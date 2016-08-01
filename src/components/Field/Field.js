@@ -1,22 +1,22 @@
 import React, {Component, PropTypes, createElement} from 'react'
-import { classNames, isMobile } from 'mui/helpers'
+import { classNames, isMobile } from 'helpers'
 
 class Field extends Component {
 	static propTypes = {
-		floating: PropTypes.bool,
-		placeholder: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
+		floating: React.PropTypes.bool,
+		placeholder: React.PropTypes.oneOfType([
+			React.PropTypes.string, React.PropTypes.bool
 		]),
-		value: PropTypes.string,
-		type: PropTypes.string,
-		success: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
+		value: React.PropTypes.string,
+		type: React.PropTypes.string,
+		success: React.PropTypes.oneOfType([
+			React.PropTypes.string, React.PropTypes.bool
 		]),
-		warning: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
+		warning: React.PropTypes.oneOfType([
+			React.PropTypes.string, React.PropTypes.bool
 		]),
-		danger: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
+		danger: React.PropTypes.oneOfType([
+			React.PropTypes.string, React.PropTypes.bool
 		])
 	};
 

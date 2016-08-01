@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "transform-runtime",
+    "transform-object-rest-spread",
+    "transform-decorators-legacy",
+    "babel-plugin-add-module-exports"
+  ],
+  "presets": ["es2015", "stage-0", "react"]
+}

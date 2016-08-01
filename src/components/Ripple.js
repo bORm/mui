@@ -2,12 +2,11 @@ import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-transition-group';
 import PureRenderMixin  from 'react-addons-pure-render-mixin';
-import Offset from '../util/offset.jsx';
-import AutoPrefix from '../style/auto-prefix.jsx';
-import Transitions from '../style/transitions.js';
+import Offset from 'util/offset.jsx';
+import AutoPrefix from 'style/auto-prefix.jsx';
+import Transitions from 'style/transitions.js';
 
-import { isMounted } from '../helpers'
-
+import { isMounted } from 'helpers/index'
 
 class Ripple extends Component {
 	static propTypes = {

@@ -1,6 +1,6 @@
-const isBrowser = require('../util/is-browser');
+const isBrowser = require('util/is-browser');
 
-const Modernizr = isBrowser ? require('../util/modernizr.custom.jsx') : undefined;
+const Modernizr = isBrowser ? require('util/modernizr.custom.jsx') : undefined;
 
 //Keep track of already prefixed keys so we can skip Modernizr prefixing
 let prefixedKeys = {};
