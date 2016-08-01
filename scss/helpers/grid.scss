@@ -1,0 +1,73 @@
+.container,
+.container-fluid {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $grid-gutter-width/2;
+}
+
+.container, .container-fluid, .row {
+  @include clearfix;
+}
+
+[class*='col-'] {
+  float: left;
+  &.float {
+    &-left {
+      float: left;
+    }
+    &-right {
+      float: right;
+    }
+  }
+  padding: 0 $grid-gutter-width/2;
+  width: 100%;
+  min-height: 1px;
+  &.inline {
+    display: inline;
+    float: none;
+    &-block {
+      display: inline-block;
+      float: none;
+    }
+  }
+}
+.row {
+  margin: 0 (-$grid-gutter-width/2);
+}
+@for $i from 1 through $grid-columns {
+  .col-xs-#{$i} {
+    width: 100% / $grid-columns * $i;
+  }
+}
+@media #{$screen-sm} {
+  .container {
+    width: $container-sm;
+  }
+  @for $i from 1 through $grid-columns {
+    .col-sm-#{$i} {
+      width: 100% / $grid-columns * $i;
+    }
+  }
+}
+
+@media #{$screen-md} {
+  .container {
+    width: $container-md;
+  }
+  @for $i from 1 through $grid-columns {
+    .col-md-#{$i} {
+      width: 100% / $grid-columns * $i;
+    }
+  }
+}
+
+@media #{$screen-lg} {
+  .container {
+    width: $container-lg;
+  }
+  @for $i from 1 through $grid-columns {
+    .col-lg-#{$i} {
+      width: 100% / $grid-columns * $i;
+    }
+  }
+}
