@@ -3,7 +3,12 @@
     "transform-runtime",
     "transform-object-rest-spread",
     "transform-decorators-legacy",
-    "babel-plugin-add-module-exports"
+    ["module-alias", [
+      { "src": "./src/util", "expose": "util" },
+      { "src": "./src/helpers", "expose": "helper" },
+      { "src": "./src/style", "expose": "style" },
+      { "src": "./src/component", "expose": "component" }
+    ]]
   ],
   "presets": ["es2015", "stage-0", "react"]
 }

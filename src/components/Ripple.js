@@ -2,8 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-transition-group';
 import PureRenderMixin  from 'react-addons-pure-render-mixin';
-import Offset from 'util/offset.jsx';
-import AutoPrefix from 'style/auto-prefix.jsx';
+import Offset from 'util/offset.js';
+import AutoPrefix from 'style/auto-prefix.js';
 import Transitions from 'style/transitions.js';
 
 import { isMounted } from 'helpers/index'

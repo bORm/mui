@@ -1,5 +1,5 @@
 'use strict';
-import './index.scss'
+//import '../index.scss'
 import Button, { ButtonIcon, ButtonText } from './components/Button/Button'
 import Field from './components/Field/Field'
 import Form from './components/Form'

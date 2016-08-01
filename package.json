@@ -10,20 +10,21 @@
     "type": "git",
     "url": "https://github.com/bORm/mui.git"
   },
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "babel --watch --presets es2015,stage-0 -d lib/ src/",
+    "build": "babel --presets es2015,stage-0 -d lib/ src/"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^6.3.7",
     "babel-cli": "^6.11.4",
     "babel-core": "^6.11.4",
     "babel-loader": "^6.2.4",
+    "babel-plugin-module-alias": "^1.6.0",
     "babel-plugin-react-transform": "^2.0.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-es2015-modules-umd": "^6.12.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.12.0",
     "babel-polyfill": "^6.9.1",
@@ -33,27 +34,11 @@
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.11.6",
     "babel-runtime": "^6.11.6",
-    "compass-mixins": "^0.12.10",
-    "css-loader": "^0.23.1",
-    "gulp": "^3.9.1",
-    "gulp-webpack": "^1.5.0",
-    "node-sass": "^3.8.0",
-    "postcss-loader": "^0.9.1",
-    "react": "@15.2.1",
-    "react-dom": "@15.2.1",
-    "sass-loader": "^4.0.0",
-    "style-loader": "^0.13.1",
-    "vinyl-named": "^1.1.0",
-    "webpack": "^1.13.1"
-  },
-  "peerDependencies": {
-    "react": "@15.2.1",
-    "react-dom": "@15.2.1",
-    "react-tap-event-plugin": "^1.0.0"
+    "react": "~15.2.1",
+    "react-dom": "~15.2.1"
   },
   "dependencies": {
-    "react-addons-pure-render-mixin": "@15.2.1",
-    "react-addons-transition-group": "@15.2.1",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-addons-pure-render-mixin": "~15.2.1",
+    "react-addons-transition-group": "~15.2.1"
   }
 }
