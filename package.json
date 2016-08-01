@@ -1,0 +1,11 @@
+{
+  "name": "mui",
+  "version": "15.1.0",
+  "description": "React's implementation of Google Material UI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "borm",
+  "license": "ISC"
+}
