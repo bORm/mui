@@ -22,13 +22,15 @@
     pointer-events: none;
     -webkit-font-smoothing: antialiased;
     z-index: 0;
-    transform: translate3d(0,48px,0) scale(1);
+    transform: translateZ(0) translate3d(0,48px,0) scale(1);
+    transform-style: preserve-3d;
     transition: transform .4s cubic-bezier(.25,.8,.25,1);
     -webkit-transform-origin: left top;
     transform-origin: left top;
     bottom: 100%;
     left: 0;
     right: auto;
+    backface-visibility: hidden;
   }
   &-entry {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -57,7 +59,7 @@
       .field-label {
         opacity: 1;
         color: rgba(0,0,0,0.54);
-        transform: translate3d(0,26px,0) scale(.75);
+        transform: translateZ(0) translate3d(0,26px,0) scale(.75);
         transition: transform cubic-bezier(.25,.8,.25,1) .4s,
                     width cubic-bezier(.25,.8,.25,1) .4s,
                     opacity cubic-bezier(.25,.8,.25,1) .4s;

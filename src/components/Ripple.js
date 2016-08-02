@@ -5,7 +5,6 @@ import PureRenderMixin  from 'react-addons-pure-render-mixin';
 import Offset from 'util/offset.js';
 import AutoPrefix from 'style/auto-prefix.js';
 import Transitions from 'style/transitions.js';
-
 import { isMounted } from 'helpers/index'
 
 class Ripple extends Component {
@@ -13,11 +12,25 @@ class Ripple extends Component {
 		container: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.element,
+		]),
+		isCenter: PropTypes.bool,
+		onMouseDown: PropTypes.oneOfType([
+			PropTypes.bool, PropTypes.func
+		]),
+		onMouseUp: PropTypes.oneOfType([
+			PropTypes.bool, PropTypes.func
+		]),
+		onMouseLeave: PropTypes.oneOfType([
+			PropTypes.bool, PropTypes.func
 		])
 	};
 
 	static defaultProps = {
-		container: 'div'
+		container: 'div',
+		isCenter: false,
+		onMouseDown: false,
+		onMouseUp: false,
+		onMouseLeave: false
 	};
 
 	constructor(props) {
@@ -53,21 +66,28 @@ class Ripple extends Component {
 	}
 
 	render() {
-		const { container, children, ...other } = this.props;
+		const {
+			container, isCenter,
+			onMouseDown, onMouseUp, onMouseLeave,
+			children, ...other
+		} = this.props;
 
 		let rippleProps = {
 			...other,
 			onMouseDown: (e)=>{
 				if (e.button === 0 && !this._ignoreNextMouseDown) {
 					::this.start(e);
+					onMouseDown && onMouseDown(e);
 					this._ignoreNextMouseDown = true;
 				}
 			}
 			, onMouseUp: (e)=>{
 				::this.end(e);
+				onMouseUp && onMouseUp(e);
 			}
 			, onMouseLeave: (e)=>{
 				::this.end(e);
+				onMouseLeave && onMouseLeave(e);
 			}
 		};
 
@@ -85,11 +105,25 @@ class Ripple extends Component {
 	}
 
 	start(e) {
+		const { isCenter } = this.props;
 		const { waves, key, size } = this.state;
 		let wave = 'wave-'+ key;
+		//debugger;
+
+		const style = this._getRippleStyle(e);
 
 		waves.push(
-			<Wave ref="RippleWave" key={wave} size={size} style={this._getRippleStyle(e)} />
+			<Wave ref="RippleWave" key={wave} size={size}
+			      style={isCenter ? {
+				      ...style,
+				      ...{
+					      top: '-100%',
+					      right: '-100%',
+					      bottom: '-100%',
+					      left: '-100%',
+					      margin: 'auto'
+				      }
+			      } : style} />
 		);
 		this.setState({
 			waves: waves,
@@ -172,7 +206,7 @@ class Wave extends Component {
 		timeOut = setTimeout(() => {
 			if (isMounted(this)) callback();
 			window.clearTimeout(timeOut);
-		}, 500);
+		}, 1000);
 	}
 
 	render() {

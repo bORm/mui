@@ -1,23 +1,49 @@
 import React, {Component, PropTypes} from 'react'
-import Ripple from '../Ripple'
+import Ripple from 'components/Ripple'
+import Paper from 'components/Paper'
+import Icon from 'components/Icon/Icon'
+import classNames from 'helpers/classNames'
 /**
  * Button
  */
 class Button extends Component {
 	static propTypes = {
-		type: PropTypes.string
+		type: PropTypes.string,
+		flat: PropTypes.bool,
+		raise: PropTypes.bool,
+		icon: PropTypes.bool,
+
+		onClick: PropTypes.oneOfType([
+			PropTypes.bool, PropTypes.func
+		])
 	};
 
 	static defaultProps = {
-		type: 'button'
+		type: 'button',
+		flat: true,
+		raised: false,
+		icon: false,
+
+		onClick: false
 	};
 
 	render() {
 		const {
-			type, children
+			type, children,
+			flat, raised, icon,
+			...other
 		} = this.props;
+
+		const button = (
+			<button type={type} className={classNames('button', {
+				flat: !raised && flat,
+				raised: raised,
+				icon: icon
+			})} />
+		);
+
 		return (
-			<Ripple container={<button type={type} className="button"/> }>
+			<Ripple {...other} container={ button } isCenter={icon ? true : false}>
 				{ children }
 			</Ripple>
 		);
@@ -41,9 +67,9 @@ class ButtonIcon extends Component {
 	render() {
 		const { children, name } = this.props;
 		return (
-			<span className="button-icon">
-				{ name || children }
-			</span>
+			<div className="button-icon">
+				<Icon>{ name || children }</Icon>
+			</div>
 		);
 	}
 }
@@ -76,6 +102,5 @@ class ButtonText extends Component {
 }
 
 export default Button
-export { Button };
 export { ButtonIcon };
 export { ButtonText };

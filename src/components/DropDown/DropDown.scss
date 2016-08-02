@@ -1,0 +1,18 @@
+.drop {
+  position: relative;
+  &-content {
+    position: absolute;
+    min-width: 100%;
+    left: 0;
+    top: 100%;
+    margin-top: -14px;
+    visibility: visible;
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+  }
+  &.down {
+
+  }
+}

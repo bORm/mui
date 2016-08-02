@@ -10,7 +10,9 @@ export default function classNames() {
 		}	else if ( type === 'object' ) {
 			for ( let className in arg ) {
 				if ( arg.hasOwnProperty(className) ) {
-					arg[className] == true ? classList.push(className) : null;
+					arg[className] == true ? classList.push(
+						className.replace(/[A-Z]/g, '-$&').toLowerCase()
+					) : null;
 				}
 			}
 		}
