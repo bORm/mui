@@ -43,7 +43,9 @@
     "react-dom": "~15.2.1"
   },
   "dependencies": {
+    "lodash.debounce": "^4.0.7",
     "react-addons-pure-render-mixin": "~15.2.1",
-    "react-addons-transition-group": "~15.2.1"
+    "react-addons-transition-group": "~15.2.1",
+    "react-onclickoutside": "^5.3.3"
   }
 }

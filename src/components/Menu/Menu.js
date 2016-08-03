@@ -1,6 +1,7 @@
 import React, {Component, PropTypes, Children, cloneElement} from 'react'
 import Paper from 'components/Paper'
 import Ripple from 'components/Ripple'
+import classNames from 'helpers/classNames'
 
 class Menu extends Component {
 	static propTypes = {
@@ -14,7 +15,7 @@ class Menu extends Component {
 	};
 
 	render() {
-		const { onChange, children } = this.props;
+		const { onChange, className, children, ...other } = this.props;
 		const items = Children.map(children, (child)=>{
 			return cloneElement(child, {
 				onClick: (e, o)=>{
@@ -23,7 +24,7 @@ class Menu extends Component {
 			})
 		});
 		return (
-			<Paper className="menu">
+			<Paper {...other} className={classNames("menu", className)}>
 				{ items }
 			</Paper>
 		);
