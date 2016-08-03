@@ -24,8 +24,10 @@ class Menu extends Component {
 			})
 		});
 		return (
-			<Paper {...other} className={classNames("menu", className)}>
-				{ items }
+			<Paper {...other}>
+				<div className={classNames("menu", className)}>
+					{ items }
+				</div>
 			</Paper>
 		);
 	}

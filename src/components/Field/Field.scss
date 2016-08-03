@@ -50,6 +50,10 @@
     line-height: inherit;
     font-family: inherit;
     background-color: rgba(0, 0, 0, 0);
+    &:disabled, &:read-only {
+      user-select: none;
+      cursor: default;
+    }
   }
 
   &.is-focused,

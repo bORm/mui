@@ -1,4 +1,7 @@
-import React, {Component, PropTypes} from 'react'
+import React, {
+	Component, PropTypes,
+	cloneElement, createElement, isValidElement
+} from 'react'
 import ReactDOM from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-transition-group';
 import PureRenderMixin  from 'react-addons-pure-render-mixin';
@@ -99,9 +102,9 @@ class Ripple extends Component {
 			</ReactCSSTransitionGroup>
 		);
 
-		return React.isValidElement(container) ?
-			React.cloneElement(container, rippleProps, [children, ripple]) :
-			React.createElement(container, rippleProps, [children, ripple]);
+		return isValidElement(container) ?
+			cloneElement(container, rippleProps, [children, ripple]) :
+			createElement(container, rippleProps, [children, ripple]);
 	}
 
 	start(e) {

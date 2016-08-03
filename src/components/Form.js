@@ -19,10 +19,13 @@ class Form extends Component {
 		validate: true
 	};
 
-	state = {
-		formData: {},
-		formValidation: {}
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			formData: {},
+			formValidation: {}
+		};
+	}
 
 	render() {
 		const { action, children, validate, ...other } = this.props;
@@ -31,33 +34,46 @@ class Form extends Component {
 			<form {...other}
 			      method="post" action={action}
 			      onSubmit={::this.onSubmit}
-			      noValidate={!validate}>
+			      noValidate={validate}>
 				{ Form.getFormElements(children, formValidation) }
 			</form>
 		);
 	}
 
+	/**
+	 * Used if submit button out of the form
+	 * <button onClick={(e)=>{
+			this.refs[ this.form.ref ].onSubmit(e);
+		}}>Submit</button>
+	 * @param e
+	 * @returns {*}
+	 */
 	onSubmit(e){
 		const { validate } = this.props;
 		this.getFormData();
 		if ( validate && objectKeys(this.state.formValidation).length ) {
+			e.preventDefault();
 			return false;
 		}
-		this.props.onSubmit(e);
+		console.log(this.state);
+		return this.props.onSubmit(e);
 	}
 
 	static getFormElements(children, formValidation){
+		//debugger;
 		return React.Children.map(children, (child)=>{
-
+			//console.log(child.type);
+			//debugger;
 			/*console.log(child.type);
 			 console.log(Field);
 			 console.log(child.type === Field);*/
 
 			// If the child has its own children, traverse through them also...
 			// in the search for elements
+
 			let {props} = child;
 
-			if ( props ) {
+			if ( props && Object.keys(props).length ) {
 				children = props && props.children;
 				if (children) {
 					return cloneElement(child, {
@@ -69,8 +85,8 @@ class Form extends Component {
 				let isInvalid = formValidation[name];
 
 				return cloneElement(child, {
-					danger: required && isInvalid || danger && danger,
-					warning: !required && isInvalid || warning && warning
+					danger: !!(required || danger) && isInvalid || danger,
+					warning: !!(!required || warning) && isInvalid || warning
 				});
 			}
 
@@ -97,20 +113,19 @@ class Form extends Component {
 			// Create formData obj
 			formData[name] = value;
 			// Validate it
-			console.log(this);
-			formValidation[name] = this.validate(element);
+			formValidation[name] = Form.validate(element);
 		}
 
-		console.log(formData);
-		console.log(formValidation);
+		// console.log(formData);
+		// console.log(formValidation);
 
 		this.setState({formValidation});
 		return formData;
 
 	}
 
-	validate(element) {
-		console.log(this);
+	static validate(element) {
+
 		const { required, name, value, type } = element;
 
 		if ( required && !value ) {

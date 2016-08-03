@@ -1,7 +1,11 @@
-import React, {Component, PropTypes, cloneElement} from 'react'
+import React, {
+	Component, PropTypes,
+	cloneElement, isValidElement
+} from 'react'
 import ReactDOM from 'react-dom';
 
 import Button, { ButtonIcon } from 'components/Button/Button'
+import Menu from 'components/Menu/Menu'
 import classNames from 'helpers/classNames'
 
 import Debounce from 'lodash.debounce'
@@ -51,6 +55,7 @@ class DropDown extends Component {
 			})}>
 				{ cloneElement(control, {
 					ref: 'control',
+					className: 'drop-control',
 					onMouseDown: e=>{
 						this.setState({
 							isOpen: !isOpen
@@ -58,20 +63,17 @@ class DropDown extends Component {
 					}
 				}) }
 				<div ref="container" className={classNames('drop-container', placement)}>
-					{ cloneElement(children, {
-						ref: 'menu',
-						className: 'drop-menu',
-						style: {maxHeight},
-						onChange: (e, value)=>{
-							( isOpen && onChange ) && onChange(e, value);
-							let timeOut = null;
+					<Menu ref="menu" className="drop-menu" style={{maxHeight}} onChange={(e, value)=>{
+						( isOpen && onChange ) && onChange(e, value);
+						let timeOut = null;
 
-							timeOut = setTimeout(() => {
-								this.setState({isOpen: false});
-								window.clearTimeout(timeOut);
-							}, 250);
-						}
-					}) }
+						timeOut = setTimeout(() => {
+							this.setState({isOpen: false});
+							window.clearTimeout(timeOut);
+						}, 250);
+					}}>
+						{ children }
+					</Menu>
 				</div>
 			</div>
 		);
@@ -89,18 +91,11 @@ class DropDown extends Component {
 	}
 
 	handleMenuExpand(){
-
+		this.getHiddenMenuOffset();
 	}
 
 	handleMenuCollapse(){
 
-	}
-
-	componentDidUpdate(prevProps) {
-		const { isOpen } = this.props;
-		if (isOpen !== prevProps.isOpen) {
-			this.handleMenuToggle();
-		}
 	}
 
 	componentDidMount(){
@@ -113,7 +108,12 @@ class DropDown extends Component {
 		window.addEventListener('resize', debounceFn);
 	}
 
-
+	componentDidUpdate(prevProps) {
+		const { isOpen } = this.props;
+		if (isOpen !== prevProps.isOpen) {
+			this.handleMenuToggle();
+		}
+	}
 
 	getHiddenMenuOffset(){
 		const rect = this.control.getBoundingClientRect();
@@ -134,11 +134,6 @@ class DropDown extends Component {
 		} else {
 			placement = "bottom-left";
 		}
-
-		// alert(window.pageYOffset);
-		// alert(document.documentElement.clientHeight);
-		// alert(rect.top);
-		// alert(cords.top);
 
 		this.setState({rect, maxHeight, placement});
 	}

@@ -16,26 +16,26 @@
     transform: scaleY(0.3) scaleX(0.3);
     overflow: hidden;
     backface-visibility: hidden;
-    &.top-left .drop-menu,
-    &.bottom-left .drop-menu {
+    &.top-left .paper,
+    &.bottom-left .paper {
       left: 0;
     }
     &.top-left {
       transform-origin: left bottom 0;
       bottom: 0;
-      .drop-menu {
+      .paper {
         bottom: 0;
       }
     }
     &.bottom-left {
       transform-origin: left top 0;
       top: 0;
-      .drop-menu {
+      .paper {
         top: 0;
       }
     }
   }
-  &-menu {
+  .paper {
     position: absolute;
     list-style: none;
     height: auto;
@@ -44,7 +44,15 @@
     margin: 0;
     opacity: 0;
     transition: opacity .1s;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  &-control {
+    cursor: pointer !important;
+    * {
+      cursor: pointer !important;
+    }
   }
 
   &.is-open {
@@ -56,10 +64,10 @@
         opacity: 1;
         overflow: visible;
       }
-      &-menu {
-        opacity: 1;
-        transition: opacity .5s;
-      }
+    }
+    .paper {
+      opacity: 1;
+      transition: opacity .5s;
     }
   }
 

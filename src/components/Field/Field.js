@@ -3,50 +3,78 @@ import { classNames, isMobile } from 'helpers'
 
 class Field extends Component {
 	static propTypes = {
-		floating: React.PropTypes.bool,
-		placeholder: React.PropTypes.oneOfType([
-			React.PropTypes.string, React.PropTypes.bool
+		floating: PropTypes.bool,
+
+		placeholder: PropTypes.oneOfType([
+			PropTypes.string, PropTypes.bool
 		]),
-		value: React.PropTypes.string,
-		type: React.PropTypes.string,
-		success: React.PropTypes.oneOfType([
-			React.PropTypes.string, React.PropTypes.bool
+		value: PropTypes.string,
+		type: PropTypes.string,
+		name: PropTypes.oneOfType([
+			PropTypes.string, PropTypes.bool
 		]),
-		warning: React.PropTypes.oneOfType([
-			React.PropTypes.string, React.PropTypes.bool
+
+		required: PropTypes.bool,
+		readOnly: PropTypes.bool,
+		disabled: PropTypes.bool,
+
+		success: PropTypes.oneOfType([
+			PropTypes.string, PropTypes.bool
+		]),
+		warning: PropTypes.oneOfType([
+			PropTypes.string, PropTypes.bool
 		]),
 		danger: React.PropTypes.oneOfType([
-			React.PropTypes.string, React.PropTypes.bool
+			PropTypes.string, PropTypes.bool
 		])
 	};
 
 	static defaultProps = {
 		floating: false,
+
 		placeholder: false,
 		value: '',
 		type: 'text',
+		name: false,
+
+		required: false,
+		readOnly: false,
+		disabled: false,
+
 		success: false,
 		warning: false,
 		danger: false
 	};
 
-	state = {
-		isFocused: false,
-		value: ''
-	};
+	constructor(props){
+		super(props);
+		this.state = {
+			isFocused: false,
+			value: ''
+		};
+	}
 
 	componentDidMount() {
 		const { value } = this.props;
 		this.setState({value});
 	}
 
+	componentWillReceiveProps(props){
+		const { value } = this.props;
+
+		value !== props.value && this.setState({value: props.value});
+	}
+
 	render(){
 		const {
 			floating, placeholder, type,
 			onChange, onFocus, onBlur,
+			name, required, readOnly, disabled,
+			success,	warning,	danger,
+			className,
 			...other
 		} = this.props;
-		const { success,	warning,	danger } = this.props;
+
 		const valid = success || warning || danger;
 
 		let icon = null;
@@ -54,39 +82,35 @@ class Field extends Component {
 
 		const inputProps = {
 			onChange: e=>{
-				this.setState({value: e.target.value});
+				const { value } = e.target;
+				this.setState({value});
 				onChange && onChange(e);
 			},
 			onFocus: e=>{
 				this.setState({isFocused: true});
 				onFocus && onFocus(e);
-
-				/*setTimeout(()=>{
-				 alert(document.body.scrollHeight);
-				 },1000);*/
-
-				isMobile && (()=>{
-					//console.log(e.target.offsetTop)
-				})()
-
 			},
 			onBlur: e=>{
 				this.setState({isFocused: false});
 				onBlur && onBlur(e);
-			},
-
+			}
 		};
 
+		if ( name ) {
+			inputProps.name = name;
+		}
+
 		return (
-			<label className={classNames('field', {
+			<label {...other} className={classNames('field', {
 				floating: floating,
-				'is-focused': isFocused,
+				'is-focused': isFocused && !readOnly && !disabled,
 				'has-value': value !== '',
 				success: success !== false,
 				warning: warning !== false,
 				danger: danger !== false
-			})}>
+			}, className)}>
 				<input type={type} ref="entry"
+				       required={required} readOnly={readOnly} disabled={disabled}
 				       className="field-entry" value={value}
 				       {...inputProps}
 				/>
