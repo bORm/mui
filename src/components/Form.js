@@ -21,10 +21,11 @@ class Form extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
+		this.formInfo = {
 			formData: {},
 			formValidation: {}
 		};
+		this.state = {...this.formInfo};
 	}
 
 	render() {
@@ -41,33 +42,26 @@ class Form extends Component {
 	}
 
 	/**
-	 * Used if submit button out of the form
-	 * <button onClick={(e)=>{
+	* Used if submit button out of the form
+		<button onClick={(e)=>{
 			this.refs[ this.form.ref ].onSubmit(e);
 		}}>Submit</button>
-	 * @param e
-	 * @returns {*}
-	 */
+	* @param e
+	* @returns {*}
+	*/
 	onSubmit(e){
 		const { validate } = this.props;
-		this.getFormData();
-		if ( validate && objectKeys(this.state.formValidation).length ) {
+		this.formInfo = this.getFormData(e);
+		if ( validate && objectKeys(this.formInfo.formValidation).length ) {
+			this.props.onSubmit(e, this.formInfo);
 			e.preventDefault();
 			return false;
 		}
-		console.log(this.state);
-		return this.props.onSubmit(e);
 	}
 
 	static getFormElements(children, formValidation){
-		//debugger;
-		return React.Children.map(children, (child)=>{
-			//console.log(child.type);
-			//debugger;
-			/*console.log(child.type);
-			 console.log(Field);
-			 console.log(child.type === Field);*/
 
+		return React.Children.map(children, (child)=>{
 			// If the child has its own children, traverse through them also...
 			// in the search for elements
 
@@ -96,8 +90,8 @@ class Form extends Component {
 	}
 
 	/**
-	 * getFormData
-	 * @returns {{formData}}
+	 *
+	 * @returns {{formData: {}, formValidation: {}}}
 	 */
 	getFormData() {
 		const elements = findDOMNode(this).elements,
@@ -119,9 +113,8 @@ class Form extends Component {
 		// console.log(formData);
 		// console.log(formValidation);
 
-		this.setState({formValidation});
-		return formData;
-
+		this.setState({formData, formValidation});
+		return {formData, formValidation}
 	}
 
 	static validate(element) {
