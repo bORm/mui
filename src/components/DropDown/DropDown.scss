@@ -53,6 +53,16 @@
     * {
       cursor: pointer !important;
     }
+    &.field {
+      &:after {
+        content: 'arrow_drop_down';
+        font-family: 'Material Icons', sans-serif;
+        position: absolute;
+        right: 0;
+        font-size: 24px;
+        color: $gray-darker;
+      }
+    }
   }
 
   &.is-open {

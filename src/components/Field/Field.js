@@ -14,6 +14,11 @@ class Field extends Component {
 			PropTypes.string, PropTypes.bool
 		]),
 
+		large: PropTypes.bool,
+		small: PropTypes.bool,
+
+		block: PropTypes.bool,
+
 		required: PropTypes.bool,
 		readOnly: PropTypes.bool,
 		disabled: PropTypes.bool,
@@ -36,6 +41,11 @@ class Field extends Component {
 		value: '',
 		type: 'text',
 		name: false,
+
+		large: false,
+		small: false,
+
+		block: false,
 
 		required: false,
 		readOnly: false,
@@ -70,6 +80,7 @@ class Field extends Component {
 			floating, placeholder, type,
 			onChange, onFocus, onBlur,
 			name, required, readOnly, disabled,
+			large, small, block,
 			success,	warning,	danger,
 			className,
 			...other
@@ -105,6 +116,10 @@ class Field extends Component {
 				floating: floating,
 				'is-focused': isFocused && !readOnly && !disabled,
 				'has-value': value !== '',
+				fieldBlock: block,
+				fieldLg: large,
+				fieldMd: !(large || small),
+				fieldSm: small,
 				success: success !== false,
 				warning: warning !== false,
 				danger: danger !== false

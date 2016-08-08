@@ -11,6 +11,13 @@
   background-color: transparent;
   cursor: text;
   box-sizing: border-box;
+  outline: none;
+  outline: 0;
+
+  &-block {
+    width: 100%;
+  }
+
   &-label {
     position: absolute;
     color: rgb(224, 224, 224);
