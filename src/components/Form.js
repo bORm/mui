@@ -1,22 +1,35 @@
 import React, { Component, PropTypes, cloneElement, createElement } from 'react'
 import { findDOMNode } from 'react-dom'
-import { objectKeys } from 'helpers/index'
+import objectKeys from 'helpers/objectKeys'
 
 class Form extends Component {
 	static propTypes = {
+		id: PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.string
+		]),
 		action: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.bool
 		]),
 		onSubmit: PropTypes.oneOfType([
 			PropTypes.func, PropTypes.bool
 		]),
-		validate: PropTypes.bool
+		validate: PropTypes.oneOfType([
+			PropTypes.bool,
+			PropTypes.object
+		]),
+		rules: PropTypes.object
 	};
 
 	static defaultProps = {
+		id: false,
 		action: '#',
 		onSubmit: false,
-		validate: true
+		validate: true,
+		rules: {
+			required: 'Field is`nt be empty!',
+			email: 'Not valid email'
+		}
 	};
 
 	constructor(props) {
@@ -25,11 +38,13 @@ class Form extends Component {
 			formData: {},
 			formValidation: {}
 		};
-		this.state = {...this.formInfo};
+		this.state = {...this.formInfo, ...{
+			rules: this.props.rules
+		}};
 	}
 
 	render() {
-		const { action, children, validate, ...other } = this.props;
+		const { action, children, validate, rules, ...other } = this.props;
 		const { formValidation } = this.state;
 		return (
 			<form {...other}
@@ -98,6 +113,8 @@ class Form extends Component {
 			length = elements.length;
 		const formData = {}, formValidation = {};
 
+		const { rules } = this.state;
+
 		for ( let i=0, element, name, type, value; i<length; i++ ) {
 			element = elements[i];
 			name = element.name;
@@ -107,7 +124,7 @@ class Form extends Component {
 			// Create formData obj
 			formData[name] = value;
 			// Validate it
-			formValidation[name] = Form.validate(element);
+			formValidation[name] = Form.validate(element, rules);
 		}
 
 		// console.log(formData);
@@ -117,19 +134,22 @@ class Form extends Component {
 		return {formData, formValidation}
 	}
 
-	static validate(element) {
+	static validate(element, rules) {
 
 		const { required, name, value, type } = element;
 
 		if ( required && !value ) {
-			return 'Field is`nt be empty!';
+			return rules.required;
 		} else {
 			let isValid;
 			switch (type) {
 				case 'email':
-					let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+					// after read this https://habrahabr.ru/post/175375/
+					//let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+					// i`ve changed
+					let re = /.+@.+\..+/i;
 					isValid = re.test(value);
-					return !isValid && 'Not valid email';
+					return !isValid && rules.email;
 					break;
 			}
 		}

@@ -122,20 +122,23 @@ class Field extends Component {
 				fieldSm: small,
 				success: success !== false,
 				warning: warning !== false,
-				danger: danger !== false
+				danger: danger !== false,
+				hidden: type === 'hidden'
 			}, className)}>
-				<input type={type} ref="entry"
-				       required={required} readOnly={readOnly} disabled={disabled}
-				       className="field-entry" value={value}
-				       {...inputProps}
-				/>
-				{ placeholder && (
-					<span className="field-label"
-					      onClick={()=>this.refs.entry.getDOMNode().focus()}
-					>{ placeholder }</span>
-				) }
-				<hr className="field-border field-border-focus"/>
+				<div className="field-control">
+					<input type={type} ref="entry"
+					       required={required} readOnly={readOnly} disabled={disabled}
+					       className="field-entry" value={value}
+					       {...inputProps}
+					/>
+					{ placeholder && (
+						<span className="field-label"
+						      onClick={()=>this.refs.entry.getDOMNode().focus()}
+						>{ placeholder }</span>
+					) }
+					<hr className="field-border field-border-focus"/>
 				<hr className="field-border"/>
+				</div>
 				{ typeof ( valid ) === 'string' && createElement('span', {
 					className: 'field-valid'
 				}, [icon, <span key="message">{ valid }</span>] ) }

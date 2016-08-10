@@ -27,8 +27,10 @@ class Button extends Component {
 		type: 'button',
 		flat: true,
 		raised: false,
+
 		primary: false,
 		accent: false,
+
 		icon: false,
 
 		onClick: false
@@ -44,7 +46,7 @@ class Button extends Component {
 		} = this.props;
 
 		const button = (
-			<button type={type} className={classNames('button', {
+			<Paper component={'button'} type={type} className={classNames('button', {
 				flat: !raised && flat,
 				raised: raised,
 				primary: primary,
