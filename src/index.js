@@ -8,3 +8,8 @@ export Menu, { Item as MenuItem, Divider as MenuDivider } from './components/Men
 
 export Ripple from './components/Ripple'
 export Paper from './components/Paper'
+
+/**
+ * helpers
+ */
+export classNames from './helpers/classNames'
