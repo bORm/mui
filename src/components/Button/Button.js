@@ -9,8 +9,13 @@ import classNames from 'helpers/classNames'
 class Button extends Component {
 	static propTypes = {
 		type: PropTypes.string,
+
 		flat: PropTypes.bool,
 		raise: PropTypes.bool,
+
+		primary: PropTypes.bool,
+		accent: PropTypes.bool,
+
 		icon: PropTypes.bool,
 
 		onClick: PropTypes.oneOfType([
@@ -22,6 +27,8 @@ class Button extends Component {
 		type: 'button',
 		flat: true,
 		raised: false,
+		primary: false,
+		accent: false,
 		icon: false,
 
 		onClick: false
@@ -30,7 +37,9 @@ class Button extends Component {
 	render() {
 		const {
 			type, children,
-			flat, raised, icon,
+			flat, raised,
+			primary, accent,
+			icon,
 			...other
 		} = this.props;
 
@@ -38,6 +47,8 @@ class Button extends Component {
 			<button type={type} className={classNames('button', {
 				flat: !raised && flat,
 				raised: raised,
+				primary: primary,
+				accent: accent,
 				icon: icon
 			})} />
 		);
