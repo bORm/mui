@@ -2,13 +2,7 @@
   "plugins": [
     "transform-runtime",
     "transform-object-rest-spread",
-    "transform-decorators-legacy",
-    ["module-alias", [
-      { "src": "./src/util", "expose": "util" },
-      { "src": "./src/helpers", "expose": "helper" },
-      { "src": "./src/style", "expose": "style" },
-      { "src": "./src/component", "expose": "component" }
-    ]]
+    "transform-decorators-legacy"
   ],
   "presets": ["es2015", "stage-0", "react"]
 }

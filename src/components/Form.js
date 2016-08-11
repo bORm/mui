@@ -34,24 +34,25 @@ class Form extends Component {
 
 	constructor(props) {
 		super(props);
+		console.log('hello');
 		this.formInfo = {
 			formData: {},
 			formValidation: {}
 		};
 		this.state = {...this.formInfo, ...{
-			rules: this.props.rules
+			rules: props.rules
 		}};
 	}
 
 	render() {
-		const { action, children, validate, rules, ...other } = this.props;
-		const { formValidation } = this.state;
+		const { action, children, validate, className } = this.props;
+		const { formValidation, rules } = this.state;
 		return (
-			<form {...other}
+			<form className={className}
 			      method="post" action={action}
 			      onSubmit={::this.onSubmit}
 			      noValidate={validate}>
-				{ Form.getFormElements(children, formValidation) }
+				{ this.getFormElements(children, formValidation, rules) }
 			</form>
 		);
 	}
@@ -69,12 +70,16 @@ class Form extends Component {
 		this.formInfo = this.getFormData(e);
 		if ( validate && objectKeys(this.formInfo.formValidation).length ) {
 			this.props.onSubmit(e, this.formInfo);
+		}
+
+		if ( validate ) {
 			e.preventDefault();
 			return false;
 		}
+
 	}
 
-	static getFormElements(children, formValidation){
+	getFormElements(children, formValidation, rules){
 
 		return React.Children.map(children, (child)=>{
 			// If the child has its own children, traverse through them also...
@@ -87,21 +92,46 @@ class Form extends Component {
 				if (children) {
 					return cloneElement(child, {
 
-					}, Form.getFormElements(children, formValidation));
+					}, this.getFormElements(children, formValidation, rules));
 				}
 
-				let { name, required, danger, warning } = props;
+				let {
+					name, required,
+					value, type,
+					danger, warning
+				} = props;
 				let isInvalid = formValidation[name];
 
 				return cloneElement(child, {
 					danger: !!(required || danger) && isInvalid || danger,
-					warning: !!(!required || warning) && isInvalid || warning
+					warning: !!(!required || warning) && isInvalid || warning,
+					onBlur: e=>{
+						if ( required ) {
+							this.setState({
+								formValidation: Form.isValidElement(formValidation, {
+									required, name, value: e.target.value, type
+								}, rules)
+							});
+						}
+					}
 				});
 			}
 
 			return createElement('span', {}, child);
 
 		})
+	}
+
+	static isValidElement(formValidation, element, rules) {
+		const isValid = Form.validate(element, rules);
+		const { name } = element;
+		if ( !isValid ) {
+			delete formValidation[name];
+		}
+		else {
+			formValidation[name] = isValid;
+		}
+		return formValidation;
 	}
 
 	/**
@@ -128,7 +158,7 @@ class Form extends Component {
 		}
 
 		// console.log(formData);
-		// console.log(formValidation);
+		console.log(formValidation);
 
 		this.setState({formData, formValidation});
 		return {formData, formValidation}
@@ -136,7 +166,7 @@ class Form extends Component {
 
 	static validate(element, rules) {
 
-		const { required, name, value, type } = element;
+		const { required, value, type } = element;
 
 		if ( required && !value ) {
 			return rules.required;
