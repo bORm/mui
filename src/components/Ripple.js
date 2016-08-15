@@ -17,6 +17,7 @@ class Ripple extends Component {
 			PropTypes.element,
 		]),
 		isCenter: PropTypes.bool,
+		disabled: PropTypes.bool,
 		onMouseDown: PropTypes.oneOfType([
 			PropTypes.bool, PropTypes.func
 		]),
@@ -31,6 +32,7 @@ class Ripple extends Component {
 	static defaultProps = {
 		container: 'div',
 		isCenter: false,
+		disabled: false,
 		onMouseDown: false,
 		onMouseUp: false,
 		onMouseLeave: false
@@ -108,14 +110,14 @@ class Ripple extends Component {
 	}
 
 	start(e) {
-		const { isCenter } = this.props;
+		const { isCenter, disabled } = this.props;
 		const { waves, key, size } = this.state;
 		let wave = 'wave-'+ key;
 		//debugger;
 
-		const style = this._getRippleStyle(e);
+		const style = this._getRippleStyle(e, isCenter);
 
-		waves.push(
+		!disabled && waves.push(
 			<Wave ref="RippleWave" key={wave} size={size}
 			      style={isCenter ? {
 				      ...style,
@@ -146,7 +148,7 @@ class Ripple extends Component {
 		}
 	}
 
-	_getRippleStyle(e) {
+	_getRippleStyle(e, isCenter) {
 		let style = {};
 		const el = ReactDOM.findDOMNode(this);
 		const elHeight = el.offsetHeight;
@@ -164,12 +166,14 @@ class Ripple extends Component {
 		const rippleRadius = Math.max(
 			topLeftDiag, topRightDiag, botRightDiag, botLeftDiag
 		);
-		const rippleSize = rippleRadius * 2;
+		const { size } = this.state;
+		const rippleSize = isCenter ? size.min : rippleRadius * 2;
 		const left = pointerX - rippleRadius;
 		const top = pointerY - rippleRadius;
 
 		style.height = rippleSize + 'px';
 		style.width = rippleSize + 'px';
+
 		style.top = top + 'px';
 		style.left = left + 'px';
 		return style;
@@ -219,10 +223,11 @@ class Wave extends Component {
 		return (
 			<div className="wave" style={{
 				...{
-					backgroundColor: 'rgb(0,0,0)'
-				, width: size.min
+					//backgroundColor: 'rgb(0,0,0)'
+				width: size.min
 				, height: size.min
-				}, ...style
+				},
+				...style
 			}}></div>
 		);
 	}

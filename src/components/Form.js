@@ -60,7 +60,7 @@ class Form extends Component {
 	/**
 	* Used if submit button out of the form
 		<button onClick={(e)=>{
-			this.refs[ this.form.ref ].onSubmit(e);
+			this.refs[ this.form[REF] ].onSubmit(e);
 		}}>Submit</button>
 	* @param e
 	* @returns {*}
@@ -154,7 +154,10 @@ class Form extends Component {
 			// Create formData obj
 			formData[name] = value;
 			// Validate it
-			formValidation[name] = Form.validate(element, rules);
+			const isValid = Form.validate(element, rules);
+			if ( isValid !== false ) {
+				formValidation[name] = Form.validate(element, rules);
+			}
 		}
 
 		// console.log(formData);
