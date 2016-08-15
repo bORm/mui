@@ -123,7 +123,8 @@ class Field extends Component {
 				success: success !== false,
 				warning: warning !== false,
 				danger: danger !== false,
-				hidden: type === 'hidden'
+				hidden: type === 'hidden',
+				required: required,
 			}, className)}>
 				<div className="field-control">
 					<input type={type} ref="entry"
@@ -134,7 +135,7 @@ class Field extends Component {
 					{ placeholder && (
 						<span className="field-label"
 						      onClick={()=>this.refs.entry.getDOMNode().focus()}
-						>{ placeholder }</span>
+						>{ placeholder } { required && <sup>*</sup> }</span>
 					) }
 					<hr className="field-border field-border-focus"/>
 				<hr className="field-border"/>

@@ -48,9 +48,14 @@
     left: 0;
     right: auto;
     backface-visibility: hidden;
-    //box-sizing: bo;
     padding: 4px 0 4px;
     line-height: 23px;
+    sup {
+      line-height: 16px;
+      font-size: 10px;
+      display: inline-block;
+      vertical-align: text-top;
+    }
   }
   &-entry {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -101,6 +106,11 @@
     }
     .field-border-focus {
       transform: scaleX(1);
+    }
+    &.required {
+      .field-label sup {
+        color: $danger;
+      }
     }
   }
 
@@ -156,23 +166,23 @@
   }
   &.success {
     .field {
-      &-border {  border-color: $success;  }
-      &-valid {  color: $success;  }
+      &-border  { border-color: $success; }
+      &-valid   { color: $success; }
+      &-label   { color: $success; }
     }
-    &.floating .field-label { color: $success; }
   }
   &.warning {
     .field {
-      &-border {  border-color: $warning;  }
-      &-valid {  color: $warning;  }
+      &-border  { border-color: $warning; }
+      &-valid   { color: $warning; }
+      &-label   { color: $warning; }
     }
-    &.floating .field-label { color: $warning; }
   }
   &.danger {
     .field {
-      &-border {  border-color: $danger;  }
-      &-valid {  color: $danger;  }
+      &-border  { border-color: $danger; }
+      &-valid   { color: $danger; }
+      &-label   { color: $danger; }
     }
-    &.floating .field-label { color: $danger; }
   }
 }
