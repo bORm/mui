@@ -1,11 +1,12 @@
 import React, {Component, PropTypes} from 'react'
 import classNames from 'helpers/classNames'
 import Ripple from 'components/Ripple'
-/**
- * Checkbox
- */
+
 class Checkbox extends Component {
   static propTypes = {
+    name: PropTypes.oneOfType([
+	    PropTypes.bool, PropTypes.string
+    ]),
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
 	  label: PropTypes.oneOfType([
@@ -14,6 +15,7 @@ class Checkbox extends Component {
   };
 
   static defaultProps = {
+	  name: false,
 	  checked: false,
     disabled: false,
 	  label: false
@@ -26,7 +28,7 @@ class Checkbox extends Component {
   }
 
   render() {
-    const {label} = this.props;
+    const {name, label} = this.props;
     const {checked, disabled} = this.state;
 
     return (
@@ -35,7 +37,10 @@ class Checkbox extends Component {
 	    } isCenter={true} disabled={disabled}>
 		    <input type="checkbox" {
 			    ...{
-			    	checked, disabled,
+				    /**
+				     * Input Props
+				     */
+			    	name, checked, disabled,
 				    onChange: e=> {
 			    		const { checked } = e.target;
 					    this.setState({checked})
