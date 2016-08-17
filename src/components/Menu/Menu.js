@@ -55,7 +55,9 @@ class Item extends Component {
 		const { text, value, children, onClick } = this.props;
 
 		return (
-			<Ripple container={<div className="menu-item" onClick={e=>{onClick && onClick(e, {value, text})}}/> }>
+			<Ripple container={
+				<div className="menu-item" onClick={e=>{onClick && onClick(e, {value, text})}}/>
+			}>
 				<div className="menu-item-inner">
 					{ children ? children : text }
 				</div>

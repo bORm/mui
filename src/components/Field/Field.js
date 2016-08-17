@@ -104,12 +104,12 @@ class Field extends Component {
 			onBlur: e=>{
 				this.setState({isFocused: false});
 				onBlur && onBlur(e);
-			}
+			},
+			name, readOnly,
+			ref: 'entry',
+			className: 'field-entry',
+			required, disabled, value
 		};
-
-		if ( name ) {
-			inputProps.name = name;
-		}
 
 		return (
 			<label {...other} className={classNames('field', {
@@ -127,11 +127,11 @@ class Field extends Component {
 				required: required,
 			}, className)}>
 				<div className="field-control">
-					<input type={type} ref="entry"
-					       required={required} readOnly={readOnly} disabled={disabled}
-					       className="field-entry" value={value}
-					       {...inputProps}
-					/>
+					{
+						type !== 'textarea'
+							? <input type={type} {...inputProps} />
+							: <textarea {...inputProps} />
+					}
 					{ placeholder && (
 						<span className="field-label"
 						      onClick={()=>this.refs.entry.getDOMNode().focus()}
