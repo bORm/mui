@@ -5,6 +5,8 @@
 @import "./scss/helpers/clearfix";
 @import "./scss/helpers/grid";
 
+@import "scss/mixins/Modal";
+
 @import "./components/Ripple";
 @import "./components/Paper";
 
@@ -14,6 +16,7 @@
 @import "./components/Field/Field";
 @import "./components/Slider/Slider";
 @import "./components/Menu/Menu";
+@import "./components/Modal/Modal";
 @import "components/Checkbox/Checkbox";
 
 .input-range {
