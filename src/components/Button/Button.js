@@ -16,7 +16,12 @@ class Button extends Component {
 		primary: PropTypes.bool,
 		accent: PropTypes.bool,
 
-		icon: PropTypes.bool,
+		text: PropTypes.oneOfType([
+			PropTypes.bool, PropTypes.string
+		]),
+		icon: PropTypes.oneOfType([
+			PropTypes.bool, PropTypes.string
+		]),
 
 		onClick: PropTypes.oneOfType([
 			PropTypes.bool, PropTypes.func
@@ -31,6 +36,7 @@ class Button extends Component {
 		primary: false,
 		accent: false,
 
+		text: false,
 		icon: false,
 
 		onClick: false
@@ -41,9 +47,12 @@ class Button extends Component {
 			type, children,
 			flat, raised,
 			primary, accent,
-			icon, className,
+			text, icon, className,
 			...other
 		} = this.props;
+
+		console.log(this.props);
+		console.log(...other);
 
 		const button = (
 			<Paper component={'button'} type={type} className={classNames('button', {
@@ -51,7 +60,7 @@ class Button extends Component {
 				raised: raised,
 				primary: primary,
 				accent: accent,
-				icon: icon
+				icon: !!(icon)
 			}, className)} />
 		);
 
@@ -60,6 +69,8 @@ class Button extends Component {
 				{ children }
 			</Ripple>
 		);
+
+		//return <button type="submit">{ children }</button>
 	}
 }
 
@@ -106,9 +117,6 @@ class ButtonText extends Component {
 		return (
 			<span className="button-text">
 				{ text || children }
-				<span>
-
-				</span>
 			</span>
 		);
 	}

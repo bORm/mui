@@ -40,7 +40,7 @@ class Ripple extends Component {
 
 	constructor(props) {
 		super(props);
-		this.shouldComponentUpdate = ::PureRenderMixin.shouldComponentUpdate;
+		//this.shouldComponentUpdate = ::PureRenderMixin.shouldComponentUpdate;
 		this.state = {
 			key: 0,
 			waves: [],
@@ -99,14 +99,17 @@ class Ripple extends Component {
 		const { waves } = this.state;
 
 		const ripple = (
-			<ReactCSSTransitionGroup className="ripple" component="div" key="ripple">
-				{waves}
-			</ReactCSSTransitionGroup>
+			<div className="ripple" key="ripple">
+				<ReactCSSTransitionGroup className="waves" key="waves">
+					{waves}
+				</ReactCSSTransitionGroup>
+			</div>
 		);
 
-		return isValidElement(container) ?
-			cloneElement(container, rippleProps, [children, ripple]) :
-			createElement(container, rippleProps, [children, ripple]);
+		return isValidElement(container)
+			? cloneElement(container, rippleProps, [children, ripple])
+			: createElement(container, rippleProps, [children, ripple])
+		;
 	}
 
 	start(e) {
