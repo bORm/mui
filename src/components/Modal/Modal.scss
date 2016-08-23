@@ -1,6 +1,13 @@
 .modal {
   @include Modal();
 
+  &-close {
+    cursor: default;
+    .icon {
+      cursor: pointer;
+    }
+  }
+
   .paper {
     position: relative;
     z-index: 1;

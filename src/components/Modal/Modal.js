@@ -114,6 +114,13 @@ class Modal extends Component {
 			<Portal id={id} mountTo={mountTo} isOpen={isOpen} {...toggle} { ...other }>
 				<div className="modal">
 					<Paper zDepth={2}>
+						{ closeButton && (()=>{
+							return (
+								<div className="modal-close">
+									<i className="icon material-icons" onClick={e=>Portal.toggle(id, false)}>close</i>
+								</div>
+							)
+						})() }
 						{ this.props.children }
 					</Paper>
 				</div>

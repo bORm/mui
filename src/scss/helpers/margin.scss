@@ -1,0 +1,16 @@
+$types: 100;
+
+@while $types >= 0 {
+  .mt#{$types} {  margin-top: $types + 0px;  	}
+  .pt#{$types} {  padding-top: $types + 0px;  	}
+
+  .mr#{$types} {  margin-right: $types + 0px; }
+  .pr#{$types} {  padding-right: $types + 0px; }
+
+  .mb#{$types} {  margin-bottom: $types + 0px;}
+  .pb#{$types} {  padding-bottom: $types + 0px;}
+
+  .ml#{$types} {  margin-left: $types + 0px;  }
+  .pl#{$types} {  padding-left: $types + 0px;  }
+  $types: $types - 5;
+}

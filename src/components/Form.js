@@ -34,7 +34,7 @@ class Form extends Component {
 
 	constructor(props) {
 		super(props);
-		console.log('hello');
+
 		this.formInfo = {
 			formData: {},
 			formValidation: {}
@@ -46,13 +46,12 @@ class Form extends Component {
 
 	render() {
 		const { action, children, validate, className } = this.props;
-		const { formValidation, rules } = this.state;
 		return (
 			<form className={className}
 			      method="post" action={action}
 			      onSubmit={::this.onSubmit}
 			      noValidate={validate}>
-				{ this.getFormElements(children, formValidation, rules) }
+				{ this.getFormElements(children) }
 			</form>
 		);
 	}
@@ -66,10 +65,11 @@ class Form extends Component {
 	* @returns {*}
 	*/
 	onSubmit(e){
-		const { validate } = this.props;
+		const { validate, onSubmit } = this.props;
 		this.formInfo = this.getFormData(e);
+
 		if ( validate && objectKeys(this.formInfo.formValidation).length ) {
-			this.props.onSubmit(e, this.formInfo);
+			onSubmit && onSubmit(e, this.formInfo);
 		}
 
 		if ( validate ) {
@@ -79,7 +79,8 @@ class Form extends Component {
 
 	}
 
-	getFormElements(children, formValidation, rules){
+	getFormElements(children){
+		const { formValidation, rules } = this.state;
 
 		return React.Children.map(children, (child)=>{
 			// If the child has its own children, traverse through them also...
@@ -161,7 +162,7 @@ class Form extends Component {
 		}
 
 		// console.log(formData);
-		console.log(formValidation);
+		// console.log(formValidation);
 
 		this.setState({formData, formValidation});
 		return {formData, formValidation}

@@ -70,9 +70,11 @@ class Field extends Component {
 	}
 
 	componentWillReceiveProps(props){
-		const { value } = this.props;
+		const { value, required, disabled } = this.props;
 
 		value !== props.value && this.setState({value: props.value});
+		required !== props.required && this.setState({required: props.required});
+		disabled !== props.disabled && this.setState({disabled: props.disabled});
 	}
 
 	render(){
