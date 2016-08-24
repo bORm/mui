@@ -90,9 +90,6 @@ class Field extends Component {
 			...other
 		} = this.props;
 
-		console.log(other);
-		console.log(this.props);
-
 		const valid = success || warning || danger;
 
 		let icon = null;
