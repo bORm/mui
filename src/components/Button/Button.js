@@ -57,7 +57,7 @@ class Button extends Component {
 			type, children,
 			flat, raised,
 			primary, accent,
-			large, medium, small,
+			large, medium, small, mini,
 			text, icon, className,
 			...other
 		} = this.props;
@@ -72,8 +72,9 @@ class Button extends Component {
 				primary,
 				accent,
 				large,
-				medium: !large || !small,
+				medium: !large || !small || !mini,
 				small,
+				mini,
 				icon: !!(icon)
 			}, className)} />
 		);
