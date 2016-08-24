@@ -62,9 +62,6 @@ class Button extends Component {
 			...other
 		} = this.props;
 
-		console.log(this.props);
-		console.log(...other);
-
 		const button = (
 			<Paper component={'button'} type={type} className={classNames('button', {
 				flat: !raised && flat,
@@ -106,9 +103,9 @@ class ButtonIcon extends Component {
 	render() {
 		const { children, name } = this.props;
 		return (
-			<div className="button-icon">
+			<span className="button-icon">
 				<Icon>{ name || children }</Icon>
-			</div>
+			</span>
 		);
 	}
 }

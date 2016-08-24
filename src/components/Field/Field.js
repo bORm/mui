@@ -9,6 +9,7 @@ class Field extends Component {
 			PropTypes.string, PropTypes.bool
 		]),
 		value: PropTypes.string,
+		defaultValue: PropTypes.string,
 		type: PropTypes.string,
 		name: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.bool
@@ -39,6 +40,7 @@ class Field extends Component {
 
 		placeholder: false,
 		value: '',
+		defaultValue: '',
 		type: 'text',
 		name: false,
 
@@ -60,13 +62,13 @@ class Field extends Component {
 		super(props);
 		this.state = {
 			isFocused: false,
-			value: ''
+			value: props.defaultValue || ''
 		};
 	}
 
 	componentDidMount() {
 		const { value } = this.props;
-		this.setState({value});
+		value && this.setState({value});
 	}
 
 	componentWillReceiveProps(props){
@@ -81,12 +83,15 @@ class Field extends Component {
 		const {
 			floating, placeholder, type,
 			onChange, onFocus, onBlur,
-			name, required, readOnly, disabled,
+			name, required, readOnly, disabled, defaultValue,
 			large, small, block,
 			success,	warning,	danger,
 			className,
 			...other
 		} = this.props;
+
+		console.log(other);
+		console.log(this.props);
 
 		const valid = success || warning || danger;
 
