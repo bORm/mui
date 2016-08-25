@@ -18,7 +18,7 @@
   text-align: center;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 1.4rem;
   font-style: inherit;
   font-variant: inherit;
   font-family: inherit;
@@ -76,12 +76,25 @@
     border-radius: 50%;
   }
 
-  &-icon {
+  &-inner {
+    font-size: 0;
+    line-height: 1px;
+  }
+
+  &-icon, &-text {
     display: inline-block;
     vertical-align: middle;
+  }
+  &-icon {
     line-height: inherit;
-    .icon {
-
+    & + .button-text {
+      margin-left: 1rem;
+    }
+  }
+  &-text {
+    font-size: 1.4rem;
+    & + .button-icon {
+      margin-right: 1rem;
     }
   }
 

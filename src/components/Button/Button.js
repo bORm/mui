@@ -78,7 +78,13 @@ class Button extends Component {
 
 		return (
 			<Ripple {...other} container={ button } isCenter={icon ? true : false}>
-				{ children }
+				<div className="button-inner">
+					{
+						typeof children === 'string'
+							? <ButtonText text={children}/>
+							: children
+					}
+				</div>
 			</Ripple>
 		);
 
