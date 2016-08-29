@@ -1,5 +1,5 @@
 import React, {Component, PropTypes, createElement} from 'react'
-import { classNames, isMobile } from 'helpers'
+import { classNames, inArray } from 'helpers'
 
 class Field extends Component {
 	static propTypes = {
@@ -11,6 +11,8 @@ class Field extends Component {
 		value: PropTypes.string,
 		defaultValue: PropTypes.string,
 		type: PropTypes.string,
+		min: PropTypes.string,
+		max: PropTypes.string,
 		name: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.bool
 		]),
@@ -81,7 +83,7 @@ class Field extends Component {
 
 	render(){
 		const {
-			floating, placeholder, type,
+			floating, placeholder, type, min, max,
 			onChange, onFocus, onBlur,
 			name, required, readOnly, disabled, defaultValue,
 			large, small, block,
@@ -114,6 +116,42 @@ class Field extends Component {
 			className: 'field-entry',
 			required, disabled, value
 		};
+
+		switch (true) {
+			case type === 'number':
+				inputProps.onKeyDown = (e)=>{
+					// Allow: backspace, delete, tab, escape, enter and .
+					if (inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+						// Allow: Ctrl+A
+						(e.keyCode == 65 && e.ctrlKey === true) ||
+						// Allow: Ctrl+C
+						(e.keyCode == 67 && e.ctrlKey === true) ||
+						// Allow: Ctrl+X
+						(e.keyCode == 88 && e.ctrlKey === true) ||
+						// Allow: home, end, left, right
+						(e.keyCode >= 35 && e.keyCode <= 39)) {
+						// let it happen, don't do anything
+						return;
+					}
+					// Ensure that it is a number and stop the keypress
+					if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+						e.preventDefault();
+					}
+				}
+		}
+
+		if ( !!(max) ) {
+			const maxLength = parseInt(max);
+			inputProps.onInput = (e)=>{
+				let { value } = e.target;
+				if ( value.toString().length > maxLength ) {
+					value = value.slice(0, maxLength);
+					e.target.value = value;
+					this.setState({value});
+					e.preventDefault();
+				}
+			}
+		}
 
 		return (
 			<label {...other} className={classNames('field', {

@@ -18,7 +18,8 @@ class Form extends Component {
 			PropTypes.bool,
 			PropTypes.object
 		]),
-		rules: PropTypes.object
+		rules: PropTypes.object,
+		names: PropTypes.object,
 	};
 
 	static defaultProps = {
@@ -29,19 +30,22 @@ class Form extends Component {
 		rules: {
 			required: 'Field is`nt be empty!',
 			email: 'Not valid email'
-		}
+		},
+		names: {}
 	};
 
 	constructor(props) {
 		super(props);
 
-		this.formInfo = {
-			formData: {},
-			formValidation: {}
+		this.form = {
+			data: {},
+			validation: {}
 		};
-		this.state = {...this.formInfo, ...{
-			rules: props.rules
-		}};
+		this.state = {
+			...this.form,
+			rules: props.rules,
+			names: props.names
+		};
 	}
 
 	render() {
@@ -59,17 +63,18 @@ class Form extends Component {
 	/**
 	* Used if submit button out of the form
 		<button onClick={(e)=>{
-			this.refs[ this.form[REF] ].onSubmit(e);
+			this.refs[ REF_NAME ].onSubmit(e);
 		}}>Submit</button>
 	* @param e
 	* @returns {*}
 	*/
 	onSubmit(e){
 		const { validate, onSubmit } = this.props;
-		this.formInfo = this.getFormData(e);
+		this.form = this.getFormData();
+		const { data, validation } = this.form;
 
-		if ( validate && objectKeys(this.formInfo.formValidation).length ) {
-			onSubmit && onSubmit(e, this.formInfo);
+		if ( validate && objectKeys(validation).length ) {
+			onSubmit && onSubmit(e, data, validation);
 		}
 
 		if ( validate ) {
@@ -80,7 +85,7 @@ class Form extends Component {
 	}
 
 	getFormElements(children){
-		const { formValidation, rules } = this.state;
+		const { validation, rules, names } = this.state;
 
 		return React.Children.map(children, (child)=>{
 			// If the child has its own children, traverse through them also...
@@ -93,7 +98,7 @@ class Form extends Component {
 				if (children) {
 					return cloneElement(child, {
 
-					}, this.getFormElements(children, formValidation, rules));
+					}, this.getFormElements(children, validation, rules, names));
 				}
 
 				let {
@@ -101,7 +106,7 @@ class Form extends Component {
 					value, type,
 					danger, warning
 				} = props;
-				let isInvalid = formValidation[name];
+				let isInvalid = validation[name] || names[name];
 
 				return cloneElement(child, {
 					danger: !!(required || danger) && isInvalid || danger,
@@ -109,7 +114,7 @@ class Form extends Component {
 					onBlur: e=>{
 						if ( required ) {
 							this.setState({
-								formValidation: Form.isValidElement(formValidation, {
+								validation: Form.isValidElement(validation, {
 									required, name, value: e.target.value, type
 								}, rules)
 							});
@@ -123,26 +128,26 @@ class Form extends Component {
 		})
 	}
 
-	static isValidElement(formValidation, element, rules) {
+	static isValidElement(validation, element, rules) {
 		const isValid = Form.validate(element, rules);
 		const { name } = element;
 		if ( !isValid ) {
-			delete formValidation[name];
+			delete validation[name];
 		}
 		else {
-			formValidation[name] = isValid;
+			validation[name] = isValid;
 		}
-		return formValidation;
+		return validation;
 	}
 
 	/**
 	 *
-	 * @returns {{formData: {}, formValidation: {}}}
+	 * @returns {{data: {}, validation: {}}}
 	 */
 	getFormData() {
 		const elements = findDOMNode(this).elements,
 			length = elements.length;
-		const formData = {}, formValidation = {};
+		const data = {}, validation = {};
 
 		const { rules } = this.state;
 
@@ -152,28 +157,28 @@ class Form extends Component {
 			type = element.type;
 			value = element.value;
 			if ( !name ) break;
-			// Create formData obj
-			formData[name] = value;
+			// Create data obj
+			data[name] = value;
 			// Validate it
 			const isValid = Form.validate(element, rules);
 			if ( isValid !== false ) {
-				formValidation[name] = Form.validate(element, rules);
+				validation[name] = Form.validate(element, rules);
 			}
 		}
 
-		// console.log(formData);
-		// console.log(formValidation);
+		// console.log(data);
+		// console.log(validation);
 
-		this.setState({formData, formValidation});
-		return {formData, formValidation}
+		this.setState({data, validation});
+		return {data, validation}
 	}
 
 	static validate(element, rules) {
 
 		const { required, value, type } = element;
-
+		let message;
 		if ( required && !value ) {
-			return rules.required;
+			message = rules.required;
 		} else {
 			let isValid;
 			switch (type) {
@@ -183,12 +188,16 @@ class Form extends Component {
 					// i`ve changed
 					let re = /.+@.+\..+/i;
 					isValid = re.test(value);
-					return !isValid && rules.email;
+					//return !isValid && rules.email;
+					if ( !isValid ) {
+						message = rules.email;
+					}
 					break;
 			}
 		}
 
-		return false;
+		return !!(message) ? message : false;
+
 	}
 
 }

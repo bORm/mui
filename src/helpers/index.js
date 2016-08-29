@@ -1,9 +1,5 @@
-import classNames from './classNames'
-import objectKeys from './objectKeys'
-import isMobile from './isMobile'
-import isMounted from './isMounted'
-
-export { classNames }
-export { objectKeys }
-export { isMobile }
-export { isMounted }
+export classNames from './classNames'
+export inArray from './inArray'
+export isMobile from './isMobile'
+export isMounted from './isMounted'
+export objectKeys from './objectKeys'
