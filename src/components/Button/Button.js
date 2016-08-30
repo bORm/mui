@@ -12,6 +12,7 @@ class Button extends Component {
 
 		flat: PropTypes.bool,
 		raise: PropTypes.bool,
+		link: PropTypes.bool,
 
 		primary: PropTypes.bool,
 		accent: PropTypes.bool,
@@ -37,6 +38,7 @@ class Button extends Component {
 		type: 'button',
 		flat: true,
 		raised: false,
+		link: false,
 
 		primary: false,
 		accent: false,
@@ -55,7 +57,7 @@ class Button extends Component {
 	render() {
 		const {
 			type, children,
-			flat, raised,
+			flat, raised, link,
 			primary, accent,
 			large, medium, small, mini,
 			text, icon, className,
@@ -64,8 +66,9 @@ class Button extends Component {
 
 		const button = (
 			<Paper component={'button'} type={type} className={classNames('button', {
-				flat: !raised && flat,
+				flat: !raised && !link && flat,
 				raised,
+				link,
 				primary,
 				accent,
 				large,
