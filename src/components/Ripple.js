@@ -72,13 +72,12 @@ class Ripple extends Component {
 
 	render() {
 		const {
-			container, isCenter,
+			container, isCenter, disabled,
 			onMouseDown, onMouseUp, onMouseLeave,
 			children, ...other
 		} = this.props;
 
-		let rippleProps = {
-			...other,
+		const eventHandlers = {
 			onMouseDown: (e)=>{
 				if (e.button === 0 && !this._ignoreNextMouseDown) {
 					::this.start(e);
@@ -96,19 +95,26 @@ class Ripple extends Component {
 			}
 		};
 
+		const rippleProps = {
+			...other,
+			...eventHandlers
+		};
+
 		const { waves } = this.state;
 
-		const ripple = (
+		const ripple = !disabled ? (
 			<div className="ripple" key="ripple">
 				<ReactCSSTransitionGroup className="waves" key="waves">
 					{waves}
 				</ReactCSSTransitionGroup>
 			</div>
-		);
+		) : null;
+
+		const grandchildren = [children, ripple];
 
 		return isValidElement(container)
-			? cloneElement(container, rippleProps, [children, ripple])
-			: createElement(container, rippleProps, [children, ripple])
+			? cloneElement(container, rippleProps, grandchildren)
+			: createElement(container, rippleProps, grandchildren)
 		;
 	}
 

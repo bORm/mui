@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { unmountComponentAtNode } from 'react-dom';
+import { render, unmountComponentAtNode } from 'react-dom';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {EventEmitter} from 'fbemitter';
 const emitter = new EventEmitter();

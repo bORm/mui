@@ -9,6 +9,7 @@ import classNames from 'helpers/classNames'
 class Button extends Component {
 	static propTypes = {
 		type: PropTypes.string,
+		disabled: PropTypes.bool,
 
 		flat: PropTypes.bool,
 		raise: PropTypes.bool,
@@ -36,6 +37,7 @@ class Button extends Component {
 
 	static defaultProps = {
 		type: 'button',
+		disabled: false,
 		flat: true,
 		raised: false,
 		link: false,
@@ -56,7 +58,7 @@ class Button extends Component {
 
 	render() {
 		const {
-			type, children,
+			type, disabled, children,
 			flat, raised, link,
 			primary, accent,
 			large, medium, small, mini,
@@ -65,7 +67,8 @@ class Button extends Component {
 		} = this.props;
 
 		const button = (
-			<Paper component={'button'} type={type} className={classNames('button', {
+			<Paper component={'button'} type={type} disabled={disabled} className={classNames('button', {
+				disabled,
 				flat: !raised && !link && flat,
 				raised,
 				link,
@@ -80,7 +83,7 @@ class Button extends Component {
 		);
 
 		return (
-			<Ripple {...other} container={ button } isCenter={icon ? true : false}>
+			<Ripple {...other} container={ button } isCenter={!!(icon)} disabled={disabled || !!(link)}>
 				<div className="button-inner">
 					{
 						typeof children === 'string'

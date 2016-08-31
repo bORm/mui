@@ -29,7 +29,8 @@ class Form extends Component {
 		validate: true,
 		rules: {
 			required: 'Field is`nt be empty!',
-			email: 'Not valid email'
+			email: 'Not valid email',
+			tel: 'Not valid phone number',
 		},
 		names: {}
 	};
@@ -47,6 +48,10 @@ class Form extends Component {
 			names: props.names
 		};
 	}
+
+	/*shouldComponentUpdate(nextProps, nextState) {
+		return nextState.rules !== this.state.rules;
+	}*/
 
 	render() {
 		const { action, children, validate, className } = this.props;
@@ -98,7 +103,7 @@ class Form extends Component {
 				if (children) {
 					return cloneElement(child, {
 
-					}, this.getFormElements(children, validation, rules, names));
+					}, this.getFormElements(children));
 				}
 
 				let {
@@ -166,9 +171,6 @@ class Form extends Component {
 			}
 		}
 
-		// console.log(data);
-		// console.log(validation);
-
 		this.setState({data, validation});
 		return {data, validation}
 	}
@@ -180,17 +182,25 @@ class Form extends Component {
 		if ( required && !value ) {
 			message = rules.required;
 		} else {
-			let isValid;
+			let isValid, re;
 			switch (type) {
 				case 'email':
 					// after read this https://habrahabr.ru/post/175375/
 					//let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 					// i`ve changed
-					let re = /.+@.+\..+/i;
+					re = /.+@.+\..+/i;
 					isValid = re.test(value);
 					//return !isValid && rules.email;
 					if ( !isValid ) {
 						message = rules.email;
+					}
+					break;
+				case 'tel':
+					//let re = /.+@.+\..+/i;
+					re = /^\+380\d{9}$/;
+					isValid = re.test(value);
+					if ( !isValid ) {
+						message = rules.tel;
 					}
 					break;
 			}
