@@ -170,6 +170,14 @@
       &-valid   { color: $success; }
       &-label   { color: $success; }
     }
+    &.is-focused,
+    &.has-value {
+      &.floating {
+        .field-label {
+          color: $success;
+        }
+      }
+    }
   }
   &.warning {
     .field {
@@ -177,12 +185,28 @@
       &-valid   { color: $warning; }
       &-label   { color: $warning; }
     }
+    &.is-focused,
+    &.has-value {
+      &.floating {
+        .field-label {
+          color: $warning;
+        }
+      }
+    }
   }
   &.danger {
     .field {
       &-border  { border-color: $danger; }
       &-valid   { color: $danger; }
       &-label   { color: $danger; }
+    }
+    &.is-focused,
+    &.has-value {
+      &.floating {
+        .field-label {
+          color: $danger;
+        }
+      }
     }
   }
 }

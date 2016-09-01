@@ -8,6 +8,9 @@ class Field extends Component {
 		placeholder: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.bool
 		]),
+		autoComplete: PropTypes.oneOfType([
+			PropTypes.string, PropTypes.bool
+		]),
 		value: PropTypes.string,
 		defaultValue: PropTypes.string,
 		type: PropTypes.string,
@@ -41,6 +44,7 @@ class Field extends Component {
 		floating: false,
 
 		placeholder: false,
+		autoComplete: false,
 		value: '',
 		defaultValue: '',
 		type: 'text',
@@ -83,7 +87,7 @@ class Field extends Component {
 
 	render(){
 		const {
-			floating, placeholder, type, min, max,
+			floating, placeholder, autoComplete, type, min, max,
 			onChange, onFocus, onBlur,
 			name, required, readOnly, disabled, defaultValue,
 			large, small, block,
@@ -111,7 +115,7 @@ class Field extends Component {
 				this.setState({isFocused: false});
 				onBlur && onBlur(e);
 			},
-			name, readOnly,
+			name, readOnly, autoComplete,
 			ref: 'entry',
 			className: 'field-entry',
 			required, disabled, value
