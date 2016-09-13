@@ -1,5 +1,5 @@
 export classNames from './classNames'
 export inArray from './inArray'
-export isMobile from './isMobile'
+//export isMobile from './isMobile'
 export isMounted from './isMounted'
 export objectKeys from './objectKeys'

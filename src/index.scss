@@ -13,13 +13,14 @@
 @import "./components/Paper";
 
 @import "./components/Button/Button";
+@import "components/Checkbox/Checkbox";
 @import "./components/DropDown/DropDown";
 @import "./components/Icon/Icon";
 @import "./components/Field/Field";
-@import "./components/Slider/Slider";
 @import "./components/Menu/Menu";
 @import "./components/Modal/Modal";
-@import "components/Checkbox/Checkbox";
+@import "./components/Slider/Slider";
+@import "./components/Table/Table";
 
 .input-range {
   $moonstone: #d8dfe6;
