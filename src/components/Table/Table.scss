@@ -4,7 +4,18 @@
 	margin-bottom: 20px;
 	border-spacing: 0;
 	border-collapse: collapse;
-	th, td {
+	&-row {
+		display: table-row;
+		&:first-child .table-cell {
+			border-top: 0;
+		}
+	}
+	&-cell {
+		display: table-cell;
+	}
+	th,
+	td,
+	&-cell {
 		padding: 24px;
 		line-height: 1.42857143;
 		vertical-align: bottom;

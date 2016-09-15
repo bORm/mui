@@ -3,6 +3,9 @@
 
   &-close {
     cursor: default;
+    position: absolute;
+    right: 15px;
+    top: 15px;
     .icon {
       cursor: pointer;
     }
