@@ -10,6 +10,7 @@ export Slider from './components/Slider/Slider'
 export Menu, { Item as MenuItem, Divider as MenuDivider } from './components/Menu/Menu'
 export Modal from './components/Modal/Modal'
 export Checkbox from './components/Checkbox/Checkbox'
+export Progress from './components/Progress/Progress'
 
 /**
  * helper components

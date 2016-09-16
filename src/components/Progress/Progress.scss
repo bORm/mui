@@ -1,0 +1,112 @@
+.progress {
+  pointer-events: none;
+  height: 4px;
+  position: relative;
+  max-width: 260px;
+
+  .bar {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    &-dotted {
+      width: 100%;
+      height: 4px;
+      animation: width 6s linear;
+      z-index: 0;
+      @keyframes width {
+        from {width: 5%}
+        to {width: 100%}
+      }
+      .line {
+        stroke: $primary;
+        stroke-width: 4;
+        stroke-linecap: round;
+        stroke-dasharray: 1, 12;
+        stroke-dashoffset: 0;
+
+        animation: scale 4s linear,
+                   move 3s linear infinite;
+        animation-delay: 0s, 3s;
+        @keyframes scale {
+          0% {
+            stroke-dasharray: 1, 2;
+          }
+          25% {
+            stroke-dasharray: 1, 2;
+          }
+          50% {
+            stroke-dasharray: 1, 4;
+          }
+          70% {
+            stroke-dasharray: 1, 8;
+          }
+          100% {
+            stroke-dasharray: 1, 12;
+          }
+        }
+        @keyframes move {
+          0% {
+            stroke-width: 4;
+            opacity: 1;
+            transform: translateX(-39px);
+          }
+          50% {
+            stroke-width: 1;
+            opacity: 0;
+          }
+          100% {
+            stroke-width: 4;
+            opacity: 1;
+            transform: translateX(-117px);
+          }
+        }
+      }
+    }
+
+    &-buffer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: lighten($primary, 20%);
+      width: 75%;
+      height: 4px;
+      animation: buffer 6s linear;
+      z-index: 1;
+      @keyframes buffer {
+        0% {
+          width: 0;
+        }
+        50% {
+          width: 10%;
+        }
+        100% {
+          width: 75%;
+        }
+      }
+    }
+
+    &-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: darken($primary, 10%);
+      width: 50%;
+      height: 4px;
+      animation: progress 6s linear;
+      z-index: 2;
+      @keyframes progress {
+        0% {
+          width: 0;
+        }
+        75% {
+          width: 10%;
+        }
+        100% {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
