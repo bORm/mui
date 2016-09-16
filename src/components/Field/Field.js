@@ -41,7 +41,7 @@ class Field extends Component {
 	};
 
 	static defaultProps = {
-		floating: false,
+		floating: true,
 
 		placeholder: false,
 		autoComplete: false,

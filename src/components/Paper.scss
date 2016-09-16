@@ -19,7 +19,7 @@
 .paper {
   background: #fff;
   border-radius: 2px;
-  display: inline-block;
+  //display: inline-block;
   position: relative;
   &-shadow-z-1 {
     @include box_shadow(1);

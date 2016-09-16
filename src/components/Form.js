@@ -100,7 +100,13 @@ class Form extends Component {
 
 			if ( props && Object.keys(props).length ) {
 				children = props && props.children;
-				if (children) {
+
+				if ( children ) {
+					if ( typeof children === 'string' ) {
+						return cloneElement(child, {
+
+						}, children);
+					}
 					return cloneElement(child, {
 
 					}, this.getFormElements(children));

@@ -1,0 +1,60 @@
+$fontSize-h1: 18px;
+$fontSize-h2: 16px;
+$fontSize-h3: 13px;
+$fontSize-h4: 12px;
+$fontSize-h5: 11px;
+$fontSize-h6: 10px;
+
+// Headings
+// -------------------------
+h1, .h1, .f1 { font-size: $fontSize-h1; font-weight: 300; }
+h2, .h2, .f2 { font-size: $fontSize-h2; font-weight: 300; }
+h3, .h3, .f3 { font-size: $fontSize-h3; font-weight: 500; }
+h4, .h4, .f4 { font-size: $fontSize-h4; font-weight: 300; }
+h5, .h5, .f5 { font-size: $fontSize-h5; font-weight: 300; }
+h6, .h6, .f6 { font-size: $fontSize-h6; font-weight: 300; }
+
+$fontSize: 20;
+
+@while $fontSize > 9 {
+
+	.f#{$fontSize} {
+		font-size: $fontSize + 0px;
+		line-height: $fontSize + 2px;
+	}
+	$fontSize: $fontSize - 1;
+
+}
+
+p {
+	margin: 0 0 10px;
+}
+
+.text {
+	&-uppercase {
+		text-transform: uppercase;
+	}
+	&-lowercase {
+		text-transform: lowercase;
+	}
+
+	// Align
+	&-left {
+		text-align: left;
+	}
+	&-center {
+		text-align: center;
+	}
+	&-right {
+		text-align: right;
+	}
+
+	&-ellipsis {
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+}
+
+small, .small {
+	font-size: 65%;
+}

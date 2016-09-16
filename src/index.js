@@ -3,14 +3,16 @@
  * ui components
  */
 export Button, { ButtonIcon, ButtonText } from './components/Button/Button'
-export Field from './components/Field/Field'
+export Checkbox from './components/Checkbox/Checkbox'
 export DropDown from './components/DropDown/DropDown'
+export Field from './components/Field/Field'
 export Form from './components/Form'
-export Slider from './components/Slider/Slider'
 export Menu, { Item as MenuItem, Divider as MenuDivider } from './components/Menu/Menu'
 export Modal from './components/Modal/Modal'
 export Checkbox from './components/Checkbox/Checkbox'
 export Progress from './components/Progress/Progress'
+export Slider from './components/Slider/Slider'
+export Table from './components/Table/Table'
 
 /**
  * helper components
