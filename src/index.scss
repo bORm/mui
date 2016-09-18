@@ -21,13 +21,13 @@ body {
 @import "./scss/helpers/margin";
 @import "./scss/helpers/type";
 
-@import "scss/mixins/Modal";
+@import "./scss/mixins/Modal";
 
 @import "./components/Ripple";
 @import "./components/Paper";
 
 @import "./components/Button/Button";
-@import "components/Checkbox/Checkbox";
+@import "./components/Checkbox/Checkbox";
 @import "./components/DropDown/DropDown";
 @import "./components/Icon/Icon";
 @import "./components/Field/Field";

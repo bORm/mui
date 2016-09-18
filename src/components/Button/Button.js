@@ -9,6 +9,7 @@ import classNames from 'helpers/classNames'
 class Button extends Component {
 	static propTypes = {
 		type: PropTypes.string,
+		active: PropTypes.bool,
 		disabled: PropTypes.bool,
 
 		flat: PropTypes.bool,
@@ -37,6 +38,7 @@ class Button extends Component {
 
 	static defaultProps = {
 		type: 'button',
+		active: false,
 		disabled: false,
 		flat: true,
 		raised: false,
@@ -58,7 +60,7 @@ class Button extends Component {
 
 	render() {
 		const {
-			type, disabled, children,
+			type, active, disabled, children,
 			flat, raised, link,
 			primary, accent,
 			large, medium, small, mini,
@@ -68,7 +70,7 @@ class Button extends Component {
 
 		const button = (
 			<Paper component={'button'} type={type} disabled={disabled} className={classNames('button', {
-				disabled,
+				active, disabled,
 				flat: !raised && !link && flat,
 				raised,
 				link,
@@ -78,18 +80,31 @@ class Button extends Component {
 				medium: !large || !small || !mini,
 				small,
 				mini,
-				icon: !!(icon)
+				//icon: !!(icon)
 			}, className)} />
 		);
+
+		let inner = [];
+
+		icon && inner.push(<ButtonIcon key="icon" name={icon}/>);
+		text && inner.push(<ButtonText key="text" text={text}/>);
+
+		if ( children ) {
+			inner = children;
+			if ( typeof children === 'string' ) {
+				inner = <ButtonText text={children}/>;
+			}
+		}
+		/*const inner = text ? (
+			<ButtonText text={text}/>
+		) : typeof children === 'string'
+			? <ButtonText text={children}/>
+			: children;*/
 
 		return (
 			<Ripple {...other} container={ button } isCenter={!!(icon)} disabled={disabled || !!(link)}>
 				<div className="button-inner">
-					{
-						typeof children === 'string'
-							? <ButtonText text={children}/>
-							: children
-					}
+					{inner}
 				</div>
 			</Ripple>
 		);

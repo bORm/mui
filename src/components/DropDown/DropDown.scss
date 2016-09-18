@@ -34,18 +34,18 @@
         top: 0;
       }
     }
-  }
-  .paper {
-    position: absolute;
-    list-style: none;
-    height: auto;
-    width: auto;
-    min-width: 124px;
-    margin: 0;
-    opacity: 0;
-    transition: opacity .1s;
-    overflow-y: auto;
-    overflow-x: hidden;
+    .paper {
+      position: absolute;
+      list-style: none;
+      height: auto;
+      width: auto;
+      min-width: 124px;
+      margin: 0;
+      opacity: 0;
+      transition: opacity .1s;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
   }
 
   &-control {

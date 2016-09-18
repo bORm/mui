@@ -10,6 +10,15 @@
 			border-top: 0;
 		}
 	}
+	&.striped>tbody>tr:nth-of-type(odd) {
+		background: #f9f9f9;
+		&:hover {
+			background: #eeeeee;
+		}
+		&:active {
+			background: #f5f5f5;
+		}
+	}
 	&-cell {
 		display: table-cell;
 	}
