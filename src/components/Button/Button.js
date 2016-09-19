@@ -9,6 +9,9 @@ import classNames from 'helpers/classNames'
 class Button extends Component {
 	static propTypes = {
 		type: PropTypes.string,
+    component: PropTypes.oneOfType([
+      PropTypes.string, PropTypes.element
+    ]),
 		active: PropTypes.bool,
 		disabled: PropTypes.bool,
 
@@ -18,6 +21,7 @@ class Button extends Component {
 
 		primary: PropTypes.bool,
 		accent: PropTypes.bool,
+    white: PropTypes.bool,
 
 		large: PropTypes.bool,
 		medium: PropTypes.bool,
@@ -25,7 +29,7 @@ class Button extends Component {
 		mini: PropTypes.bool,
 
 		text: PropTypes.oneOfType([
-			PropTypes.bool, PropTypes.string
+			PropTypes.bool, PropTypes.string, PropTypes.number
 		]),
 		icon: PropTypes.oneOfType([
 			PropTypes.bool, PropTypes.string
@@ -38,6 +42,7 @@ class Button extends Component {
 
 	static defaultProps = {
 		type: 'button',
+    component: 'button',
 		active: false,
 		disabled: false,
 		flat: true,
@@ -46,6 +51,7 @@ class Button extends Component {
 
 		primary: false,
 		accent: false,
+    white: false,
 
 		large: false,
 		medium: true,
@@ -55,27 +61,28 @@ class Button extends Component {
 		text: false,
 		icon: false,
 
-		onClick: false
+		//onClick: false
 	};
 
 	render() {
 		const {
-			type, active, disabled, children,
+			type, component, active, disabled, children,
 			flat, raised, link,
-			primary, accent,
+			primary, accent, white,
 			large, medium, small, mini,
 			text, icon, className,
 			...other
 		} = this.props;
 
 		const button = (
-			<Paper component={'button'} type={type} disabled={disabled} className={classNames('button', {
+			<Paper component={component} type={type} disabled={disabled} className={classNames('button', {
 				active, disabled,
 				flat: !raised && !link && flat,
 				raised,
 				link,
 				primary,
 				accent,
+        white,
 				large,
 				medium: !large || !small || !mini,
 				small,
@@ -143,7 +150,7 @@ class ButtonIcon extends Component {
 class ButtonText extends Component {
 	static propTypes = {
 		text: PropTypes.oneOfType([
-			PropTypes.bool, PropTypes.string
+			PropTypes.bool, PropTypes.string, PropTypes.number
 		])
 	};
 

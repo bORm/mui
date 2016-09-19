@@ -82,6 +82,7 @@
   }
   &.disabled {
     @include box_shadow(0);
+    color: $gray-darker;
     cursor: default;
   }
   &.primary {
@@ -120,7 +121,7 @@
 
   &-inner {
     font-size: 0;
-    line-height: 1px;
+    //line-height: 1px;
   }
 
   &-icon, &-text {
