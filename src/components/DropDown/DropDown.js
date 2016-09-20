@@ -2,7 +2,7 @@ import React, {
 	Component, PropTypes,
 	cloneElement, isValidElement
 } from 'react'
-import ReactDOM from 'react-dom';
+import { findDOMNode } from 'react-dom';
 
 import Button, { ButtonIcon } from 'components/Button/Button'
 import Menu from 'components/Menu/Menu'
@@ -99,7 +99,7 @@ class DropDown extends Component {
 	}
 
 	componentDidMount(){
-		this.control = ReactDOM.findDOMNode(this.refs.control);
+		this.control = findDOMNode(this.refs.control);
 
 		const debounceFn = Debounce(::this.getHiddenMenuOffset, 250);
 
@@ -119,16 +119,16 @@ class DropDown extends Component {
 		const rect = this.control.getBoundingClientRect();
 
 		var cords = {
-			top: rect.top - window.pageYOffset,
-			left: rect.left - window.pageXOffset,
-			bottom: document.documentElement.clientHeight - (rect.top - window.pageYOffset),
-			right: document.documentElement.clientWidth - (rect.left - window.pageXOffset)
+			top: rect.top,
+			left: rect.left,
+			bottom: document.documentElement.clientHeight - (rect.top),
+			right: document.documentElement.clientWidth - (rect.left)
 		};
 
 		var maxHeight = cords.bottom, placement;
 
 		// Decide if place the dropdown below or above the input
-		if (maxHeight < 200 && cords.top > cords.bottom) {
+		if (maxHeight < findDOMNode(this.refs.menu).clientHeight + 20 && cords.top > cords.bottom) {
 			maxHeight = cords.top;
 			placement = "top-left";
 		} else {
