@@ -111,9 +111,9 @@ class Modal extends Component {
 
 
 		return (
-			<Portal id={id} mountTo={mountTo} isOpen={isOpen} {...toggle} { ...other }>
+			<Portal id={id} mountTo={mountTo} isOpen={isOpen} {...toggle}>
 				<div className="modal">
-					<Paper zDepth={2}>
+					<Paper zDepth={2} style={style}>
 						{ closeButton && (()=>{
 							return (
 								<div className="modal-close">

@@ -89,6 +89,7 @@
     background-color: $primary;
     &.disabled {
       background-color: lighten($primary, 20%);
+      color: white;
     }
     &:not(.disabled) {
       &:hover {
@@ -103,6 +104,7 @@
     background-color: $accent;
     &.disabled {
       background-color: lighten($accent, 10%);
+      color: white;
     }
     &:not(.disabled) {
       &:hover {

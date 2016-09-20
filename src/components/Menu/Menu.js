@@ -22,6 +22,8 @@ class Menu extends Component {
 					{ Children.map(children, (child)=>{
 						return cloneElement(child, {
 							onClick: (e, o)=>{
+								const { onClick } = child.props;
+								onClick && onClick(e);
 								onChange && onChange(e, o)
 							}
 						})
@@ -55,12 +57,12 @@ class Item extends Component {
 
 	render() {
 
-		const { text, value, children, onClick, ripple } = this.props;
+		const { text, value, children, onClick, ripple, ...other } = this.props;
 
 		return (
 			<Ripple isCenter={ripple.isCenter} container={
 				<div className="menu-item" onClick={e=>{onClick && onClick(e, {value, text})}}/>
-			}>
+			} {...other}>
 				<div className="menu-item-inner">
 					{ children ? children : text }
 				</div>
