@@ -46,11 +46,11 @@ class DropDown extends Component {
 
 	render() {
 
-		const { control, onChange, children } = this.props;
+		const { control, onChange, children, className, ...other } = this.props;
 		const { isOpen, maxHeight, placement } = this.state;
 
 		return (
-			<div className={classNames('drop', {
+			<div className={classNames('drop', className, {
 				isOpen
 			})}>
 				{ cloneElement(control, {

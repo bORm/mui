@@ -20,3 +20,16 @@
     display: table-cell !important;
   }
 }
+
+.justify {
+  text-align: justify;
+  font-size: 0;
+  .inline-block {
+    vertical-align: middle;
+  }
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+}

@@ -93,8 +93,8 @@ class Button extends Component {
 
 		let inner = [];
 
+    text && inner.push(<ButtonText key="text" text={text}/>);
 		icon && inner.push(<ButtonIcon key="icon" name={icon}/>);
-		text && inner.push(<ButtonText key="text" text={text}/>);
 
 		if ( children ) {
 			inner = children;
