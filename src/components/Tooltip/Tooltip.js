@@ -7,8 +7,8 @@ class Tooltip extends Component {
 
   render() {
     return (
-      <div>
-
+      <div className="tooltip active">
+        Hello i'm tooltip
       </div>
     );
   }

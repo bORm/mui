@@ -9,11 +9,12 @@ export Field from './components/Field/Field'
 export Form from './components/Form'
 export Menu, { Item as MenuItem, Divider as MenuDivider } from './components/Menu/Menu'
 export Modal from './components/Modal/Modal'
-export Checkbox from './components/Checkbox/Checkbox'
 export Progress from './components/Progress/Progress'
 //export Pagination from './components/Pagination/Pagination'
 export Slider from './components/Slider/Slider'
 export Table from './components/Table/Table'
+export Tooltip from './components/Tooltip/Tooltip'
+
 
 /**
  * helper components
