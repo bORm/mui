@@ -15,6 +15,7 @@ class Button extends Component {
 		active: PropTypes.bool,
 		disabled: PropTypes.bool,
 
+		block: PropTypes.bool,
 		flat: PropTypes.bool,
 		raise: PropTypes.bool,
 		link: PropTypes.bool,
@@ -45,6 +46,8 @@ class Button extends Component {
     component: 'button',
 		active: false,
 		disabled: false,
+
+		block: false,
 		flat: true,
 		raised: false,
 		link: false,
@@ -67,7 +70,7 @@ class Button extends Component {
 	render() {
 		const {
 			type, component, active, disabled, children,
-			flat, raised, link,
+			block, flat, raised, link,
 			primary, accent, white,
 			large, medium, small, mini,
 			text, icon, className,
@@ -76,7 +79,7 @@ class Button extends Component {
 
 		const button = (
 			<Paper component={component} type={type} disabled={disabled} className={classNames('button', {
-				active, disabled,
+				active, disabled, block,
 				flat: !raised && !link && flat,
 				raised,
 				link,
@@ -111,7 +114,19 @@ class Button extends Component {
 		return (
 			<Ripple {...other} container={ button } isCenter={!!(icon)} disabled={disabled || !!(link)}>
 				<div className="button-inner">
-					{inner}
+					{text && <ButtonText key="text" text={text}/>}
+					&nbsp;
+					{icon && <ButtonIcon key="icon" name={icon}/>}
+					{(()=>{
+						let inner = null;
+						if ( children ) {
+							inner = children;
+							if ( typeof children === 'string' ) {
+								inner = <ButtonText text={children}/>;
+							}
+							return inner;
+						}
+					})()}
 				</div>
 			</Ripple>
 		);

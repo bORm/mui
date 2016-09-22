@@ -15,7 +15,8 @@ class DropDown extends Component {
 
 	static propTypes = {
 		control: PropTypes.element,
-		isOpen: PropTypes.bool,
+		//isOpen: PropTypes.bool,
+    toggle: PropTypes.bool,
 		onChange: PropTypes.oneOfType([
 			PropTypes.bool, PropTypes.func
 		])
@@ -27,46 +28,46 @@ class DropDown extends Component {
 				<ButtonIcon>more_vert</ButtonIcon>
 			</Button>
 		),
-		isOpen: false,
+		//isOpen: false,
+    toggle: true,
 		onChange: false
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			isOpen: props.isOpen,
+			isOpen: props.isOpen || false,
 			rect: {},
 			maxHeight: 0,
 			placement: 'top-left'
 		};
-
+    
 		this.control = null;
 		this.handleClickOutside = ::this.handleClickOutside
 	}
 
 	render() {
 
-		const { control, onChange, children, className, ...other } = this.props;
+		const { control, onChange, children, className, toggle, ...other } = this.props;
 		const { isOpen, maxHeight, placement } = this.state;
 
 		return (
 			<div className={classNames('drop', className, {
 				isOpen
-			})}>
+			})} {...other }>
 				{ cloneElement(control, {
 					ref: 'control',
 					className: 'drop-control',
 					onMouseDown: e=>{
-						this.setState({
-							isOpen: !isOpen
-						}, ::this.handleMenuToggle)
+            this.setState({
+							isOpen: toggle ? !isOpen : true
+						}, ::this.handleMenuToggle);
 					}
 				}) }
 				<div ref="container" className={classNames('drop-container', placement)}>
 					<Menu ref="menu" className="drop-menu" style={{maxHeight}} onChange={(e, value)=>{
 						( isOpen && onChange ) && onChange(e, value);
 						let timeOut = null;
-
 						timeOut = setTimeout(() => {
 							this.setState({isOpen: false});
 							window.clearTimeout(timeOut);

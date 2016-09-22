@@ -24,7 +24,7 @@ class Menu extends Component {
 							onClick: (e, o)=>{
 								const { onClick } = child.props;
 								onClick && onClick(e);
-								onChange && onChange(e, o)
+								//onChange && onChange(e, o)
 							}
 						})
 					}) }
