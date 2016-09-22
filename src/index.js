@@ -14,6 +14,7 @@ export Pagination from './components/Pagination/Pagination'
 export Slider from './components/Slider/Slider'
 export Table from './components/Table/Table'
 export Tooltip from './components/Tooltip/Tooltip'
+export Icon from './components/Icon/Icon'
 
 
 /**
