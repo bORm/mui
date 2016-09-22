@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react'
-
+/**
+ * Tooltip
+ */
 class Tooltip extends Component {
   static propTypes = {};
 
@@ -7,8 +9,8 @@ class Tooltip extends Component {
 
   render() {
     return (
-      <div>
-
+      <div className="tooltip-text tooltip-bot">
+        { this.props.children }
       </div>
     );
   }
