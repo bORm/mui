@@ -45,8 +45,8 @@
 
 .tooltip:hover .tooltip-text{
   visibility: visible;
-  opacity: .9;
-  transition: all .4s ease-in-out;
+  opacity: 1;
+  transition: top .4s, bottom .4s, left .4s, right .4s, opacity .3s ease-in-out;
 }
 
 .tooltip:hover .tooltip-bot{
