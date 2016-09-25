@@ -15,7 +15,9 @@ class DropDown extends Component {
 
 	static propTypes = {
 		control: PropTypes.element,
-		//isOpen: PropTypes.bool,
+		isOpen: PropTypes.bool,
+    autoClose: PropTypes.bool,
+		handleClickOutside: PropTypes.bool,
     toggle: PropTypes.bool,
 		onChange: PropTypes.oneOfType([
 			PropTypes.bool, PropTypes.func
@@ -28,9 +30,12 @@ class DropDown extends Component {
 				<ButtonIcon>more_vert</ButtonIcon>
 			</Button>
 		),
-		//isOpen: false,
+		isOpen: false,
+		autoClose: true,
+		handleClickOutside: true,
     toggle: true,
-		onChange: false
+		onChange: false,
+		//outsideClickIgnoreClass: 'react-datepicker-ignore-onclickoutside'
 	};
 
 	constructor(props) {
@@ -46,15 +51,23 @@ class DropDown extends Component {
 		this.handleClickOutside = ::this.handleClickOutside
 	}
 
+	componentWillReceiveProps(props){
+		if ( this.state.isOpen !== props.isOpen ) {
+			this.setState({
+				isOpen: props.isOpen
+			}, ::this.handleMenuToggle);
+		}
+	}
+
 	render() {
 
-		const { control, onChange, children, className, toggle, ...other } = this.props;
+		const { control, onChange, autoClose, children, className, toggle, ...other } = this.props;
 		const { isOpen, maxHeight, placement } = this.state;
 
 		return (
 			<div className={classNames('drop', className, {
 				isOpen
-			})} {...other }>
+			})}>
 				{ cloneElement(control, {
 					ref: 'control',
 					className: 'drop-control',
@@ -69,7 +82,7 @@ class DropDown extends Component {
 						( isOpen && onChange ) && onChange(e, value);
 						let timeOut = null;
 						timeOut = setTimeout(() => {
-							this.setState({isOpen: false});
+							autoClose && this.setState({isOpen: false});
 							window.clearTimeout(timeOut);
 						}, 250);
 					}}>
@@ -80,19 +93,23 @@ class DropDown extends Component {
 		);
 	}
 
-	handleMenuToggle() {
+	handleMenuToggle(e) {
 		const { isOpen } = this.state;
 		return isOpen
-			? this.handleMenuExpand()
-			: this.handleMenuCollapse();
+			? this.handleMenuExpand(e)
+			: this.handleMenuCollapse(e);
 	}
 
-	handleClickOutside(event) {
-		this.setState({isOpen: false});
+	handleClickOutside(e) {
+		const { isOpen } = this.state;
+		if ( isOpen && this.props.handleClickOutside ) {
+			this.setState({isOpen: !isOpen});
+		}
 	}
 
 	handleMenuExpand(){
 		this.getHiddenMenuOffset();
+
 	}
 
 	handleMenuCollapse(){
@@ -141,4 +158,4 @@ class DropDown extends Component {
 
 }
 
-export default onClickOutside(DropDown)
+export default onClickOutside(DropDown, 'react-datepicker__tether-element')

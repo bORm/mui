@@ -15,16 +15,16 @@ class Menu extends Component {
 	};
 
 	render() {
-		const { onChange, className, children, ...other } = this.props;
+		const { onChange, children, ...other } = this.props;
 		return (
 			<Paper {...other}>
-				<div className={classNames("menu", className)}>
+				<div className={classNames("menu")}>
 					{ Children.map(children, (child)=>{
 						return cloneElement(child, {
 							onClick: (e, o)=>{
 								const { onClick } = child.props;
 								onClick && onClick(e);
-								//onChange && onChange(e, o)
+								onChange && onChange(e, o);
 							}
 						})
 					}) }
@@ -57,12 +57,18 @@ class Item extends Component {
 
 	render() {
 
-		const { text, value, children, onClick, ripple, ...other } = this.props;
+		const {
+			text, value,
+			className,
+			children, onClick, 
+			ripple, ...other
+		} = this.props;
 
 		return (
-			<Ripple isCenter={ripple.isCenter} container={
-				<div className="menu-item" onClick={e=>{onClick && onClick(e, {value, text})}}/>
-			} {...other}>
+			<Ripple isCenter={ripple.isCenter} container={(
+				<div className={classNames('menu-item', className)}
+						 onClick={e=>{onClick && onClick(e, {value, text})}}/>
+			)} {...other}>
 				<div className="menu-item-inner">
 					{ children ? children : text }
 				</div>
@@ -74,7 +80,9 @@ class Item extends Component {
 class Divider extends Component {
 	render() {
 		return(
-			<div className="menu-divider"/>
+			<div className="menu-divider">
+				{ this.props.children }
+			</div>
 		)
 	}
 }

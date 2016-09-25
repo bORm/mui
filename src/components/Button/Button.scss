@@ -39,7 +39,8 @@
       &:hover {
         background-color: rgba(158,158,158, .2);
       }
-      &:active {
+      &:active,
+      &.active {
         background-color: rgba(158,158,158, .4);
       }
     }
