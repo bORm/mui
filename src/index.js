@@ -13,7 +13,7 @@ export Progress from './components/Progress/Progress'
 export Pagination from './components/Pagination/Pagination'
 export Slider from './components/Slider/Slider'
 export Table from './components/Table/Table'
-export Table from './components/Tabs/Tabs'
+export Tabs from './components/Tabs/Tabs'
 export Tooltip from './components/Tooltip/Tooltip'
 export Icon from './components/Icon/Icon'
 
