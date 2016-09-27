@@ -3,7 +3,9 @@ import React, {Component, PropTypes} from 'react'
  * Tooltip
  */
 class Tooltip extends Component {
-  static propTypes = {};
+  static propTypes = {
+    
+  };
 
   static defaultProps = {};
 
