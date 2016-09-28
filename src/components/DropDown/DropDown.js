@@ -26,9 +26,7 @@ class DropDown extends Component {
 
 	static defaultProps = {
 		control: (
-			<Button icon={true}>
-				<ButtonIcon>more_vert</ButtonIcon>
-			</Button>
+			<Button icon={'more_vert'} />
 		),
 		isOpen: false,
 		autoClose: true,
