@@ -7,7 +7,7 @@ class Modal extends Component {
 		id: PropTypes.string.isRequired,
 		size: PropTypes.oneOf(['large', 'medium', 'small', 'mini']),
 		header: PropTypes.oneOfType([
-			PropTypes.bool, PropTypes.array, PropTypes.element
+			PropTypes.bool, PropTypes.array, PropTypes.element, PropTypes.string
 		]),
 		body: PropTypes.oneOfType([
 			PropTypes.bool, PropTypes.element, PropTypes.array
@@ -114,14 +114,23 @@ class Modal extends Component {
 			<Portal id={id} mountTo={mountTo} isOpen={isOpen} {...toggle}>
 				<div className="modal">
 					<Paper zDepth={2} style={style}>
-						{ closeButton && (()=>{
-							return (
-								<div className="modal-close">
-									<i className="icon material-icons" onClick={e=>Portal.toggle(id, false)}>close</i>
+						<header className="clearfix">
+							{ closeButton && (()=>{
+								return (
+									<div className="modal-close">
+										<i className="icon material-icons" onClick={e=>Portal.toggle(id, false)}>close</i>
+									</div>
+								)
+							})() }
+							{header && (
+								<div className="modal-header">
+									{ header }
 								</div>
-							)
-						})() }
-						{ this.props.children }
+							)}
+						</header>
+						<div className="modal-body">
+							{ this.props.children }
+						</div>
 					</Paper>
 				</div>
 			</Portal>

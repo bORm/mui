@@ -3,19 +3,24 @@
 
   &-close {
     cursor: default;
-    position: absolute;
-    right: 15px;
-    top: 15px;
+    float: right;
+    margin: auto -5px auto auto;
     font-size: 0;
     .icon {
       cursor: pointer;
     }
   }
 
+  &-header {
+    overflow: hidden;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
   > .paper {
     position: relative;
     z-index: 1;
-    padding: 40px 20px 20px;
+    padding: 24px 24px 24px;
   }
 
   &:after {
