@@ -7,8 +7,10 @@ class Tabs extends Component {
 
   render() {
     return (
-      <div>
-
+      <div className="tabs">
+        <Tab>
+          {this.props.children}
+        </Tab>
       </div>
     );
   }
