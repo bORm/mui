@@ -81,7 +81,7 @@ class Menu extends Component {
 					ref: 'control',
 					onClick: ::this.handleControlClick
 				}) }
-				<Paper zDepth={zDepth}>
+				<Paper zDepth={zDepth} className="menu-container">
 					{ this.props.children }
 				</Paper>
 			</div>

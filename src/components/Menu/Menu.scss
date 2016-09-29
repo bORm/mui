@@ -5,7 +5,7 @@
 		z-index: 2;
 	}
 
-	> button + .paper {
+	&-container {
 		position: absolute;
 		top: 0;
 		padding: 8px 0;
@@ -17,16 +17,16 @@
 		opacity: 0;
 	}
 
-}
-
-.menu.is-open{
-	> button + .paper{
-		max-width: 250px;
-		max-height: 200px;
-		visibility: visible;
-		overflow-y: auto;
-		z-index: 2;
-		opacity: 1;
-		transition: max-height .8s, max-width .4s, opacity .4s;
+	&.is-open {
+		.menu-container {
+			max-width: 250px;
+			max-height: 200px;
+			visibility: visible;
+			overflow-y: auto;
+			z-index: 2;
+			opacity: 1;
+			transition: max-height .8s, max-width .4s, opacity .4s;
+		}
 	}
+
 }
