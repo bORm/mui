@@ -1,6 +1,11 @@
 .menu {
-  padding: 8px 0;
-  display: block;
+
+	> .paper {
+		padding: 8px 0;
+	}
+
+  //padding: 8px 0;
+  /*display: block;
   box-sizing: border-box;
   &-item {
     position: relative;
@@ -17,6 +22,6 @@
     border-bottom: 1px solid $gray-light;
     margin: 8px 0;
     cursor: default;
-  }
+  }*/
 
 }
