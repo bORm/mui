@@ -7,6 +7,9 @@
   font-size: 0;
   border-radius: 50%;
   cursor: pointer;
+  * {
+    box-sizing: content-box;
+  }
   &:before {
     content: '';
     height: 100%;

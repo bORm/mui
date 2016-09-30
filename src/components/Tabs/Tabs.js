@@ -1,5 +1,6 @@
 import React, {Component, PropTypes, Children} from 'react'
 import Tab from 'components/Tabs/Tab'
+import Button from 'components/Button/Button'
 import classNames from 'helpers/classNames'
 
 class Tabs extends Component {
@@ -40,12 +41,14 @@ class Tabs extends Component {
 
     let transform = 100 * (-1);
 
-    Children.map(this.props.children, (tab, key)=>{
+    React.Children.map(this.props.children, (tab, key)=>{
       tabs.titles.push(
         <li className={classNames('tab-title', {
           active: key === active
         })} key={key} onClick={e=>this.active = key}>
-          { tab.props.label }
+          { typeof tab.props.label === 'string' ? (
+            <Button text={tab.props.label}/>
+          ) : tab.props.label }
         </li>
       );
 

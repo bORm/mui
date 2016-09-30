@@ -4,7 +4,7 @@
  */
 export Button, { ButtonIcon, ButtonText } from './components/Button/Button'
 export Checkbox from './components/Checkbox/Checkbox'
-export DropDown from './components/DropDown/DropDown'
+export DropDown, { Item as DropDownItem } from './components/DropDown/DropDown'
 export Field from './components/Field/Field'
 export Form from './components/Form'
 export List, { Item as ListItem } from './components/List/List'

@@ -1,6 +1,11 @@
 .tabs {
 	position: relative;
 
+	ul {
+		padding: 0;
+		margin: 0;
+	}
+
 	&-content {
 		transform: translateX(0%);
 	}
