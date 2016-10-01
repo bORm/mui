@@ -21,6 +21,15 @@
   }
 }
 
+.float {
+  &-left {
+    float: left;
+  }
+  &-right {
+    float: right;
+  }
+}
+
 .justify {
   text-align: justify;
   font-size: 0;
