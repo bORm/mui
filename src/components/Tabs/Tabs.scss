@@ -8,9 +8,9 @@
 		position: relative;
 
 		li {
-			.button {
+			.button.flat {
 				margin: 0;
-				&:hover, &:active {
+				&:hover, &:active, &:focus {
 					background: transparent;
 				}
 			}
