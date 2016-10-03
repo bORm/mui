@@ -1,4 +1,5 @@
 import React, {Component, PropTypes, Children} from 'react'
+import { findDOMNode } from 'react-dom'
 import Tab from 'components/Tabs/Tab'
 import Button from 'components/Button/Button'
 import classNames from 'helpers/classNames'
@@ -11,21 +12,39 @@ class Tabs extends Component {
   };
 
   static defaultProps = {
-    active: 0
+    active: 0,
+    last: 0,
+    inkBar: {
+      width: 0,
+      left: 0
+    }
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      active: props.active
-    }
+      ...props,
+      ...{
+        active: parseInt(props.active),
+        last: parseInt(props.last)
+      }
+    };
   }
 
   set active(index){
+    let DOM = findDOMNode(this.refs['li' + index]);
     this.setState({
       active: index,
-      last  : this.state.active
+      last  : this.state.active,
+      inkBar: {
+        width : DOM.offsetWidth
+      , left  : DOM.offsetLeft
+      }
     })
+  }
+
+  componentDidMount() {
+    this.active = parseInt(this.props.active)
   }
 
   render() {
@@ -35,7 +54,7 @@ class Tabs extends Component {
       contents: []
     };
 
-    const { active, last } = this.state;
+    const { active, last, inkBar } = this.state;
     const count = Children.count(this.props.children);
     const width = 100 / count;
 
@@ -43,7 +62,7 @@ class Tabs extends Component {
 
     React.Children.map(this.props.children, (tab, key)=>{
       tabs.titles.push(
-        <li className={classNames('tab-title', {
+        <li ref={'li'+key} className={classNames('tab-title', {
           active: key === active
         })} key={key} onClick={e=>this.active = key}>
           { typeof tab.props.label === 'string' ? (
@@ -52,14 +71,14 @@ class Tabs extends Component {
         </li>
       );
 
-      if ( key === this.state.active ) {
+      if ( key === active ) {
         transform = 0
-      } else if ( key > this.state.active ) {
+      } else if ( key > active ) {
         transform = 100
       }
 
       tabs.contents.push(
-        <div className={classNames('tab-content', {
+        <div className={classNames('tab-content', tab.props.className, {
           active: key === active
         })} style={{
           width: width + '%',
@@ -74,8 +93,9 @@ class Tabs extends Component {
       <div className="tabs">
         <ul>
           { tabs.titles }
+          <li className="ink-bar" style={inkBar}/>
         </ul>
-        <div style={{overflow: 'hidden'}}>
+        <div className="tabs-container">
           <div className="tabs-content" style={{width: count * 100 + '%'}}>
             { tabs.contents }
           </div>
