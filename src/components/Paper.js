@@ -1,4 +1,4 @@
-import React, {Component, PropTypes, createElement, cloneElement} from 'react'
+import React, {Component, PropTypes, isValidElement, createElement, cloneElement} from 'react'
 import { classNames } from 'helpers'
 
 class Paper extends Component {
@@ -24,9 +24,9 @@ class Paper extends Component {
 				}, className)
 			}
 		};
-		return React.isValidElement(component) ?
-			React.cloneElement(component, paperProps) :
-			React.createElement(component, paperProps);
+		return isValidElement(component) ?
+			cloneElement(component, paperProps) :
+			createElement(component, paperProps);
 	}
 }
 

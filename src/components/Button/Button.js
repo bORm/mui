@@ -30,7 +30,7 @@ class Button extends Component {
 		mini: PropTypes.bool,
 
 		text: PropTypes.oneOfType([
-			PropTypes.bool, PropTypes.string, PropTypes.number
+			PropTypes.bool, PropTypes.string, PropTypes.number, PropTypes.element
 		]),
 		icon: PropTypes.oneOfType([
 			PropTypes.bool, PropTypes.string
@@ -112,7 +112,7 @@ class Button extends Component {
 			: children;*/
 
 		return (
-			<Ripple {...other} container={ button } isCenter={!!(icon)} disabled={disabled || !!(link)}>
+			<Ripple {...other} container={ button } disabled={disabled || !!(link)}>
 				<div className="button-inner">
 					{text && <ButtonText key="text" text={text}/>}
 					&nbsp;
@@ -165,7 +165,7 @@ class ButtonIcon extends Component {
 class ButtonText extends Component {
 	static propTypes = {
 		text: PropTypes.oneOfType([
-			PropTypes.bool, PropTypes.string, PropTypes.number
+			PropTypes.bool, PropTypes.string, PropTypes.number, PropTypes.element
 		])
 	};
 

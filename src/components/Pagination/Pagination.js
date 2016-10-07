@@ -23,6 +23,11 @@ class Pagination extends Component {
 
   constructor(props) {
     super(props);
+    this.state = props;
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({...props})
   }
 
   render() {
@@ -33,109 +38,86 @@ class Pagination extends Component {
     );
   }
 
-  pages() {
+  pages(){
     let {
       visible, first, last,
       limit, total, page, onChange
-    } = this.props;
+    } = this.state;
 
-    page = parseInt(page);
+    limit = parseInt(limit);
+    total = parseInt(total);
+    page  = parseInt(page);
+
+    if ( !limit || !total || !page ) return null;
+
     const pages = Math.ceil(total / limit);
+    visible = pages > visible ? visible == 2 ? 3 : visible : pages;
 
+    let currentPage, lowerLimit, upperLimit;
+    currentPage = lowerLimit = upperLimit = Math.min(page, pages);
 
-    var range = Math.floor(visible / 2);
-    var nav_begin = page - range;
-    if (visible % 2 == 0) { // Если четное кол-во
-      nav_begin++;
-    }
-    var nav_end = page + range;
-    var left_dots = true;
-    var right_dots = true;
-
-    if (nav_begin <= 2) {
-      nav_end = visible;
-      if (nav_begin == 2) {
-        nav_end++;
-      }
-      nav_begin = 1;
-      left_dots = false;
+    for (let b = 1; b < visible && b < pages;) {
+      if (lowerLimit > 1 ) { lowerLimit--; b++; }
+      if (b < visible && upperLimit < pages) { upperLimit++; b++; }
     }
 
-    if (nav_end >= pages - 1 ) {
-      nav_begin = pages - visible + 1;
-      if (nav_end == pages - 1) {
-        nav_begin--;
-      }
-      nav_end = pages;
-      right_dots = false;
-    }
-    
-    if ( !limit ||  !total || !page ) {
-      return null;
-    }
-
-    let pagination = [
+    const pagination = [
       <Button className="prev" icon='chevron_left'
+              disabled={page <= 1} key={'prev'}
               onClick={e=>{
                 onChange && onChange((page - 1), e);
                 return Pagination.handlePrevNextClick(e,page <= 1);
-              }}
-              disabled={page <= 1}
-              key={'prev'}/>
+              }}/>
     ];
 
-    if ( left_dots ) {
-      if ( first ) {
-        pagination.push(
-          <Button text={1} key={'first'}
-                  onClick={e=>{
-                    onChange && onChange(1, e);
-                }} />
-        );
-      }
+    if ( first && lowerLimit > 1 && visible >= 3 ) {
+      lowerLimit++;
       pagination.push(
+        <Button text={1} key={'first'}
+                onClick={e=>{onChange && onChange(1, e)}} />,
         <Button text={'...'} key={'lDots'} disabled/>
-      );
+      )
     }
 
-    let buttonProps = {};
-    for ( let i = nav_begin; i<=nav_end; i++ ) {
-      buttonProps = {
-        [i == page ? "primary" : "white"]: true
-      };
-      pagination.push(
-        <Button text={i} key={i} {...buttonProps}
-                onClick={e=>{
-                  onChange && onChange(i, e);
-                  return Pagination.handlePrevNextClick(e,page == i);
-                }} />
-      );
+    if ( last && upperLimit < pages && visible >= 3 ) {
+      upperLimit--;
     }
 
-    if ( right_dots ) {
-      pagination.push(
-        <Button text={'...'} key={'rDots'} disabled/>
-      );
-      if ( last ) {
+    console.log({pages,visible,upperLimit, lowerLimit});
+
+    for (let i = lowerLimit; i <= upperLimit; i++) {
+      if (i == currentPage) {
         pagination.push(
-          <Button text={pages} key={'last'}
-                  onClick={e=>{
-                    onChange && onChange(pages, e);
-                }} />
+          <Button text={i} key={i} primary disabled={true} />
         );
       }
+      else {
+        pagination.push(
+          <Button text={i} key={i} white
+                  onClick={e=>{onChange && onChange(i, e)}} />
+        );
+      }
+    }
+
+    if ( last && upperLimit < pages && visible >= 3 ) {
+      pagination.push(
+        <Button text={'...'} key={'rDots'} disabled/>,
+        <Button text={pages} key={'last'}
+                onClick={e=>{onChange && onChange(pages, e)}} />
+      )
     }
 
     pagination.push(
       <Button className="prev" icon='chevron_right'
-              disabled={page >= pages}
+              disabled={page >= pages} key={'next'}
               onClick={e=>{
                 onChange && onChange((page + 1), e);
                 return Pagination.handlePrevNextClick(e,page >= 1);
-              }}
-              key={'next'}/>
+              }}/>
     );
+
     return pagination;
+
   }
 
   static handlePrevNextClick(e, disabled) {

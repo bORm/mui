@@ -116,12 +116,10 @@ class DropDown extends Component {
 
 	componentDidMount(){
 		this.control = findDOMNode(this.refs.control);
-
-		const debounceFn = Debounce(::this.getHiddenMenuOffset, 250);
-
 		this.getHiddenMenuOffset();
 
-		window.addEventListener('resize', debounceFn);
+		this.debounceFn = Debounce(::this.getHiddenMenuOffset, 250);
+		window.addEventListener('resize', ::this.debounceFn);
 	}
 
 	componentDidUpdate(prevProps) {

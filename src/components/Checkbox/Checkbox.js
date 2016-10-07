@@ -28,7 +28,7 @@ class Checkbox extends Component {
   }
 
   render() {
-    const {name, label} = this.props;
+    const {name, label, onChange} = this.props;
     const {checked, disabled} = this.state;
 
     return (
@@ -44,6 +44,7 @@ class Checkbox extends Component {
 				    onChange: e=> {
 			    		const { checked } = e.target;
 					    this.setState({checked})
+							onChange && onChange(e);
 				    }
 			    }
 		    } />

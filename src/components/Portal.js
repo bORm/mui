@@ -59,6 +59,7 @@ class Portal extends Component {
 	}
 
 	mount(id, isOpen = false) {
+
 		this.portal = document.getElementById(id);
 
 		if ( !this.portal ) {
@@ -66,12 +67,14 @@ class Portal extends Component {
 			this.portal.id = id;
 			document.getElementById(this.props.mountTo).appendChild(this.portal);
 		}
-		if ( isOpen ) {
+		if ( isOpen && !!(this.portal) ) {
 			this.child();
+			// Fix portal is null
+			const portal = this.portal;
 			this.timer = setTimeout(()=>{
-				this.portal.className = isOpen ? 'open' : '';
+				portal.className = isOpen ? 'open' : '';
 				this.timer && clearTimeout(this.timer);
-			}, 0);
+			}, 100);
 		}
 
 		( !isOpen && this.portal ) && this.unMount();
