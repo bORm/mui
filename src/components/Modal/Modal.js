@@ -23,6 +23,9 @@ class Modal extends Component {
 		]),
 		style: PropTypes.object,
 		isOpen: PropTypes.bool,
+		onClose: PropTypes.oneOfType([
+			PropTypes.bool, PropTypes.func
+		]),
 		isMount: PropTypes.bool,
 		closeButton: PropTypes.bool,
 		onClickOutside: PropTypes.shape({
@@ -41,6 +44,7 @@ class Modal extends Component {
 		className: false,
 		style: {},
 		isOpen: false,
+		onClose: false,
 		isMount: false,
 		closeButton: true,
 		onClickOutside: {
@@ -88,7 +92,7 @@ class Modal extends Component {
 		const {
 			id, size, className, style, displayName
 			, header, desc, children, footer
-			, isOpen, closeButton, modal, mountTo
+			, isOpen, onClose, closeButton, modal, mountTo
 			, ...other
 		} = this.props;
 
@@ -118,7 +122,10 @@ class Modal extends Component {
 							{ closeButton && (()=>{
 								return (
 									<div className="modal-close">
-										<i className="icon material-icons" onClick={e=>Portal.toggle(id, false)}>close</i>
+										<i className="icon material-icons" onClick={e=>{
+											Portal.toggle(id, false);
+											onClose && onClose(e, id);
+										}}>close</i>
 									</div>
 								)
 							})() }

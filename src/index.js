@@ -30,3 +30,4 @@ export Portal from './components/Portal'
  * helpers
  */
 export classNames from './helpers/classNames'
+export offset from './helpers/offset'

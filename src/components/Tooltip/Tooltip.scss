@@ -1,67 +1,68 @@
-.tooltip{
+.tooltip {
   position: relative;
-  display: inline-block;
+  //display: inline-block;
   cursor: pointer;
+
+  &-text {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    white-space: nowrap;
+    padding: 8px;
+    border-radius: 2px;
+    color: #ffffff;
+    background: $gray-darker;
+    text-align: center;
+    line-height: 1;
+    z-index: 999;
+  }
+
+  &-bot, &-top {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &-bot {
+    top: 170%;
+  }
+
+  &-top {
+    bottom: 170%;
+  }
+
+  &-left, &-right {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &-left {
+    right: 170%;
+  }
+
+  &-right {
+    left: 170%;
+  }
+
+  &:hover, &.hover, &.active {
+
+    .tooltip {
+      &-text {
+        visibility: visible;
+        opacity: 1;
+        transition: top .4s, bottom .4s, left .4s, right .4s, opacity .3s ease-in-out;
+      }
+      &-bot {
+        top: 130%;
+      }
+      &-top {
+        bottom: 130%;
+      }
+      &-left {
+        right: 130%;
+      }
+      &-right {
+        left: 130%;
+      }
+    }
+
+  }
+
 }
-
-.tooltip-text{
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  white-space: nowrap;
-  padding: 8px;
-  border-radius: 2px;
-  color: #ffffff;
-  background: $gray-darker;
-
-  text-align: center;
-  line-height: 1;
-  z-index: 999;
-}
-
-.tooltip-bot{
-  top: 170%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.tooltip-top{
-  bottom: 170%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.tooltip-left{
-  top: 50%;
-  transform: translateY(-50%);
-  right: 170%;
-}
-
-.tooltip-right{
-  top: 50%;
-  transform: translateY(-50%);
-  left: 170%;
-}
-
-.tooltip:hover .tooltip-text{
-  visibility: visible;
-  opacity: 1;
-  transition: top .4s, bottom .4s, left .4s, right .4s, opacity .3s ease-in-out;
-}
-
-.tooltip:hover .tooltip-bot{
-  top: 130%;
-}
-
-.tooltip:hover .tooltip-top{
-  bottom: 130%;
-}
-
-.tooltip:hover .tooltip-left{
-  right: 130%;
-}
-
-.tooltip:hover .tooltip-right{
-  left: 130%;
-}
-

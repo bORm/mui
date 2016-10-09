@@ -83,8 +83,6 @@ class Pagination extends Component {
       upperLimit--;
     }
 
-    console.log({pages,visible,upperLimit, lowerLimit});
-
     for (let i = lowerLimit; i <= upperLimit; i++) {
       if (i == currentPage) {
         pagination.push(
