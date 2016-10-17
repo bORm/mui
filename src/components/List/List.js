@@ -3,21 +3,28 @@ import Ripple from '../Ripple'
 import classNames from '../../helpers/classNames'
 
 class List extends Component {
-  static propTypes = {};
+  static propTypes = {
+    component: PropTypes.oneOfType([
+      PropTypes.string, PropTypes.element
+    ])
+  };
 
-  static defaultProps = {};
+  static defaultProps = {
+    component: 'div'
+  };
 
   constructor(props) {
     super(props);
   }
 
   render() {
-    const { className } = this.props;
-    return (
-      <div className={classNames('list', className)}>
-        { this.props.children }
-      </div>
-    );
+    const { component, className } = this.props;
+    const props = {
+      className: classNames('list', className)
+    };
+    return isValidElement(component) ?
+      cloneElement(component, props, this.props.children) :
+      createElement(component, props, this.props.children);
   }
 }
 
