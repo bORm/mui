@@ -6,11 +6,13 @@ class List extends Component {
   static propTypes = {
     component: PropTypes.oneOfType([
       PropTypes.string, PropTypes.element
-    ])
+    ]),
+    className: PropTypes.string
   };
 
   static defaultProps = {
-    component: 'div'
+    component: 'div',
+    className: ''
   };
 
   constructor(props) {
@@ -18,7 +20,7 @@ class List extends Component {
   }
 
   render() {
-    const { component, className } = this.props;
+    const { component, className, ...other } = this.props;
     const props = {
       className: classNames('list', className)
     };
@@ -44,17 +46,17 @@ class Item extends Component {
   }
 
   handleLiClick(e) {
-    console.log(e);
-    //e.stopPropagation();
-    // e.preventDefault(e);
-    // return e;
+    const { onClick } = this.props;
+    //console.log(e);
+    onClick && onClick(e);
   }
 
   render() {
     const {
       className,
       component, children,
-      primary, text, secondary
+      primary, text, secondary,
+      ...other
     } = this.props;
 
     const props = {
@@ -67,7 +69,7 @@ class Item extends Component {
       createElement(component, props);
 
     return (
-      <Ripple container={item}>
+      <Ripple container={item} {...other}>
         { children && children }
         { primary && <div className="primary">{primary}</div> }
         { text && <div className="text">{text}</div> }
