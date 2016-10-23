@@ -17,13 +17,11 @@ h6, .h6, .f6 { font-size: $fontSize-h6; font-weight: 300; }
 $fontSize: 20;
 
 @while $fontSize > 9 {
-
 	.f#{$fontSize} {
 		font-size: $fontSize + 0px;
 		line-height: $fontSize + 2px;
 	}
 	$fontSize: $fontSize - 1;
-
 }
 
 p {
@@ -52,6 +50,14 @@ p {
 	&-ellipsis {
 		text-overflow: ellipsis;
 		overflow: hidden;
+	}
+
+	&-none {
+		text-transform: none;
+	}
+
+	&-underline {
+		text-decoration: underline;
 	}
 }
 
