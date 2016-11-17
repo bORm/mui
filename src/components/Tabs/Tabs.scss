@@ -20,6 +20,7 @@
 				height: 2px;
 				background: $accent;
 				transition: left ease-out .3s, width ease-out .3s;
+				z-index: 1;
 			}
 		}
 

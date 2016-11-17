@@ -5,7 +5,7 @@ import React, {
 import { findDOMNode } from 'react-dom';
 
 import Button, { ButtonIcon } from 'components/Button/Button'
-import Menu, { Item } from './Menu'
+import Menu, { Item } from 'components/Menu/Menu'
 import classNames from 'helpers/classNames'
 
 import Debounce from 'lodash.debounce'
