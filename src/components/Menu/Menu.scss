@@ -6,27 +6,67 @@
 	}
 
 	&-container {
+		display: inline-block;
 		position: absolute;
 		top: 0;
+		left: 0;
 		padding: 8px 0;
-		max-width: 100px;
 		max-height: 50px;
+		max-width: 250px;
 		visibility: hidden;
-		overflow-y: hidden;
+		overflow: hidden;
 		z-index: 1;
-		opacity: 0;
+		animation: {
+			name: dropdown-close;
+			duration: .5s;
+		}
 	}
 
 	&.is-open {
 		.menu-container {
 			max-width: 250px;
 			max-height: 200px;
-			visibility: visible;
-			overflow-y: auto;
 			z-index: 2;
-			opacity: 1;
-			transition: max-height .8s, max-width .4s, opacity .4s;
+			animation: {
+				name: dropdown-open;
+				duration: .5s;
+				fill-mode: forwards;
+			}
 		}
 	}
 
+}
+
+@keyframes dropdown-open {
+	0%{
+		opacity: 0;
+		max-width: 100px;
+		max-height: 50px;
+	}
+
+	90%{
+		opacity: 1;
+		overflow-y: hidden;
+		max-width: 250px;
+	}
+
+	100%{
+		overflow-y: auto;
+		visibility: visible;
+		max-height: 200px;
+	}
+}
+
+@keyframes dropdown-close {
+	0%{
+		opacity: 1;
+		max-height: 200px;
+		visibility: visible;
+	}
+
+	100%{
+		opacity: 1;
+		max-height: 150px;
+		visibility: visible;
+	}
 }
