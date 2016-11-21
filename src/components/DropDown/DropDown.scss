@@ -34,6 +34,24 @@
         top: 0;
       }
     }
+    &.top-right .paper,
+    &.bottom-right .paper {
+      right: 0;
+    }
+    &.top-right {
+      transform-origin: right bottom 0;
+      bottom: 0;
+      > .paper {
+        bottom: 0;
+      }
+    }
+    &.bottom-right {
+      transform-origin: right top 0;
+      top: 0;
+      > .paper {
+        top: 0;
+      }
+    }
     > .paper {
       position: absolute;
       list-style: none;
