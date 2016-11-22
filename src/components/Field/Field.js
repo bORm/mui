@@ -1,4 +1,4 @@
-import React, {Component, PropTypes, createElement} from 'react'
+import React, {Component, PropTypes, createElement, cloneElement} from 'react'
 import { classNames, inArray } from 'helpers'
 
 class Field extends Component {
@@ -11,8 +11,8 @@ class Field extends Component {
 		autoComplete: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.bool
 		]),
-		value: PropTypes.string,
-		defaultValue: PropTypes.string,
+		value: PropTypes.any,
+		defaultValue: PropTypes.any,
 		type: PropTypes.string,
 		min: PropTypes.string,
 		max: PropTypes.string,
@@ -45,8 +45,8 @@ class Field extends Component {
 
 		placeholder: false,
 		autoComplete: false,
-		value: '',
-		defaultValue: '',
+		// value: '',
+		// defaultValue: '',
 		type: 'text',
 		name: false,
 
@@ -67,41 +67,80 @@ class Field extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			hasValue: false,
 			isFocused: false,
-			value: props.defaultValue || ''
 		};
 	}
 
-	componentDidMount() {
-		const { value } = this.props;
-		value && this.setState({value});
+	componentWillMount() {
+		this.hasValue(this.props);
 	}
 
-	componentWillReceiveProps(props){
-		const { value, required, disabled } = this.props;
-
-		value !== props.value && this.setState({value: props.value});
+	componentWillReceiveProps(props) {
+		if (props.hasOwnProperty('value') || props.hasOwnProperty('defaultValue')) {
+			this.hasValue(props);
+		}
+		const { required, disabled } = this.props;
 		required !== props.required && this.setState({required: props.required});
 		disabled !== props.disabled && this.setState({disabled: props.disabled});
 	}
 
+	/**
+	 * Check isValid oneOf([value, defaultValue])
+	 * @param props
+	 * value = value || defaultValue
+	 * setState({value});
+	 */
+	hasValue(props){
+		const {value, defaultValue} = props;
+		const hasValue = Field.isValidValue(value)
+			? value
+			: Field.isValidValue(defaultValue)
+				? defaultValue
+				: '';
+
+		this.setState({
+			value: hasValue,
+			hasValue: !!(hasValue)
+		});
+	}
+
+	/**
+	 * Check if a value is valid to be displayed inside an input.
+	 *
+	 * @param value
+	 * @returns boolean if the string provided is valid, false otherwise.
+	 */
+	static isValidValue(value){
+		return value !== '' && value !== undefined && value !== null;
+	}
+
 	render(){
 		const {
+			/**
+			 * defaultValue for disable conflict value && defaultValue
+			 * and value can be null
+			 * see hasValue function
+			 */
+			defaultValue,
 			floating, placeholder, autoComplete, type, min, max,
 			onChange, onFocus, onBlur,
-			name, required, readOnly, disabled, defaultValue,
+			name, required, readOnly, disabled,
 			large, small, block,
 			success,	warning,	danger,
 			className,
 			...other
 		} = this.props;
 
+		console.log(name, other);
+
 		const valid = success || warning || danger;
 
 		let icon = null;
-		const { isFocused, value } = this.state;
+		const { value, hasValue, isFocused } = this.state;
 
 		const inputProps = {
+			...other,
 			onChange: e=>{
 				const { value } = e.target;
 				this.setState({value});
@@ -157,11 +196,17 @@ class Field extends Component {
 			}
 		}
 
+		inputProps.onChange = (e)=>{
+			this.setState({
+				value: e.target.value
+			})
+		};
+
 		return (
-			<label {...other} className={classNames('field', {
+			<label className={classNames('field', {
 				floating: floating,
-				'is-focused': isFocused && !readOnly && !disabled,
-				'has-value': value !== '',
+				isFocused: isFocused && !readOnly && !disabled,
+				hasValue: hasValue,
 				fieldBlock: block,
 				fieldLg: large,
 				fieldMd: !(large || small),
@@ -194,4 +239,4 @@ class Field extends Component {
 	}
 }
 
-export default Field
+export default Field;

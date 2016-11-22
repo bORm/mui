@@ -33,3 +33,4 @@ export Portal from './components/Portal'
  */
 export classNames from './helpers/classNames'
 export offset from './helpers/offset'
+export {convertHexToRGB} from './helpers/color'

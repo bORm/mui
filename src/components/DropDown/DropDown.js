@@ -132,21 +132,30 @@ class DropDown extends Component {
 	getHiddenMenuOffset(){
 		const rect = this.control.getBoundingClientRect();
 
-		var cords = {
+		const cords = {
 			top: rect.top,
 			left: rect.left,
 			bottom: document.documentElement.clientHeight - (rect.top),
 			right: document.documentElement.clientWidth - (rect.left)
 		};
 
-		var maxHeight = cords.bottom, placement;
+		let maxHeight = cords.bottom
+			, maxWidth = cords.left
+			, placement;
 
 		// Decide if place the dropdown below or above the input
 		if (maxHeight < findDOMNode(this.refs.menu).clientHeight + 20 && cords.top > cords.bottom) {
 			maxHeight = cords.top;
-			placement = "top-left";
+			placement = "top-";
 		} else {
-			placement = "bottom-left";
+			placement = "bottom-";
+		}
+
+		// Decide if place the dropdown below or above the input
+		if (maxWidth < findDOMNode(this.refs.menu).clientWidth + 20 && cords.left > cords.right) {
+			placement += "left";
+		} else {
+			placement += "right";
 		}
 
 		this.setState({rect, maxHeight, placement});

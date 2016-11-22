@@ -90,7 +90,7 @@ class Tabs extends Component {
     });
 
     return (
-      <div className="tabs">
+      <div className={classNames('tabs', this.props.className)}>
         <ul>
           { tabs.titles }
           <li className="ink-bar" style={inkBar}/>
