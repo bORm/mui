@@ -12,13 +12,14 @@
   margin: 6px 0;
   line-height: 36px;
   min-height: 36px;
+  height: 1px;
   background: 0 0;
   white-space: nowrap;
   //min-width: 88px;
   text-align: center;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 0;
   font-style: inherit;
   font-variant: inherit;
   font-family: inherit;
@@ -59,25 +60,6 @@
     &:not(.disabled):active {
       @include box_shadow(2);
     }
-  }
-
-  // Sizes
-  &.large {
-    line-height: 48px;
-    min-height: 48px;
-    font-size: 1.8rem;
-  }
-
-  &.medium {
-
-  }
-
-  &.small {
-
-  }
-
-  &.mini {
-
   }
 
   &.primary,
@@ -125,9 +107,29 @@
     border-radius: 50%;
   }
 
+  &:before,
   &-inner {
-    font-size: 0;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  &:before {
+    content: '';
+    width: 1px;
+    height: 100%;
+    margin-left: -1px;
+  }
+  &-inner {
+    //font-size: 0;
     //line-height: 1;
+    font-size: 1px;
+    line-height: 20px;
+    &:before {
+      content: '';
+      display: inline-block;
+      width: 1px;
+      height: 100%;
+      margin-left: -1px;
+    }
   }
 
   &-icon, &-text {
@@ -143,9 +145,35 @@
   &-text {
     font-size: 1.6rem;
     margin: 0 6px;
+    line-height: 1;
     //& + .button-icon {
     //  margin-right: 1rem;
     //}
+  }
+
+  // Sizes
+  &.large {
+    line-height: 48px;
+    min-height: 48px;
+    .button {
+      &-text {
+        //line-height: 48px;
+        //min-height: 48px;
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  &.medium {
+
+  }
+
+  &.small {
+
+  }
+
+  &.mini {
+
   }
 
 }

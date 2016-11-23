@@ -5,7 +5,7 @@ import React, {
 import { findDOMNode } from 'react-dom';
 
 import Button, { ButtonIcon } from 'components/Button/Button'
-import Menu, { Item } from 'components/Menu/Menu'
+import Menu, { Item } from './Menu'
 import classNames from 'helpers/classNames'
 
 import Debounce from 'lodash.debounce'
@@ -46,7 +46,8 @@ class DropDown extends Component {
 		};
     
 		this.control = null;
-		this.handleClickOutside = ::this.handleClickOutside
+		this.handleClickOutside = ::this.handleClickOutside;
+		this.debounceFn = Debounce(::this.getHiddenMenuOffset, 250);
 	}
 
 	componentWillReceiveProps(props){
@@ -107,7 +108,6 @@ class DropDown extends Component {
 
 	handleMenuExpand(){
 		this.getHiddenMenuOffset();
-
 	}
 
 	handleMenuCollapse(){
@@ -117,9 +117,11 @@ class DropDown extends Component {
 	componentDidMount(){
 		this.control = findDOMNode(this.refs.control);
 		this.getHiddenMenuOffset();
+		window.addEventListener('resize', this.debounceFn);
+	}
 
-		this.debounceFn = Debounce(::this.getHiddenMenuOffset, 250);
-		window.addEventListener('resize', ::this.debounceFn);
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.debounceFn);
 	}
 
 	componentDidUpdate(prevProps) {

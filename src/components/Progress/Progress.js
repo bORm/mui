@@ -39,6 +39,8 @@ export class Progress extends React.Component {
 
     this.state = initialState;
 
+    this.progressInterval = null;
+    this.animationTimeout = null;
     this.boundSimulateProgress = this.simulateProgress.bind(this);
     this.boundResetProgress = this.resetProgress.bind(this)
   }
@@ -54,39 +56,37 @@ export class Progress extends React.Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.state.progressInterval);
-    clearTimeout(this.state.animationTimeout)
+    clearInterval(this.progressInterval);
+    clearTimeout(this.animationTimeout)
   }
 
   launch() {
-    let { progressInterval, percent, buffer } = this.state;
-    const { animationTimeout } = this.state;
+    let { percent, buffer } = this.state;
 
-    if (!progressInterval) {
-      progressInterval = setInterval(
+    if (!this.progressInterval) {
+      this.progressInterval = setInterval(
         this.boundSimulateProgress,
         this.props.updateTime
       );
-      clearTimeout(animationTimeout);
+      clearTimeout(this.animationTimeout);
       percent = 0;
       buffer = 0;
     }
 
     this.setState({
       ...this.state,
-      progressInterval,
       percent,
       buffer
     })
   }
 
   simulateProgress() {
-    let { progressInterval, percent, buffer, animationTimeout } = this.state;
+    let { percent, buffer } = this.state;
     if (percent === 100) {
-      animationTimeout = setTimeout(this.boundResetProgress, ANIMATION_TIME);
-      clearInterval(progressInterval);
-      progressInterval = null;
-    } else if (this.props.progress === 0) {
+      this.animationTimeout = setTimeout(this.boundResetProgress, ANIMATION_TIME);
+      clearInterval(this.progressInterval);
+      this.progressInterval = null;
+    } else if (this.props.progress === null) {
       percent = 100;
       buffer = 100;
     } else if (percent < this.props.maxProgress) {
@@ -105,12 +105,13 @@ export class Progress extends React.Component {
       }
     }
 
-    this.setState({ percent, buffer, progressInterval, animationTimeout });
+    this.setState({ percent, buffer });
     
     this.props.onProgress(percent);
   }
 
   resetProgress() {
+    clearTimeout(this.animationTimeout);
     this.setState(initialState, ()=>{
       this.props.onDone();
     });
