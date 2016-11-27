@@ -115,7 +115,7 @@ class Modal extends Component {
 
 
 		return (
-			<Portal id={id} mountTo={mountTo} isOpen={isOpen} {...toggle}>
+			<Portal id={id} mountTo={mountTo} isOpen={isOpen} {...toggle} className={className}>
 				<div className="modal">
 					<Paper zDepth={2} style={style}>
 						<header className="clearfix">

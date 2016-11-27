@@ -131,9 +131,7 @@ class Field extends Component {
 			className,
 			...other
 		} = this.props;
-
-		console.log(name, other);
-
+		
 		const valid = success || warning || danger;
 
 		let icon = null;
@@ -143,7 +141,9 @@ class Field extends Component {
 			...other,
 			onChange: e=>{
 				const { value } = e.target;
-				this.setState({value});
+				this.hasValue({
+					defaultValue, value
+				});
 				onChange && onChange(e);
 			},
 			onFocus: e=>{
@@ -196,11 +196,11 @@ class Field extends Component {
 			}
 		}
 
-		inputProps.onChange = (e)=>{
+		/*inputProps.onChange = (e)=>{
 			this.setState({
 				value: e.target.value
 			})
-		};
+		};*/
 
 		return (
 			<label className={classNames('field', {

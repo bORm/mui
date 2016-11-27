@@ -155,9 +155,9 @@ class DropDown extends Component {
 
 		// Decide if place the dropdown below or above the input
 		if (maxWidth < findDOMNode(this.refs.menu).clientWidth + 20 && cords.left > cords.right) {
-			placement += "left";
-		} else {
 			placement += "right";
+		} else {
+			placement += "left";
 		}
 
 		this.setState({rect, maxHeight, placement});

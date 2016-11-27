@@ -4,6 +4,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {EventEmitter} from 'fbemitter';
 const emitter = new EventEmitter();
 const renderSubtreeIntoContainer = require("react-dom").unstable_renderSubtreeIntoContainer;
+import { classNames } from 'helpers'
 
 class Portal extends Component {
 	static propTypes = {
@@ -61,6 +62,7 @@ class Portal extends Component {
 	mount(id, isOpen = false) {
 
 		this.portal = document.getElementById(id);
+		const { className } = this.props;
 
 		if ( !this.portal ) {
 			this.portal = document.createElement('div');
@@ -72,7 +74,9 @@ class Portal extends Component {
 			// Fix portal is null
 			const portal = this.portal;
 			this.timer = setTimeout(()=>{
-				portal.className = isOpen ? 'open' : '';
+				portal.className = classNames(className, {
+					open: isOpen
+				});
 				this.timer && clearTimeout(this.timer);
 			}, 100);
 		}
