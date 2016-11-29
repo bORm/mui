@@ -16,6 +16,29 @@
 	right: -$grid-gutter-width;
 	transition-duration: 500ms;
 	transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+	&-close {
+		cursor: default;
+		float: right;
+		margin: auto -5px auto auto;
+		font-size: 0;
+		.icon {
+			cursor: pointer;
+		}
+	}
+
+	&-header {
+		overflow: hidden;
+		font-size: 18px;
+		font-weight: 500;
+	}
+
+	> .paper {
+		position: relative;
+		z-index: 1;
+		padding: 24px 24px 24px;
+	}
+
 	.open & {
 		visibility: visible;
 	}

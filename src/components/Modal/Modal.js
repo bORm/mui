@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import Portal from 'components/Portal'
 import Paper from 'components/Paper'
+import classNames from 'helpers/classNames'
 
 class Modal extends Component {
 	static propTypes = {
@@ -10,9 +11,6 @@ class Modal extends Component {
 			PropTypes.bool, PropTypes.array, PropTypes.element, PropTypes.string
 		]),
 		body: PropTypes.oneOfType([
-			PropTypes.bool, PropTypes.element, PropTypes.array
-		]),
-		desc: PropTypes.oneOfType([
 			PropTypes.bool, PropTypes.element, PropTypes.array
 		]),
 		footer: PropTypes.oneOfType([
@@ -32,8 +30,7 @@ class Modal extends Component {
 			close: PropTypes.bool,
 			callback: PropTypes.func
 		}),
-		modal: PropTypes.bool,
-		displayName: PropTypes.string
+		modal: PropTypes.bool
 	};
 	static defaultProps = {
 		size: 'medium',
@@ -58,11 +55,12 @@ class Modal extends Component {
 
 	static toggle = Portal.toggle;
 
-	componentDidUpdate(prevProps, prevState){
-		if(!this.props.isOpen && prevProps.isOpen){
-			Modal.toggle(this.props.id, false);
-		}else if(this.props.isOpen && !prevProps.isOpen){
-			Modal.toggle(this.props.id, true);
+	componentDidUpdate(props){
+		const { id, isOpen } = this.props;
+		if(!isOpen && props.isOpen){
+			Modal.toggle(id, false);
+		}else if(isOpen && !props.isOpen){
+			Modal.toggle(id, true);
 		}
 	}
 
@@ -90,33 +88,26 @@ class Modal extends Component {
 
 	render() {
 		const {
-			id, size, className, style, displayName
-			, header, desc, children, footer
-			, isOpen, onClose, closeButton, modal, mountTo
+			id, size, className, style
+			, closeButton, header
+			, isOpen, onClose, modal, mountTo
 			, ...other
 		} = this.props;
 
-		const body = this.props.body || children;
-		const styles = {
-			box: {},
-			...style
-		};
-
-		const descLength = desc.length;
-
 		const toggle = {
-			beforeToggle: (id, isOpen)=>{
+			before: (id, isOpen)=>{
 				modal && Modal.bodyStyle(isOpen, modal);
 			},
-			afterToggle: (id, isOpen)=>{
+			after: (id, isOpen)=>{
 
 			}
 		};
 
-
 		return (
 			<Portal id={id} mountTo={mountTo} isOpen={isOpen} {...toggle} className={className}>
-				<div className="modal">
+				<div className={classNames("modal", {
+					[size]: true
+				})}>
 					<Paper zDepth={2} style={style}>
 						<header className="clearfix">
 							{ closeButton && (()=>{

@@ -7,60 +7,64 @@ import classNames from 'helpers/classNames';
 
 class Notify extends Modal {
 
+	static propTypes = {
+		...Modal.propTypes,
+		wait: PropTypes.number.isRequired
+	};
+
 	static defaultProps = {
 		...Modal.defaultProps,
-		size: 'medium',
-		header: [],
-		body: false,
-		desc: false,
-		footer: false,
-		className: false,
-		style: {},
-		isOpen: false,
-		onClose: false,
-		isMount: false,
-		closeButton: true,
-		onClickOutside: {
-			close: true,
-			callback: ()=>{}
-		},
-		modal: true,
-		displayName: 'modal',
-		mountTo: 'notifies'
+		mountTo: 'notifies',
+		wait: 5000
 	};
+
+	static wait = null;
 
 	render() {
 		const {
-			id, size, className, style, displayName
-			, header, desc, children, footer
-			, isOpen, onClose, closeButton, modal, mountTo
+			id, size, className, style
+			, closeButton, header
+			, isOpen, onClose, mountTo
 			, ...other
 		} = this.props;
 
-		const body = this.props.body || children;
-		const styles = {
-			box: {},
-			...style
-		};
-
-		const descLength = desc.length;
-
 		const toggle = {
-			beforeToggle: (id, isOpen)=>{
-				modal && Modal.bodyStyle(isOpen, modal);
+			before: (id, isOpen)=>{
+				Notify.wait && clearTimeout(Notify.wait);
 			},
-			afterToggle: (id, isOpen)=>{
-
+			after: (id, isOpen)=>{
+				isOpen && ( Notify.wait = setTimeout(()=>{
+					Notify.toggle(id, false);
+					clearTimeout(Notify.wait);
+				}, parseInt(this.props.wait)) )
 			}
 		};
 
+		const portalProps = {id, mountTo, isOpen, toggle, className};
 
 		return (
-			<Portal id={id} mountTo={mountTo} isOpen={isOpen} {...toggle} className={className}>
+			<Portal {...portalProps}>
 				<div className={classNames("notify", {
 					[size]: true
 				})}>
 					<Paper zDepth={2} style={style}>
+						<header className="clearfix">
+							{ closeButton && (()=>{
+								return (
+									<div className="notify-close">
+										<i className="icon material-icons" onClick={e=>{
+											Portal.toggle(id, false);
+											onClose && onClose(e, id);
+										}}>close</i>
+									</div>
+								)
+							})() }
+							{header && (
+								<div className="notify-header">
+									{ header }
+								</div>
+							)}
+						</header>
 						{ this.props.children }
 					</Paper>
 				</div>
