@@ -56,7 +56,7 @@ class Form extends Component {
 	render() {
 		const { action, children, validate, className } = this.props;
 		return (
-			<form className={className}
+			<form className={className} ref="form"
 			      method="post" action={action}
 			      onSubmit={::this.onSubmit}
 			      noValidate={validate}>
@@ -156,7 +156,7 @@ class Form extends Component {
 	 * @returns {{data: {}, validation: {}}}
 	 */
 	getFormData() {
-		const elements = findDOMNode(this).elements,
+		const elements = findDOMNode(this.refs.form).elements,
 			length = elements.length;
 		const data = {}, validation = {};
 
