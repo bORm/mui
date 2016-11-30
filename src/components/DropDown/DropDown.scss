@@ -41,6 +41,7 @@
     &.top-right {
       transform-origin: right bottom 0;
       bottom: 0;
+      right: 0;
       > .paper {
         bottom: 0;
       }
@@ -48,6 +49,7 @@
     &.bottom-right {
       transform-origin: right top 0;
       top: 0;
+      right: 0;
       > .paper {
         top: 0;
       }

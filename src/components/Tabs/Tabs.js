@@ -12,12 +12,7 @@ class Tabs extends Component {
   };
 
   static defaultProps = {
-    active: 0,
-    last: 0,
-    inkBar: {
-      width: 0,
-      left: 0
-    }
+    active: 0
   };
 
   constructor(props) {

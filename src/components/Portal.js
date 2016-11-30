@@ -90,10 +90,7 @@ class Portal extends Component {
 	}
 
 	componentDidUpdate(props) {
-		//console.log(1);
 		if (this.portal && Portal.isOpen && props.id === this.props.id) {
-			// console.log(2);
-			// console.info('update');
 			return this.child();
 		}
 	}
@@ -106,7 +103,7 @@ class Portal extends Component {
 		}
 	}
 
-	render() {return null;}
+	render() {return null}
 
 }
 
