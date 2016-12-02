@@ -53,7 +53,6 @@ class Form extends Component {
 	/*shouldComponentUpdate(nextProps, nextState) {
 		return nextState.rules !== this.state.rules;
 	}*/
-
 	render() {
 		const { action, children, validate, className, ref } = this.props;
 		return (
