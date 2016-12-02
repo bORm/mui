@@ -77,7 +77,7 @@ class Field extends Component {
 	}
 
 	componentWillReceiveProps(props) {
-		if (props.hasOwnProperty('value') || props.hasOwnProperty('defaultValue')) {
+		if (props.hasOwnProperty('value') || !this.state.value && props.hasOwnProperty('defaultValue')) {
 			this.hasValue(props);
 		}
 		const { required, disabled } = this.props;
@@ -190,7 +190,9 @@ class Field extends Component {
 				if ( value.toString().length > maxLength ) {
 					value = value.slice(0, maxLength);
 					e.target.value = value;
-					this.setState({value});
+					this.hasValue({
+						defaultValue, value
+					});
 					e.preventDefault();
 				}
 			}

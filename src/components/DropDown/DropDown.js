@@ -7,6 +7,7 @@ import { findDOMNode } from 'react-dom';
 import Button, { ButtonIcon } from 'components/Button/Button'
 import Menu, { Item } from './Menu'
 import classNames from 'helpers/classNames'
+import isMounted from 'helpers/isMounted'
 
 import Debounce from 'lodash.debounce'
 import onClickOutside  from 'react-onclickoutside'
@@ -81,9 +82,11 @@ class DropDown extends Component {
 						( isOpen && onChange ) && onChange(e, value);
 						let timeOut = null;
 						timeOut = setTimeout(() => {
-							autoClose && this.setState({isOpen: false});
-							window.clearTimeout(timeOut);
-						}, 250);
+							if ( isMounted(this) ) {
+								autoClose && this.setState({isOpen: false});
+							}
+							clearTimeout(timeOut);
+						}, 250)
 					}}>
 						{ children }
 					</Menu>

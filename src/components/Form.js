@@ -1,6 +1,7 @@
 import React, { Component, PropTypes, cloneElement, createElement } from 'react'
 import { findDOMNode } from 'react-dom'
 import objectKeys from 'helpers/objectKeys'
+import classNames from 'helpers/classNames'
 
 class Form extends Component {
 	static propTypes = {
@@ -32,7 +33,8 @@ class Form extends Component {
 			email: 'Not valid email',
 			tel: 'Not valid phone number',
 		},
-		names: {}
+		names: {},
+		ref: 'form'
 	};
 
 	constructor(props) {
@@ -54,9 +56,9 @@ class Form extends Component {
 	}*/
 
 	render() {
-		const { action, children, validate, className } = this.props;
+		const { action, children, validate, className, ref } = this.props;
 		return (
-			<form className={className}
+			<form className={className} ref={ref}
 			      method="post" action={action}
 			      onSubmit={::this.onSubmit}
 			      noValidate={validate}>
@@ -78,7 +80,7 @@ class Form extends Component {
 		this.form = this.getFormData();
 		const { data, validation } = this.form;
 
-		if ( validate && objectKeys(validation).length ) {
+		if ( validate ) {
 			onSubmit && onSubmit(e, data, validation);
 		}
 
@@ -119,9 +121,7 @@ class Form extends Component {
 				} = props;
 				let isInvalid = validation[name] || names[name];
 
-				return cloneElement(child, {
-					danger: !!(required || danger) && isInvalid || danger,
-					warning: !!(!required || warning) && isInvalid || warning,
+				let childProps = {
 					onBlur: e=>{
 						if ( required ) {
 							this.setState({
@@ -131,7 +131,16 @@ class Form extends Component {
 							});
 						}
 					}
-				});
+				};
+
+				if ( props.hasOwnProperty('danger') ) {
+					childProps['danger'] = !!(required || danger) && isInvalid || danger;
+				}
+				if ( props.hasOwnProperty('warning') ) {
+					childProps['warning'] = !!(!required || warning) && isInvalid || warning;
+				}
+
+				return cloneElement(child, childProps);
 			}
 
 			return createElement('span', {}, child);
@@ -156,7 +165,8 @@ class Form extends Component {
 	 * @returns {{data: {}, validation: {}}}
 	 */
 	getFormData() {
-		const elements = findDOMNode(this).elements,
+		const { ref } = this.props;
+		const elements = findDOMNode(this.refs[ref]).elements,
 			length = elements.length;
 		const data = {}, validation = {};
 
