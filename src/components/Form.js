@@ -1,7 +1,6 @@
 import React, { Component, PropTypes, cloneElement, createElement } from 'react'
 import { findDOMNode } from 'react-dom'
 import objectKeys from 'helpers/objectKeys'
-import classNames from 'helpers/classNames'
 
 class Form extends Component {
 	static propTypes = {

@@ -57,6 +57,8 @@
     }
   }
   &.raised {
+    border-radius: 50%;
+    overflow: hidden;
     &:not(.disabled):active {
       @include box_shadow(2);
     }
@@ -155,6 +157,7 @@
   &.large {
     line-height: 48px;
     min-height: 48px;
+    min-width: 48px;
     .button {
       &-text {
         //line-height: 48px;
