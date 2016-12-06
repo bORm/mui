@@ -78,7 +78,7 @@ class Form extends Component {
 		this.form = this.getFormData();
 		const { data, validation } = this.form;
 
-		if ( validate ) {
+		if ( validate && objectKeys(validation).length ) {
 			onSubmit && onSubmit(e, data, validation);
 		}
 

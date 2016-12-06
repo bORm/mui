@@ -34,5 +34,6 @@ export Portal from './components/Portal'
  * helpers
  */
 export classNames from './helpers/classNames'
+export isMounted from './helpers/isMounted'
 export offset from './helpers/offset'
 export {convertHexToRGB} from './helpers/color'
