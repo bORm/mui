@@ -1,7 +1,7 @@
 .drop {
   position: relative;
   &-container {
-    display: block;
+    min-width: 100%;
     margin: 0;
     padding: 0;
     border: none;
@@ -73,15 +73,17 @@
     * {
       cursor: pointer !important;
     }
-    &.field {
-      &:after {
-        content: 'arrow_drop_down';
-        font-family: 'Material Icons', sans-serif;
-        position: absolute;
-        right: 0;
-        bottom: 8px;
-        font-size: 24px;
-        color: $gray-darker;
+    .field {
+      &-control {
+        &:after {
+          content: 'arrow_drop_down';
+          font-family: 'Material Icons', sans-serif;
+          position: absolute;
+          right: 0;
+          bottom: 8px;
+          font-size: 24px;
+          color: $gray-darker;
+        }
       }
     }
   }

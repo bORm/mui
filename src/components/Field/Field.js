@@ -164,13 +164,16 @@ class Field extends Component {
 			case type === 'number':
 				inputProps.onKeyDown = (e)=>{
 					// Allow: backspace, delete, tab, escape, enter and .
+					let ctrlKey = (e.ctrlKey || e.metaKey) === true;
 					if (inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
 						// Allow: Ctrl+A
-						(e.keyCode == 65 && e.ctrlKey === true) ||
+						(e.keyCode == 65 && ctrlKey) ||
 						// Allow: Ctrl+C
-						(e.keyCode == 67 && e.ctrlKey === true) ||
+						(e.keyCode == 67 && ctrlKey) ||
 						// Allow: Ctrl+X
-						(e.keyCode == 88 && e.ctrlKey === true) ||
+						(e.keyCode == 88 && ctrlKey) ||
+						// Allow: Ctrl+V
+						(e.keyCode == 86 && ctrlKey) ||
 						// Allow: home, end, left, right
 						(e.keyCode >= 35 && e.keyCode <= 39)) {
 						// let it happen, don't do anything

@@ -16,6 +16,7 @@ export Notify from './components/Notify/Notify'
 export Progress from './components/Progress/Progress'
 export Pagination from './components/Pagination/Pagination'
 export RadioButton from './components/RadioButton/RadioButton'
+export Select from './components/Field/Select'
 export Slider from './components/Slider/Slider'
 export Switch from './components/Switch/Switch'
 export Table from './components/Table/Table'
@@ -29,7 +30,8 @@ export Icon from './components/Icon/Icon'
  */
 export Ripple from './components/Ripple'
 export Paper from './components/Paper'
-export Portal from './components/Portal'
+//export Portal from './components/Portal'
+export Portal from './components/Portal/Portal'
 
 /**
  * helpers
