@@ -14,8 +14,12 @@ class Field extends Component {
 		value: PropTypes.any,
 		defaultValue: PropTypes.any,
 		type: PropTypes.string,
-		min: PropTypes.string,
-		max: PropTypes.string,
+		min: PropTypes.oneOfType([
+			PropTypes.string, PropTypes.number
+		]),
+		max: PropTypes.oneOfType([
+			PropTypes.string, PropTypes.number
+		]),
 		name: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.bool
 		]),
@@ -48,7 +52,7 @@ class Field extends Component {
 		// value: '',
 		// defaultValue: '',
 		type: 'text',
-		name: false,
+		//name: false,
 
 		large: false,
 		small: false,
@@ -101,7 +105,7 @@ class Field extends Component {
 
 		this.setState({
 			value: hasValue,
-			hasValue: !!(hasValue)
+			hasValue: !!(typeof hasValue === 'number' ? JSON.stringify(hasValue) : hasValue)
 		});
 	}
 
@@ -157,7 +161,8 @@ class Field extends Component {
 			name, readOnly, autoComplete,
 			ref: 'entry',
 			className: 'field-entry',
-			required, disabled, value
+			required, disabled, value,
+			min, max
 		};
 
 		switch (true) {

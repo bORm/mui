@@ -45,6 +45,8 @@ class Form extends Component {
 			required: 'Field is`nt be empty!',
 			email: 'Not valid email',
 			tel: 'Not valid phone number',
+			min: 'Value is`t valid',
+			max: 'Value is`t valid',
 		},
 		names: {},
 		ref: 'form'
@@ -119,7 +121,8 @@ class Form extends Component {
 					let {
 						name, required,
 						value, type,
-						danger, warning
+						min, max,
+						danger, warning,
 					} = props;
 
 					let childProps = {
@@ -127,12 +130,21 @@ class Form extends Component {
 							if ( required ) {
 								this.setState({
 									validation: Form.isValidElement(validation, {
-										required, name, value: e.target.value, type
+										required, name, value: e.target.value, type, min, max
 									}, rules)
 								});
 							}
 						}
 					};
+
+					/*if ( type === 'select' ) {
+						//debugger
+						childProps.onChange = (e)=>{
+							console.log(e.target);
+							childProps.onBlur(e);
+							return child.props.onChange;
+						};
+					}*/
 
 					let isInvalid = validation[name] || names[name];
 
@@ -496,7 +508,7 @@ class Form extends Component {
 
 	static validate(element, rules) {
 
-		const { required, value, type } = element;
+		const { required, value, type, min, max } = element;
 		let message;
 		if ( required ) {
 			if ( !value ) {
@@ -521,6 +533,16 @@ class Form extends Component {
 						isValid = re.test(value);
 						if ( !isValid ) {
 							message = rules.tel;
+						}
+						break;
+					case 'number':
+						let int = parseInt(value);
+						if ( !(parseInt(min) <= int) ) {
+							message = typeof rules.min === 'function' ? rules.min({min}) : rules.min;
+						}
+
+						if ( !(parseInt(max) >= int) ) {
+							message = typeof rules.max === 'function' ? rules.max({max}) : rules.max;
 						}
 						break;
 				}

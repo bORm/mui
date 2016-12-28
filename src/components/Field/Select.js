@@ -5,66 +5,16 @@ import Field from 'components/Field/Field'
 
 class Select extends Component {
 	static propTypes = {
-		floating: PropTypes.bool,
-
-		placeholder: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
-		]),
-		autoComplete: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
-		]),
-		value: PropTypes.any,
-		defaultValue: PropTypes.any,
-		type: PropTypes.string,
-		min: PropTypes.string,
-		max: PropTypes.string,
-		name: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
-		]),
-
-		large: PropTypes.bool,
-		small: PropTypes.bool,
-
-		block: PropTypes.bool,
-
-		required: PropTypes.bool,
-		readOnly: PropTypes.bool,
-		disabled: PropTypes.bool,
-
-		success: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
-		]),
-		warning: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
-		]),
-		danger: React.PropTypes.oneOfType([
-			PropTypes.string, PropTypes.bool
-		])
+		...Field.propTypes,
+		onChange: PropTypes.func,
+		onBlur: PropTypes.func,
 	};
 
 	static defaultProps = {
-		floating: true,
-
-		placeholder: false,
-		autoComplete: false,
-		// value: '',
-		// defaultValue: '',
-		type: 'text',
-		name: false,
-
-		large: false,
-		small: false,
-
-		block: false,
-
-		required: false,
-		readOnly: true,
-		disabled: false,
-
-		success: false,
-		warning: false,
-		danger: false,
-		onChange: (e, selected)=>{}
+		...Field.defaultProps,
+		type: 'select',
+		onChange: (e, selected)=>{},
+		onBlur: e=>{}
 	};
 
 	constructor(props) {
@@ -136,8 +86,9 @@ class Select extends Component {
 		const { value } = this.state;
 
 		const control = (
-			<Field {...{...fieldProps, name: '', required: false, ref: 'input', value: value.input}} />
+			<Field {...{...fieldProps, name: '', required: false, ref: 'input', value: value.input, readOnly:true}} />
 		);
+
 		return (
 			<div>
 				<DropDown control={control} onChange={(e, selected)=>{
@@ -146,13 +97,19 @@ class Select extends Component {
 						input: selected.text
 					};
 					this.setState({value}, ()=>{
-						this.props.onChange(e, selected)
+						this.props.onChange(e, selected);
+						this.props.onBlur({
+							target: {
+								value: value.select
+							}
+						});
 					});
 				}}>
 					{ this.props.children }
 				</DropDown>
-				<select hidden="hidden" {...{name, required}} ref="select" value={value.select}>
-					<option value="" hidden>Select</option>
+				<select hidden {...{name, required}} ref="select"
+								value={value.select}>
+					<option value="" hidden>Select...</option>
 					{ ((options)=>{
 						let value, text;
 						return options.map(option=>{
