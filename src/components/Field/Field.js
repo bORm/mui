@@ -81,7 +81,7 @@ class Field extends Component {
 	}
 
 	componentWillReceiveProps(props) {
-		if (props.hasOwnProperty('value') || !this.state.value && props.hasOwnProperty('defaultValue')) {
+		if ( props.hasOwnProperty('value') ) {
 			this.hasValue(props);
 		}
 		const { required, disabled } = this.props;
