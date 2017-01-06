@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component, PropTypes, Children} from 'react'
 import { findDOMNode } from 'react-dom'
 import DropDown, { Item } from 'components/DropDown/DropDown'
 import Field from 'components/Field/Field'
@@ -112,7 +112,7 @@ class Select extends Component {
 					<option value="" hidden>Select...</option>
 					{ ((options)=>{
 						let value, text;
-						return options.map(option=>{
+						return Children.map(options, option=>{
 							text = !!(option.props.text) ? option.props.text : option.props.children;
 							value = option.props.value ? option.props.value : text;
 							return <option key={option.key} value={value}>{text}</option>;

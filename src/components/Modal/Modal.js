@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import Portal from 'components/Portal'
+import Portal from 'components/Portal/Portal'
 import Paper from 'components/Paper'
 import classNames from 'helpers/classNames'
 
@@ -55,14 +55,14 @@ class Modal extends Component {
 
 	static toggle = Portal.toggle;
 
-	componentDidUpdate(props){
+	/*componentDidUpdate(props){
 		const { id, isOpen } = this.props;
 		if(!isOpen && props.isOpen){
 			Modal.toggle(id, false);
 		}else if(isOpen && !props.isOpen){
 			Modal.toggle(id, true);
 		}
-	}
+	}*/
 
 	static bodyStyle(isOpen, modal) {
 		if (isOpen && modal) {

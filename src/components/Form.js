@@ -537,11 +537,11 @@ class Form extends Component {
 						break;
 					case 'number':
 						let int = parseInt(value);
-						if ( !(parseInt(min) <= int) ) {
+						if ( !!(min) && !(parseInt(min) <= int) ) {
 							message = typeof rules.min === 'function' ? rules.min({min}) : rules.min;
 						}
 
-						if ( !(parseInt(max) >= int) ) {
+						if ( !!(max) && !(parseInt(max) >= int) ) {
 							message = typeof rules.max === 'function' ? rules.max({max}) : rules.max;
 						}
 						break;

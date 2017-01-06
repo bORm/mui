@@ -142,12 +142,10 @@ class Field extends Component {
 		const { value, hasValue, isFocused } = this.state;
 
 		const inputProps = {
-			...other,
+			...other, defaultValue,
 			onChange: e=>{
 				const { value } = e.target;
-				this.hasValue({
-					defaultValue, value
-				});
+				this.hasValue({defaultValue, value});
 				onChange && onChange(e);
 			},
 			onFocus: e=>{
@@ -156,21 +154,27 @@ class Field extends Component {
 			},
 			onBlur: e=>{
 				this.setState({isFocused: false});
+				let { value } = e.target;
+				if (type === 'number') {
+					value = parseFloat(value).toFixed(2);
+				}
+				this.hasValue({defaultValue, value});
 				onBlur && onBlur(e);
 			},
 			name, readOnly, autoComplete,
 			ref: 'entry',
 			className: 'field-entry',
-			required, disabled, value,
+			required, disabled, //value,
 			min, max
 		};
 
 		switch (true) {
 			case type === 'number':
-				inputProps.onKeyDown = (e)=>{
-					// Allow: backspace, delete, tab, escape, enter and .
+				/*inputProps.onKeyDown = (e)=>{
+					console.log(e.keyCode)
+					// Allow: backspace, delete, tab, escape, enter and . and ,
 					let ctrlKey = (e.ctrlKey || e.metaKey) === true;
-					if (inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+					if (inArray(e.keyCode, [46, 8, 9, 27, 13, 110/!*, 190*!/, 188]) !== -1 ||
 						// Allow: Ctrl+A
 						(e.keyCode == 65 && ctrlKey) ||
 						// Allow: Ctrl+C
@@ -188,7 +192,7 @@ class Field extends Component {
 					if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
 						e.preventDefault();
 					}
-				}
+				}*/
 		}
 
 		if ( !!(max) ) {
