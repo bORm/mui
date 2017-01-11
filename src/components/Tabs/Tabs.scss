@@ -28,11 +28,11 @@
 	}
 
 	&-container {
-		overflow-x: hidden;
+		//overflow-x: hidden;
 	}
 
 	&-content {
-		transform: translateX(0%);
+		//transform: translateX(0%);
 	}
 
 	.tab {
@@ -45,8 +45,11 @@
 
 		&-content {
 			width: 100%;
-			transition: transform ease-out .3s;
-			float: left;
+			//transition: transform ease-out .3s;
+			//float: left;
+			opacity: 0;
+			display: none;
+			transition: opacity .15s linear;
 		}
 
 	}

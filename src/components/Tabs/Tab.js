@@ -16,8 +16,9 @@ class Tab extends Component {
   }
 
   render() {
+    const { ...other } = this.props;
     return (
-      <div>
+      <div {...other}>
         { this.props.children }
       </div>
     );

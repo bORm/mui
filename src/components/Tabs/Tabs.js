@@ -1,4 +1,4 @@
-import React, {Component, PropTypes, Children} from 'react'
+import React, {Component, PropTypes, Children, cloneElement} from 'react'
 import { findDOMNode } from 'react-dom'
 import Tab from 'components/Tabs/Tab'
 import Button from 'components/Button/Button'
@@ -67,21 +67,27 @@ class Tabs extends Component {
       );
 
       if ( key === active ) {
-        transform = 0
+        transform = 0;
       } else if ( key > active ) {
-        transform = 100
+        transform = 100;
       }
 
       tabs.contents.push(
-        <div className={classNames('tab-content', tab.props.className, {
-          active: key === active
-        })} style={{
-          width: width + '%',
-          transform: `translateX(${transform}%)`,
-          position: key === active ? 'relative' : 'absolute',
-          visibility: key === active || key === last ? 'visible' : 'hidden'
-        }} key={key}>{ tab }</div>
-      )
+				cloneElement(tab, {
+					className: classNames('tab-content', tab.props.className, {
+						active: key === active
+					}),
+					style: {
+						// width: width + '%',
+						// transform: `translateX(${transform}%)`,
+						// position: key === active ? 'relative' : 'absolute',
+						//visibility: key === active || key === last ? 'visible' : 'hidden',
+						display: key === active ? 'block' : 'none',
+						opacity: key === active ? 1 : 0,
+          }, key
+        })
+      );
+
     });
 
     return (
@@ -91,7 +97,7 @@ class Tabs extends Component {
           <li className="ink-bar" style={inkBar}/>
         </ul>
         <div className="tabs-container">
-          <div className="tabs-content" style={{width: count * 100 + '%'}}>
+          <div className="tabs-content" style={{/*{width: count * 100 + '%'}*/}}>
             { tabs.contents }
           </div>
         </div>
