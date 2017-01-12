@@ -1,6 +1,9 @@
 .date-picker {
 	font-size:16px;
 	box-sizing:border-box;
+	.modal-body{
+		margin: -24px;
+	}
 	> .modal >.paper {
 		padding: 0;
 	}
@@ -8,8 +11,11 @@
 		box-sizing:border-box;
 	}
 	.date-view {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
 		background: $accent;
-		height: 280px;
+		height: 328px;
 		width: 180px;
 		float: left;
 		@media #{$screen-xs-max} {
@@ -22,6 +28,13 @@
 			text-transform: uppercase;
 			color: white;
 		}
+		.day,.month,.year{
+			cursor: pointer;
+			i{
+				vertical-align: middle;
+				font-size: 20px;
+			}
+		}
 		.day {
 			font-size: 8rem;
 		}
@@ -30,7 +43,7 @@
 		z-index: 10;
 		background: white;
 		width: 330px;
-		height: 280px;
+		height: 328px;
 		color: #244152;
 		overflow: hidden;
 
@@ -64,6 +77,7 @@
 			float: left;
 			width: 100%;
 			margin-top: 8px;
+			margin-left: 8px;
 			font-size: 0;
 			> span {
 				display: inline-block;
@@ -85,6 +99,7 @@
 			overflow: hidden;
 			position: relative;
 			height: 192px;
+			margin-left: 8px;
 			> div {
 				//width: 330px;
 				width: 50%;
@@ -150,6 +165,12 @@
 					}
 				}
 			}
+		}
+		.button-cont{
+			display: flex;
+			justify-content: flex-end;
+			margin-right: 5px;
+			color: $accent;
 		}
 	}
 }

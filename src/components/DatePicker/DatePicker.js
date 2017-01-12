@@ -149,6 +149,10 @@ class DatePicker extends Component {
 									break;
 							}
 						})(picker) }
+						<div className="button-cont">
+							<Button>Cancel</Button>
+							<Button>Ok</Button>
+						</div>
 					</div>
 				</Modal>
 			</div>
@@ -164,12 +168,14 @@ class DateView extends Component {
 			<div className="date-view">
 				<div className="month" onClick={e=>picker('month')}>
 					{ DayAndMonthAndYear.months }
+					<i className="material-icons">keyboard_arrow_down</i>
 				</div>
 				<div className="day" onClick={e=>picker('day')}>
 					{ DateUtilities.toDayOfMonthString(selected) }
 				</div>
 				<div className="year" onClick={e=>picker('year')}>
 					{ DayAndMonthAndYear.year }
+					<i className="material-icons">keyboard_arrow_down</i>
 				</div>
 			</div>
 		)
@@ -306,7 +312,7 @@ class CalendarDay extends Component {
 
 	render() {
 		return (
-			<div className={'calendar-day'}>
+			<div className={'calendar-day clearfix'}>
 				<MonthHeader  {...{
 					ref: "monthHeader",
 					view: this.props.view,
