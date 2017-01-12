@@ -17,7 +17,7 @@ class Button extends Component {
 
 		block: PropTypes.bool,
 		flat: PropTypes.bool,
-		raise: PropTypes.bool,
+		raised: PropTypes.bool,
 		link: PropTypes.bool,
 
 		primary: PropTypes.bool,

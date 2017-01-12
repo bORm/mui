@@ -176,7 +176,7 @@ class Ripple extends Component {
 			topLeftDiag, topRightDiag, botRightDiag, botLeftDiag
 		);
 		const { size } = this.state;
-		const rippleSize = isCenter ? size.min : rippleRadius * 2;
+		const rippleSize = isCenter ? size.max : rippleRadius * 2;
 		const left = pointerX - rippleRadius;
 		const top = pointerY - rippleRadius;
 

@@ -5,6 +5,7 @@
 export Button, { ButtonIcon, ButtonText } from './components/Button/Button'
 export Checkbox from './components/Checkbox/Checkbox'
 export Chips from './components/Chips/Chips'
+export DatePicker from './components/DatePicker/DatePicker'
 export DropDown, { Item as DropDownItem } from './components/DropDown/DropDown'
 export Field from './components/Field/Field'
 export Form from './components/Form'

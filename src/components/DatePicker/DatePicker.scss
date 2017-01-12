@@ -1,0 +1,155 @@
+.date-picker {
+	font-size:16px;
+	box-sizing:border-box;
+	> .modal >.paper {
+		padding: 0;
+	}
+	* {
+		box-sizing:border-box;
+	}
+	.date-view {
+		background: $accent;
+		height: 280px;
+		width: 180px;
+		float: left;
+		@media #{$screen-xs-max} {
+			float: none;
+			height: auto;
+		}
+		div {
+			width: 100%;
+			text-align: center;
+			text-transform: uppercase;
+			color: white;
+		}
+		.day {
+			font-size: 8rem;
+		}
+	}
+	.calendar {
+		z-index: 10;
+		background: white;
+		width: 330px;
+		height: 280px;
+		color: #244152;
+		overflow: hidden;
+
+		&-month,
+		&-year {
+			height: 100%;
+			overflow: auto;
+			div {
+				text-align: center;
+				line-height: 3.6rem;
+				cursor: pointer;
+				&.selected {
+					cursor: default;
+					font-size: 3rem;
+					color: $accent;
+				}
+			}
+		}
+
+		.month-header {
+			float: left;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			> .button {
+				box-shadow: none;
+			}
+		}
+		.week-header {
+			float: left;
+			width: 100%;
+			margin-top: 8px;
+			font-size: 0;
+			> span {
+				display: inline-block;
+				width: 32px;
+				height: 32px;
+				font-size: 1.2rem;
+				text-transform: uppercase;
+				color: $gray;
+				font-weight: bold;
+				text-align: center;
+				& + span {
+					margin-left: 15px;
+				}
+			}
+		}
+		.weeks {
+			float: left;
+			width: 200%;
+			overflow: hidden;
+			position: relative;
+			height: 192px;
+			> div {
+				//width: 330px;
+				width: 50%;
+				&.current {
+					left: 0;
+				}
+				&.other {
+					position: absolute;
+					left: 330px;
+					&.right {
+						left: -330px;
+					}
+				}
+				&.sliding {
+					transition: transform 250ms ease;
+					&.left {
+						transform: translate3d(-330px, 0, 0);
+					}
+					&.right {
+						transform: translate3d(330px, 0, 0);
+					}
+				}
+			}
+			.week {
+				float: left;
+				width: 100%;
+				font-size: 0;
+				.day {
+					//float: left;
+					display: inline-block;
+					width: 32px;
+					height: 32px;
+					line-height: 32px;
+					//margin: 0 7.5px;
+					margin: 0;
+					color: $black;
+					& + .day {
+						margin-left: 15px;
+					}
+					font-size: 1.2rem;
+					cursor: pointer;
+					text-align: center;
+					border-radius: 50%;
+					&:hover {
+						background: #EAEAEA;
+					}
+					&.other-month {
+						color: #AAA;
+					}
+					&.disabled {
+						color: #E0E0E0;
+						cursor: default;
+						&:hover {
+							background: transparent !important;
+						}
+					}
+					&.today {
+						color: $accent;
+					}
+					&.selected {
+						background: $accent;
+						color: white;
+					}
+				}
+			}
+		}
+	}
+}
