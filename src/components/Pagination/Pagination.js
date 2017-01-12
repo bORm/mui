@@ -17,6 +17,7 @@ class Pagination extends Component {
     first: true,
     last: true,
     limit: 10,
+		total: 10,
     link: '/page/',
     onChange: false
   };
@@ -33,16 +34,16 @@ class Pagination extends Component {
   render() {
     return (
       <div className="pagination">
-        { this.pages() }
+        { this.pages(this.props) }
       </div>
     );
   }
 
-  pages(){
+  pages(props){
     let {
       visible, first, last,
       limit, total, page, onChange
-    } = this.state;
+    } = props;
 
     limit = parseInt(limit);
     total = parseInt(total);
