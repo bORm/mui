@@ -82,7 +82,7 @@ class DatePicker extends Component {
 	}
 
 	onSelect(day) {
-		this.setState({selected: day});
+		this.setState({selected: day, picker: 'day'});
 		if (this.props.onSelect) {
 			this.props.onSelect(day);
 		}
@@ -122,7 +122,7 @@ class DatePicker extends Component {
 									return <CalendarDay {...{
 										id: this.state.id,
 										onSelect: day=>{
-											this.hide();
+											//this.hide();
 											this.onSelect(day);
 										},
 										view: this.state.view,
@@ -150,8 +150,8 @@ class DatePicker extends Component {
 							}
 						})(picker) }
 						<div className="button-cont">
-							<Button>Cancel</Button>
-							<Button>Ok</Button>
+							<Button onClick={e=>this.hide()}>Cancel</Button>
+							<Button onClick={e=>this.hide()}>Ok</Button>
 						</div>
 					</div>
 				</Modal>
