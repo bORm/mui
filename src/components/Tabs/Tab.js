@@ -4,11 +4,13 @@ class Tab extends Component {
   static propTypes = {
     label: PropTypes.oneOfType([
       PropTypes.bool, PropTypes.string, PropTypes.element
-    ])
+    ]),
+    disabled: PropTypes.bool
   };
 
   static defaultProps = {
-    label: false
+    label: false,
+		disabled: false
   };
 
   constructor(props) {

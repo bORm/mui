@@ -8,11 +8,13 @@ class Tabs extends Component {
   static propTypes = {
     active: PropTypes.oneOfType([
       PropTypes.number, PropTypes.string
-    ])
+    ]),
+    onChange: PropTypes.func
   };
 
   static defaultProps = {
-    active: 0
+    active: 0,
+		onChange: ()=>{}
   };
 
   constructor(props) {
@@ -26,20 +28,36 @@ class Tabs extends Component {
     };
   }
 
-  set active(index){
-    let DOM = findDOMNode(this.refs['li' + index]);
-    this.setState({
-      active: index,
-      last  : this.state.active,
-      inkBar: {
-        width : DOM.offsetWidth
-      , left  : DOM.offsetLeft
+  set active(props){
+		let { active } = props;
+		active = parseInt(active);
+		let TAB = props.children[active];
+		if ( TAB ) {
+		  if ( TAB.props.disabled ) {
+				active = this.state.active;
       }
-    })
+			let DOM = findDOMNode(this.refs['li' + active]);
+			this.setState({
+				active: active,
+				last  : this.state.active,
+				inkBar: {
+					width : DOM.offsetWidth
+				, left  : DOM.offsetLeft
+				}
+			}, ()=>{
+			  this.props.onChange(this.state.active)
+      })
+    }
   }
 
   componentDidMount() {
-    this.active = parseInt(this.props.active)
+    this.active = this.props
+  }
+
+  componentWillReceiveProps(props){
+    if ( props.active !== this.state.active ) {
+			this.active = props
+    }
   }
 
   render() {
@@ -59,9 +77,9 @@ class Tabs extends Component {
       tabs.titles.push(
         <li ref={'li'+key} className={classNames('tab-title', {
           active: key === active
-        })} key={key} onClick={e=>this.active = key}>
+        })} key={key} onClick={e=>this.active = {...this.props, active: key}}>
           { typeof tab.props.label === 'string' ? (
-            <Button text={tab.props.label}/>
+            <Button text={tab.props.label} disabled={tab.props.disabled}/>
           ) : tab.props.label }
         </li>
       );

@@ -173,4 +173,17 @@
 			color: $accent;
 		}
 	}
+
+	&.month {
+		.calendar .weeks .week .day{
+			&:hover {
+				background: transparent;
+				cursor: default;
+				&.selected {
+					background: $accent;
+					color: white;
+				}
+			}
+		}
+	}
 }

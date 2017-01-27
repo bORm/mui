@@ -678,7 +678,7 @@ export default class Portal extends Component {
 
 	render(){
 		const { id, ...other } = this.props;
-		console.log(id, this.state);
+		//console.log(id, this.state);
 		return (
 			<PortalContent id={id} { ...other } isOpen={this.state.isOpen}>
 				{ this.props.children }

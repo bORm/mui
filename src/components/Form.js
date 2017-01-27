@@ -7,13 +7,13 @@ import objectKeys from 'helpers/objectKeys'
 
 // types which indicate a submit action and are not successful controls
 // these will be ignored
-var k_r_submitter = /^(?:submit|button|image|reset|file)$/i;
+let k_r_submitter = /^(?:submit|button|image|reset|file)$/i;
 
 // node names which could be successful controls
-var k_r_success_contrls = /^(?:input|select|textarea|keygen)/i;
+let k_r_success_contrls = /^(?:input|select|textarea|keygen)/i;
 
 // Matches bracket notation.
-var brackets = /(\[[^\[\]]*\])/g;
+let brackets = /(\[[^\[\]]*\])/g;
 
 
 class Form extends Component {
@@ -47,6 +47,8 @@ class Form extends Component {
 			tel: 'Not valid phone number',
 			min: 'Value is`t valid',
 			max: 'Value is`t valid',
+			minLength: 'Value is`t valid',
+			maxLength: 'Value is`t valid',
 		},
 		names: {},
 		ref: 'form'
@@ -122,6 +124,7 @@ class Form extends Component {
 						name, required,
 						value, type,
 						min, max,
+						minLength, maxLength,
 						danger, warning,
 					} = props;
 
@@ -130,7 +133,7 @@ class Form extends Component {
 							if ( required ) {
 								this.setState({
 									validation: Form.isValidElement(validation, {
-										required, name, value: e.target.value, type, min, max
+										required, name, value: e.target.value, type, min, max, minLength, maxLength
 									}, rules)
 								});
 							}
@@ -273,15 +276,15 @@ class Form extends Component {
 
 		const { rules } = this.state;
 
-		var serializer = options.serializer || ((options.hash) ? Form.hash_serializer : Form.str_serialize);
+		let serializer = options.serializer || ((options.hash) ? Form.hash_serializer : Form.str_serialize);
 
-		var elements = form && form.elements ? form.elements : [];
+		let elements = form && form.elements ? form.elements : [];
 
 		//Object store each radio and set if it's empty or not
-		var radio_store = Object.create(null);
+		let radio_store = Object.create(null);
 
-		for (var i=0 ; i<elements.length ; ++i) {
-			var element = elements[i];
+		for (let i=0 ; i<elements.length ; ++i) {
+			let element = elements[i];
 
 			// ingore disabled fields
 			if ((!options.disabled && element.disabled) || !element.name) {
@@ -293,8 +296,8 @@ class Form extends Component {
 				continue;
 			}
 
-			var key = element.name;
-			var val = element.value;
+			let key = element.name;
+			let val = element.value;
 
 			// we can't just use element.value for checkboxes cause some browsers lie to us
 			// they say "on" for value when the box isn't checked
@@ -335,12 +338,12 @@ class Form extends Component {
 			if (element.type === 'select-multiple') {
 				val = [];
 
-				var selectOptions = element.options;
-				var isSelectedOptions = false;
-				for (var j=0 ; j<selectOptions.length ; ++j) {
-					var option = selectOptions[j];
-					var allowedEmpty = options.empty && !option.value;
-					var hasValue = (option.value || allowedEmpty);
+				let selectOptions = element.options;
+				let isSelectedOptions = false;
+				for (let j=0 ; j<selectOptions.length ; ++j) {
+					let option = selectOptions[j];
+					let allowedEmpty = options.empty && !option.value;
+					let hasValue = (option.value || allowedEmpty);
 					if (option.selected && hasValue) {
 						isSelectedOptions = true;
 
@@ -376,7 +379,7 @@ class Form extends Component {
 
 		// Check for all empty radio buttons and serialize them with key=""
 		if (options.empty) {
-			for (var key in radio_store) {
+			for (let key in radio_store) {
 				if (!radio_store[key]) {
 					result = serializer(result, key, '');
 				}
@@ -389,10 +392,10 @@ class Form extends Component {
 	}
 
 	static parse_keys(string) {
-		var keys = [];
-		var prefix = /^([^\[\]]*)/;
-		var children = new RegExp(brackets);
-		var match = prefix.exec(string);
+		let keys = [];
+		let prefix = /^([^\[\]]*)/;
+		let children = new RegExp(brackets);
+		let match = prefix.exec(string);
 
 		if (match[1]) {
 			keys.push(match[1]);
@@ -411,8 +414,8 @@ class Form extends Component {
 			return result;
 		}
 
-		var key = keys.shift();
-		var between = key.match(/^\[(.+?)\]$/);
+		let key = keys.shift();
+		let between = key.match(/^\[(.+?)\]$/);
 
 		if (key === '[]') {
 			result = result || [];
@@ -438,11 +441,11 @@ class Form extends Component {
 			result[key] = Form.hash_assign(result[key], keys, value);
 		}
 		else {
-			var string = between[1];
+			let string = between[1];
 			// +var converts the variable into a number
 			// better than parseInt because it doesn't truncate away trailing
 			// letters and actually fails if whole thing is not a number
-			var index = +string;
+			let index = +string;
 
 			// If the characters between the brackets is not a number it is an
 			// attribute name and can be assigned directly.
@@ -461,18 +464,18 @@ class Form extends Component {
 
 	// Object/hash encoding serializer.
 	static hash_serializer(result, key, value) {
-		var matches = key.match(brackets);
+		let matches = key.match(brackets);
 
 		// Has brackets? Use the recursive assignment function to walk the keys,
 		// construct any missing objects in the result tree and make the assignment
 		// at the end of the chain.
 		if (matches) {
-			var keys = Form.parse_keys(key);
+			let keys = Form.parse_keys(key);
 			Form.hash_assign(result, keys, value);
 		}
 		else {
 			// Non bracket notation can make assignments directly.
-			var existing = result[key];
+			let existing = result[key];
 
 			// If the value has been assigned already (for instance when a radio and
 			// a checkbox have the same name attribute) convert the previous value
@@ -508,13 +511,23 @@ class Form extends Component {
 
 	static validate(element, rules) {
 
-		const { required, value, type, min, max } = element;
+		const { required, value, type, min, max, minLength, maxLength } = element;
 		let message;
 		if ( required ) {
 			if ( !value ) {
 				message = rules.required;
 			} else {
 				let isValid, re;
+
+				let length = value.length;
+				if ( minLength !== -1 && length < parseInt(minLength) ) {
+					message = typeof rules.minLength === 'function' ? rules.minLength({minLength}) : rules.minLength;
+				}
+
+				if ( minLength !== -1 && length > parseInt(maxLength) ) {
+					message = typeof rules.maxLength === 'function' ? rules.maxLength({maxLength}) : rules.maxLength;
+				}
+
 				switch (type) {
 					case 'email':
 						// after read this https://habrahabr.ru/post/175375/
@@ -546,6 +559,7 @@ class Form extends Component {
 						}
 						break;
 				}
+
 			}
 		}
 

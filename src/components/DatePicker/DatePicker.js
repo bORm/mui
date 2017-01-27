@@ -6,15 +6,24 @@ import classNames from 'helpers/classNames'
 
 import { findDOMNode } from 'react-dom'
 
-const months = [
+/*const months = [
 	"January", "February",
 	"March", "April", "May",
 	"June", "July", "August",
 	"September", "October", "November",
 	"December"
+];*/
+
+const months = [
+	"Январь","Февраль",
+	"Март","Апрель","Май",
+	"Июнь","Июль","Август",
+	"Сентябрь","Октябрь", "Ноябрь",
+	"Декабрь"
 ];
 
-const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+//const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
 const DateUtilities = {
 	pad: function (value, length) {
@@ -35,6 +44,10 @@ const DateUtilities = {
 
 	toString: function (date) {
 		return date.getFullYear() + "-" + DateUtilities.pad((date.getMonth() + 1).toString(), 2) + "-" + DateUtilities.pad(date.getDate().toString(), 2);
+	},
+
+	toMonthString: function (date) {
+		return date.getFullYear() + "-" + DateUtilities.pad((date.getMonth() + 1).toString(), 2);
 	},
 
 	toDayOfMonthString: function (date) {
@@ -68,15 +81,25 @@ const DateUtilities = {
 };
 
 class DatePicker extends Component {
+
+	static propTypes = {
+		type: PropTypes.oneOf(['date', 'month'])
+	};
+
+	static defaultProps = {
+		type: 'date'
+	};
+
 	constructor(props) {
 		super(props);
-		const def = this.props.selected || new Date();
+		const { selected } = props;
+		const def = selected || new Date();
 		this.state = {
 			view: DateUtilities.clone(def),
-			selected: DateUtilities.clone(def),
+			selected: selected,
 			minDate: DateUtilities.addYears(new Date(), -100),
 			maxDate: DateUtilities.addYears(new Date(), 100),
-			id: 'datePicker',
+			id: this.props.id || 'datePicker',
 			picker: 'day' // oneOf['day', 'month', 'year']
 		}
 	}
@@ -96,17 +119,19 @@ class DatePicker extends Component {
 	}
 
 	render(){
-		const { picker } = this.state;
-
+		const { selected, picker } = this.state;
+		const { name, placeholder, type } = this.props;
 		return (
 			<div className={'date-picker-control'}>
 				<Field {...{
 					type: "text",
 					readOnly: true,
-					value: DateUtilities.toString(this.state.selected),
-					onClick: ::this.show
+					value: !!(selected)
+						? type === 'date' ? DateUtilities.toString(selected) : DateUtilities.toMonthString(selected)
+						: '',
+					onClick: ::this.show, name, placeholder
 				}}/>
-				<Modal id={this.state.id} className={'date-picker'} closeButton={false}>
+				<Modal id={this.state.id} className={classNames('date-picker', type)} closeButton={false}>
 					<DateView {...{
 						view: this.state.view,
 						selected: this.state.selected,
@@ -121,9 +146,12 @@ class DatePicker extends Component {
 								case 'day':
 									return <CalendarDay {...{
 										id: this.state.id,
-										onSelect: day=>{
+										onSelect: date=>{
 											//this.hide();
-											this.onSelect(day);
+											if ( type === 'month' ) {
+												date.setUTCDate(new Date().getUTCDate());
+											}
+											this.onSelect(date);
 										},
 										view: this.state.view,
 										selected: this.state.selected,
@@ -150,8 +178,8 @@ class DatePicker extends Component {
 							}
 						})(picker) }
 						<div className="button-cont">
-							<Button onClick={e=>this.hide()}>Cancel</Button>
-							<Button onClick={e=>this.hide()}>Ok</Button>
+							<Button onClick={e=>this.hide()}>Отмена</Button>
+							<Button onClick={e=>this.hide()}>Подтвердить</Button>
 						</div>
 					</div>
 				</Modal>
@@ -162,8 +190,8 @@ class DatePicker extends Component {
 
 class DateView extends Component {
 	render(){
-		const { selected, picker } = this.props;
-		const DayAndMonthAndYear = DateUtilities.toMonthAndYearString(selected);
+		const { selected, view, picker } = this.props;
+		const DayAndMonthAndYear = DateUtilities.toMonthAndYearString(selected ? selected : view);
 		return (
 			<div className="date-view">
 				<div className="month" onClick={e=>picker('month')}>
@@ -171,7 +199,7 @@ class DateView extends Component {
 					<i className="material-icons">keyboard_arrow_down</i>
 				</div>
 				<div className="day" onClick={e=>picker('day')}>
-					{ DateUtilities.toDayOfMonthString(selected) }
+					{ DateUtilities.toDayOfMonthString(selected ? selected : view) }
 				</div>
 				<div className="year" onClick={e=>picker('year')}>
 					{ DayAndMonthAndYear.year }
@@ -270,7 +298,7 @@ class CalendarMonth extends Component {
 	}
 
 	render(){
-		const date = this.props.selected;
+		const date = !!(this.props.selected) ? this.props.selected : this.props.view;
 		let selected;
 		let props;
 		return (
@@ -339,8 +367,9 @@ class CalendarDay extends Component {
 class MonthHeader extends Component {
 	constructor(props) {
 		super(props);
+		const { selected, view } = props;
 		this.state = {
-			view: DateUtilities.clone(this.props.selected),
+			view: DateUtilities.clone(!!(selected) ? selected : view),
 			enabled: true
 		}
 	}
@@ -403,9 +432,10 @@ class WeekHeader extends Component {
 class Weeks extends Component {
 	constructor(props){
 		super(props);
+		const { selected, view } = props;
 		this.state = {
-			view: DateUtilities.clone(this.props.selected),
-			other: DateUtilities.clone(this.props.selected),
+			view: DateUtilities.clone(!!(selected) ? selected : view),
+			other: DateUtilities.clone(!!(selected) ? selected : view),
 			sliding: null
 		}
 	}
@@ -469,7 +499,7 @@ class Weeks extends Component {
 		return starts.map((start,key)=>(
 			<Week {...{
 				key, start, month,
-				selected, onSelect, minDate, maxDate
+				selected, view, onSelect, minDate, maxDate
 			}}/>
 		));
 	}
@@ -501,7 +531,7 @@ class Week extends Component {
 	}
 
 	render() {
-		const { start, month, selected } = this.props;
+		const { start, month, selected , view } = this.props;
 		let days = Week.buildDays(start);
 		return (
 			<div className="week">
@@ -512,7 +542,7 @@ class Week extends Component {
 						className: classNames('day', {
 							today: DateUtilities.isSameDay(day, new Date()),
 							otherMonth: month !== day.getMonth(),
-							selected: selected && DateUtilities.isSameDay(day, selected),
+							selected: selected && DateUtilities.isSameDay(day, !!(selected) ? selected : view),
 							disabled: this.isDisabled(day)
 						})
 					}}>

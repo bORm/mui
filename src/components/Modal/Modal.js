@@ -76,13 +76,13 @@ class Modal extends Component {
 	}
 
 	static scrollWidth() {
-		var scrollDiv = document.createElement("div");
+		let scrollDiv = document.createElement("div");
 		scrollDiv.style.cssText = 'width:100px;height:100px;overflow:scroll !important;position:absolute;top:-9999px';
 		document.body.appendChild(scrollDiv);
-		var result = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+		let result = scrollDiv.offsetWidth - scrollDiv.clientWidth;
 		//console.log(result);
 		document.body.removeChild(scrollDiv);
-		var hasScroll = window.innerWidth > document.documentElement.clientWidth;
+		let hasScroll = window.innerWidth > document.documentElement.clientWidth;
 		return hasScroll ? result : 0;
 	}
 
