@@ -19,6 +19,8 @@
 		width: 180px;
 		float: left;
 		@media #{$screen-xs-max} {
+			width: 100%;
+			padding: 25px 0;
 			float: none;
 			height: auto;
 		}
