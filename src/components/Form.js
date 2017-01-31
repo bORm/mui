@@ -130,13 +130,13 @@ class Form extends Component {
 
 					let childProps = {
 						onBlur: e=>{
-							if ( required ) {
-								this.setState({
-									validation: Form.isValidElement(validation, {
-										required, name, value: e.target.value, type, min, max, minLength, maxLength
-									}, rules)
-								});
-							}
+							this.setState({
+								validation: Form.isValidElement(validation, {
+									required, name, value: e.target.value, type, min, max, minLength, maxLength
+								}, rules)
+							}, ()=>{
+								console.log(this.state.validation)
+							});
 						}
 					};
 
@@ -514,52 +514,53 @@ class Form extends Component {
 		const { required, value, type, min, max, minLength, maxLength } = element;
 		let message;
 		if ( required ) {
-			if ( !value ) {
-				message = rules.required;
-			} else {
-				let isValid, re;
 
-				let length = value.length;
-				if ( minLength !== -1 && length < parseInt(minLength) ) {
-					message = typeof rules.minLength === 'function' ? rules.minLength({minLength}) : rules.minLength;
-				}
+		}
 
-				if ( minLength !== -1 && length > parseInt(maxLength) ) {
-					message = typeof rules.maxLength === 'function' ? rules.maxLength({maxLength}) : rules.maxLength;
-				}
+		if ( required && !value ) {
+			message = rules.required;
+		} else if ( required || !!(value) ) {
+			let isValid, re;
 
-				switch (type) {
-					case 'email':
-						// after read this https://habrahabr.ru/post/175375/
-						//let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-						// i`ve changed
-						re = /.+@.+\..+/i;
-						isValid = re.test(value);
-						//return !isValid && rules.email;
-						if ( !isValid ) {
-							message = rules.email;
-						}
-						break;
-					case 'tel':
-						//let re = /.+@.+\..+/i;
-						re = /^\+380\d{9}$/;
-						isValid = re.test(value);
-						if ( !isValid ) {
-							message = rules.tel;
-						}
-						break;
-					case 'number':
-						let int = parseInt(value);
-						if ( !!(min) && !(parseInt(min) <= int) ) {
-							message = typeof rules.min === 'function' ? rules.min({min}) : rules.min;
-						}
+			let length = value.length;
+			if ( minLength !== -1 && length < parseInt(minLength) ) {
+				message = typeof rules.minLength === 'function' ? rules.minLength({minLength}) : rules.minLength;
+			}
 
-						if ( !!(max) && !(parseInt(max) >= int) ) {
-							message = typeof rules.max === 'function' ? rules.max({max}) : rules.max;
-						}
-						break;
-				}
+			if ( maxLength !== -1 && length > parseInt(maxLength) ) {
+				message = typeof rules.maxLength === 'function' ? rules.maxLength({maxLength}) : rules.maxLength;
+			}
 
+			switch (type) {
+				case 'email':
+					// after read this https://habrahabr.ru/post/175375/
+					//let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+					// i`ve changed
+					re = /.+@.+\..+/i;
+					isValid = re.test(value);
+					//return !isValid && rules.email;
+					if ( !isValid ) {
+						message = rules.email;
+					}
+					break;
+				case 'tel':
+					//let re = /.+@.+\..+/i;
+					re = /^\+380\d{9}$/;
+					isValid = re.test(value);
+					if ( !isValid ) {
+						message = rules.tel;
+					}
+					break;
+				case 'number':
+					let int = parseInt(value);
+					if ( !!(min) && !(parseInt(min) <= int) ) {
+						message = typeof rules.min === 'function' ? rules.min({min}) : rules.min;
+					}
+
+					if ( !!(max) && !(parseInt(max) >= int) ) {
+						message = typeof rules.max === 'function' ? rules.max({max}) : rules.max;
+					}
+					break;
 			}
 		}
 
