@@ -13,6 +13,7 @@ class RadioButton extends Component {
             <input type="radio" />
             <span>Some text</span>
             <div className="control__indicator"></div>
+            <div className="description"></div>
           </label>
         </div>
       </div>

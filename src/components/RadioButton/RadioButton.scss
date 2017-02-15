@@ -10,7 +10,6 @@
     position: relative;
     padding-left: 30px;
     cursor: pointer;
-    font-size: 16px;
     line-height: 30px;
   }
 
@@ -58,6 +57,13 @@
     content: '';
     position: absolute;
     transform: scale(0);
+  }
+
+  .description{
+    font-size: 12px;
+    font-weight: 300;
+    color: $gray-darker;
+    line-height: 1;
   }
 
   input:disabled ~ .control__indicator, input:disabled ~ .control__indicator:after, input:disabled + span{

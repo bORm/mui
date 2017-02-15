@@ -8,6 +8,10 @@
 		position: relative;
 		padding-bottom: 2px;
 
+		display: flex;
+		width: 100%;
+		overflow: scroll;
+
 		li {
 			.button.flat {
 				margin: 0;
@@ -17,6 +21,7 @@
 			}
 			&.ink-bar {
 				position: absolute;
+				bottom: 0;
 				width: 0;
 				height: 2px;
 				background: $accent;
@@ -41,6 +46,11 @@
 			display: inline-block;
 			font-size: 14px;
 			vertical-align: middle;
+			/*.button-text{
+				@include for-phone-only{
+					font-size: 1.2rem;
+				}
+			}*/
 		}
 
 		&-content {
@@ -50,6 +60,12 @@
 			opacity: 0;
 			display: none;
 			transition: opacity .15s linear;
+
+			ul{
+				display: block;
+				overflow: none;
+				width: auto;
+			}
 		}
 
 	}
