@@ -960,7 +960,7 @@ class Field extends Component {
 			className,
 			...other
 		} = this.props;
-		
+
 		const valid = success || warning || danger;
 
 		let icon = null;

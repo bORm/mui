@@ -3,6 +3,7 @@
  * ui components
  */
 export Button, { ButtonIcon, ButtonText } from './components/Button/Button'
+export Carousel from './components/Carousel'
 export Checkbox from './components/Checkbox/Checkbox'
 export Chips from './components/Chips/Chips'
 export DatePicker from './components/DatePicker/DatePicker'

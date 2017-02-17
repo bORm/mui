@@ -47,7 +47,9 @@ class Item extends Component {
     value: PropTypes.oneOfType([
       PropTypes.string, PropTypes.number, PropTypes.bool
     ]),
-    text: PropTypes.string,
+    text: PropTypes.oneOfType([
+      PropTypes.string, PropTypes.number
+    ]),
     onClick: PropTypes.oneOfType([
       PropTypes.func, PropTypes.bool
     ]),
