@@ -1,4 +1,9 @@
 .checkbox {
+
+  &-container {
+    display: inline-block;
+  }
+
   display: inline-block;
   padding: 0 15px;
   margin-left: -15px;

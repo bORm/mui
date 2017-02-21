@@ -62,26 +62,25 @@ class Item extends Component {
     onClick: false,
     ripple: {
       isCenter: false
-    }
+    },
+    onChange: (e)=>{}
   };
 
   render() {
 
     const {
-      text, value,
-      className,
-      children, onClick,
+      text, children, onClick,
       ripple, ...other
     } = this.props;
 
     const rippleContainer = (
-      <div className={classNames('menu-item', className)}
+      <div className={classNames('menu-item', this.props.className)}
            onClick={e=>{
              onClick && onClick(e, ((text, value)=>{
                text = !!(text) ? text : children;
                value = value ? value : text;
                return {value, text}
-             })(text, value))
+             })(text, this.props.value))
            }}
       />
     );

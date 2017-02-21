@@ -10,12 +10,11 @@ class Checkbox extends Component {
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
 	  label: PropTypes.oneOfType([
-		  PropTypes.bool, PropTypes.string
+		  PropTypes.bool, PropTypes.string, PropTypes.element
 	  ])
   };
 
   static defaultProps = {
-	  name: false,
 	  checked: false,
     disabled: false,
 	  label: false

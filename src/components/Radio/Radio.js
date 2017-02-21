@@ -11,12 +11,11 @@ class RadioButton extends Component {
 
   render() {
     return (
-      <div className="radio-btn">
-        <label className="control control-radio">
+      <div className="radio">
+        <label className="radio-control">
           <input type="radio" name={this.props.name} onChange={this.props.onChange} />
           <span>{this.props.label}</span>
-          <div className="control-indicator"></div>
-          <div className="description">{this.props.description}</div>
+          <div className="radio-control-indicator"></div>
         </label>
       </div>
     );

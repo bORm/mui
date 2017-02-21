@@ -28,7 +28,7 @@ class Slider extends Component {
 		super(props);
 		this.state = {
 			percent: 0,
-			value: 0
+			value: props.min || 0
 		}
 	}
 
@@ -38,10 +38,19 @@ class Slider extends Component {
 			'y', 'y-reverse'
 		]),
 		disabled: PropTypes.bool,
-		step:     PropTypes.number,
-		max:      PropTypes.number,
-		min:      PropTypes.number,
+		step:     PropTypes.oneOfType([
+      PropTypes.number, PropTypes.string
+		]),
+		max:      PropTypes.oneOfType([
+      PropTypes.number, PropTypes.string
+    ]),
+		min:      PropTypes.oneOfType([
+      PropTypes.number, PropTypes.string
+    ]),
 		required: PropTypes.bool,
+		label: PropTypes.oneOfType([
+			PropTypes.string, PropTypes.component
+		])
 	};
 
 	static defaultProps = {
@@ -55,7 +64,7 @@ class Slider extends Component {
 
 	render(){
 
-		const { disabled } = this.props;
+		const { disabled, label } = this.props;
 
 		let handleDragProps;
 		if (!disabled) {
@@ -70,18 +79,25 @@ class Slider extends Component {
 		const left = percent === 0 ? '0%' : (percent * 100) + '%';
 
 		return (
-			<div className="slider" ref={'track'} {...handleDragProps}>
-				<div className="slider-thumb" ref={'thumb'} style={{
-					left: left
-				}}>
-					<div className="slider-thumb-discrete">
-						<span>{value}</span>
+			<div className="slider">
+				{ typeof label !== 'undefined' && (
+					<div className="slider-label">
+						{ label }
 					</div>
+				) }
+				<div className="slider-track" ref={'track'} {...handleDragProps}>
+					<div className="slider-thumb" ref={'thumb'} style={{
+            left: left
+          }}>
+						<div className="slider-thumb-discrete">
+							<span>{value}</span>
+						</div>
+					</div>
+					<span className="slider-fill" ref={'fill'} style={{
+            width: left
+          }}/>
+					<input type="hidden" value={value} onChange={()=>{}} />
 				</div>
-				<span className="slider-fill" ref={'fill'} style={{
-					width: left
-				}}/>
-				<input type="hidden" value={value} onChange={()=>{}} />
 			</div>
 		);
 	}
@@ -92,7 +108,7 @@ class Slider extends Component {
 	 */
 	handleTouchStart(event){
 		if (document) {
-			document.addEventListener('touchmove', this.dragHandler, false);
+			document.addEventListener('touchmove', ::this.dragHandler, false);
 			document.addEventListener('touchup', ::this.dragTouchEndHandler, false);
 			document.addEventListener('touchend', ::this.dragTouchEndHandler, false);
 			document.addEventListener('touchcancel', ::this.dragTouchEndHandler, false);
