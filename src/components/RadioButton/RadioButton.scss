@@ -1,18 +1,17 @@
 .radio-btn{
-  font-size: 15px;
-  line-height: 16px;
   width: 100%;
-  padding: 10px 0 5px 0;
   box-sizing: border-box;
+  margin-bottom: 20px;
 
   .control {
     display: block;
     position: relative;
-    padding-left: 30px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 300;
     line-height: 18px;
-    padding-top: 5px;
+    padding-left: 30px;
+    padding-top: 4px;
   }
 
   .control input {
@@ -26,10 +25,10 @@
     padding: 0;
   }
 
-  .control--radio .control__indicator {
+  .control-radio .control-indicator {
     border-radius: 50%;
   }
-  .control__indicator {
+  .control-indicator {
     position: absolute;
     top: 2px;
     left: 0;
@@ -37,15 +36,15 @@
     width: 18px;
     border: 2px solid #cccccc;
   }
-  .control input:checked ~ .control__indicator:after {
+  .control input:checked ~ .control-indicator:after {
     transform: scale(1);
   }
 
-  .control input:checked ~ .control__indicator{
+  .control input:checked ~ .control-indicator{
     border-color: $accent;
   }
 
-  .control--radio .control__indicator:after {
+  .control-radio .control-indicator:after {
     left: 4px;
     top: 4px;
     height: 10px;
@@ -54,7 +53,7 @@
     background: $accent;
     transition: all .3s;
   }
-  .control__indicator:after {
+  .control-indicator:after {
     content: '';
     position: absolute;
     transform: scale(0);
@@ -67,7 +66,7 @@
     line-height: 1;
   }
 
-  input:disabled ~ .control__indicator, input:disabled ~ .control__indicator:after, input:disabled + span{
+  input:disabled ~ .control-indicator, input:disabled ~ .control-indicator:after, input:disabled + span{
     opacity: .6;
   }
 }

@@ -3,19 +3,21 @@ import React, {Component, PropTypes} from 'react'
 class RadioButton extends Component {
   static propTypes = {};
 
-  static defaultProps = {};
+  static defaultProps = {
+    onChange: function (e) {
+      console.log(e);
+    }
+  };
 
   render() {
     return (
-      <div>
-        <div className="radio-btn">
-          <label className="control control--radio">
-            <input type="radio" />
-            <span>Some text</span>
-            <div className="control__indicator"></div>
-            <div className="description"></div>
-          </label>
-        </div>
+      <div className="radio-btn">
+        <label className="control control-radio">
+          <input type="radio" name={this.props.name} onChange={this.props.onChange} />
+          <span>{this.props.label}</span>
+          <div className="control-indicator"></div>
+          <div className="description">{this.props.description}</div>
+        </label>
       </div>
     );
   }
