@@ -15,17 +15,16 @@ class SelectionGroup extends Component {
     } = this.props;
 
     return (
-      <div>
+      <fieldset>
         <legend>{this.props.legend}</legend>
         { this.props.name ? Children.map(children, child=>{
             return cloneElement(child, {
               name: this.props.name
             })
           }) : children }
-      </div>
+      </fieldset>
     );
   }
 }
 
 export default SelectionGroup
-   
