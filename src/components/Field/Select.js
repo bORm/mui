@@ -258,7 +258,7 @@ class Select extends Component {
 					<option value="" hidden>Select</option>
           { ((options)=>{
             let value, text;
-            Children.map(options, (option)=>{
+            return Children.map(options, (option)=>{
               text = !!(option.props.text) ? option.props.text : option.props.children;
               value = option.props.value ? option.props.value : text;
               return <option key={option.key} value={value}>{text}</option>;

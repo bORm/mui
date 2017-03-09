@@ -2,7 +2,7 @@ import React, {
 	Component, PropTypes,
 	cloneElement, createElement, isValidElement
 } from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM, { findDOMNode } from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-transition-group';
 import PureRenderMixin  from 'react-addons-pure-render-mixin';
 import Offset from 'util/offset.js';
@@ -51,23 +51,31 @@ class Ripple extends Component {
 			offset: {}
 		};
 		this._ignoreNextMouseDown = false;
+		this.ripple = null;
 	}
 
 	componentDidMount() {
-		let DOMNode = ReactDOM.findDOMNode(this);
+    this.ripple = findDOMNode(this.refs.ripple);
 		this.setState({
-			size : {
-				min: Math.min(
-					DOMNode.offsetWidth,
-					DOMNode.offsetHeight
-				),
-				max: Math.max(
-					DOMNode.offsetWidth,
-					DOMNode.offsetHeight
-				)
-			},
-			offset: Offset(DOMNode)
-		});
+			size: this.size
+		})
+	}
+
+	get size(){
+		let ripple = this.ripple;
+		return !this.ripple ? {
+			min: 0,
+			max: 0
+		} : {
+      min: Math.min(
+        ripple.offsetWidth,
+        ripple.offsetHeight
+      ),
+      max: Math.max(
+        ripple.offsetWidth,
+        ripple.offsetHeight
+      )
+    }
 	}
 
 	render() {
@@ -80,7 +88,7 @@ class Ripple extends Component {
 		const eventHandlers = {
 			onMouseDown: (e)=>{
 				if (e.button === 0 && !this._ignoreNextMouseDown) {
-					::this.start(e);
+          ::this.start(e);
 					onMouseDown && onMouseDown(e);
 					this._ignoreNextMouseDown = true;
 				}
@@ -103,7 +111,7 @@ class Ripple extends Component {
 		const { waves } = this.state;
 
 		const ripple = !disabled ? (
-			<div className="ripple" key="ripple">
+			<div className="ripple" key={'ripple'} ref={'ripple'}>
 				<ReactCSSTransitionGroup className="waves" key="waves">
 					{waves}
 				</ReactCSSTransitionGroup>
@@ -120,11 +128,12 @@ class Ripple extends Component {
 
 	start(e) {
 		const { isCenter, disabled } = this.props;
-		const { waves, key, size } = this.state;
+		const { waves, key } = this.state;
+		const size = this.size;
 		let wave = 'wave-'+ key;
 		//debugger;
 
-		const style = this._getRippleStyle(e, isCenter);
+		const style = this._getRippleStyle(e, isCenter, size);
 
 		!disabled && waves.push(
 			<Wave ref="RippleWave" key={wave} size={size}
@@ -157,9 +166,9 @@ class Ripple extends Component {
 		}
 	}
 
-	_getRippleStyle(e, isCenter) {
+	_getRippleStyle(e, isCenter, size) {
 		let style = {};
-		const el = ReactDOM.findDOMNode(this);
+		const el = findDOMNode(this);
 		const elHeight = el.offsetHeight;
 		const elWidth = el.offsetWidth;
 		const offset = Offset(el);
@@ -175,7 +184,7 @@ class Ripple extends Component {
 		const rippleRadius = Math.max(
 			topLeftDiag, topRightDiag, botRightDiag, botLeftDiag
 		);
-		const { size } = this.state;
+		//const { size } = this.state;
 		const rippleSize = isCenter ? size.max : rippleRadius * 2;
 		const left = pointerX - rippleRadius;
 		const top = pointerY - rippleRadius;

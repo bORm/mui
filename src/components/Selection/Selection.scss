@@ -1,0 +1,108 @@
+.selection {
+
+  &-container {
+    display: inline-block;
+  }
+  backface-visibility: hidden;
+  display: inline-block;
+  padding: 0 15px;
+  margin-left: -15px;
+  height: 48px;
+  position: relative;
+  font-size: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  * {
+    box-sizing: content-box;
+  }
+  &:before {
+    content: '';
+    height: 100%;
+    width: 1px;
+    margin-left: -1px;
+  }
+
+  &:before,
+  &-icon,
+  &-label {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  &-icon {
+    position: relative;
+    z-index: 2;
+    width: 14px;
+    height: 14px;
+    background: transparent;
+    border: 2px solid $gray;
+    transition: all 250ms ease-in-out;
+    border-radius: 2px;
+    cursor: pointer;
+    &:after {
+      content: '';
+      box-sizing: border-box;
+      transform: scale(.8) rotate(45deg);
+      opacity: 0;
+      transition: all 250ms ease-in-out;
+      position: absolute;
+      left: 4px;
+      top: 0;
+      width: 6.67px;
+      height: 13.33px;
+      border: 0 solid white;
+      border-right-width: 2px;
+      border-bottom-width: 2px;
+    }
+  }
+
+  &-label {
+    font-size: $font-size;
+    margin-left: 15px;
+    user-select: none;
+  }
+
+  input[type='checkbox'] {
+    opacity: 0;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: 15px;
+    margin: auto;
+    cursor: pointer;
+    &:checked {
+      & + .checkbox {
+        &-icon {
+          background: $accent;
+          border-color: $accent;
+          &:after {
+            transform: scale(1) rotate(45deg);
+            opacity: 1;
+          }
+        }
+      }
+      &:disabled {
+        & + .checkbox {
+          &-icon {
+            background: $gray-light;
+            border-color: $gray-light;
+            cursor: default;
+          }
+        }
+      }
+      ~ .ripple {
+        .wave {
+          background-color: $accent;
+        }
+      }
+    }
+  }
+
+  .ripple {
+    max-width: 48px;
+    z-index: 0;
+  }
+}

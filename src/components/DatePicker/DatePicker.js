@@ -191,6 +191,9 @@ class DatePicker extends Component {
 class DateView extends Component {
 	render(){
 		const { selected, view, picker } = this.props;
+
+		console.log(selected)
+
 		const DayAndMonthAndYear = DateUtilities.toMonthAndYearString(selected ? selected : view);
 		return (
 			<div className="date-view">

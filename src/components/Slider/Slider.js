@@ -47,6 +47,7 @@ class Slider extends Component {
 		min:      PropTypes.oneOfType([
       PropTypes.number, PropTypes.string
     ]),
+		name: PropTypes.string,
 		required: PropTypes.bool,
 		label: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.component
@@ -64,7 +65,7 @@ class Slider extends Component {
 
 	render(){
 
-		const { disabled, label } = this.props;
+		const { disabled, label, name } = this.props;
 
 		let handleDragProps;
 		if (!disabled) {
@@ -96,7 +97,7 @@ class Slider extends Component {
 					<span className="slider-fill" ref={'fill'} style={{
             width: left
           }}/>
-					<input type="hidden" value={value} onChange={()=>{}} />
+					<input type="hidden" value={value} name={name} onChange={()=>{}} />
 				</div>
 			</div>
 		);

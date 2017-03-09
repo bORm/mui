@@ -8,7 +8,7 @@ function objectKeys(object) {
 	if (Object.keys) {
 		return Object.keys(object);
 	}
-	var result = [];
+	let result = [];
 
 	forEach(object, function(val, key) {
 		result.push(key);

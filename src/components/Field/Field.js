@@ -1067,7 +1067,7 @@ class Field extends Component {
 				warning: warning !== false,
 				danger: danger !== false,
 				hidden: type === 'hidden',
-				required: required,
+				required, disabled,
 			}, className)}>
 				<div className="field-control">
 					{

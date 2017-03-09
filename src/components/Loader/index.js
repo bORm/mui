@@ -16,7 +16,7 @@ class Loader extends Component {
 	render() {
 		const { width } = this.props;
 		const style = {
-			width: width,
+			width,
 			height: width
 		};
 
