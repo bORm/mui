@@ -43,6 +43,7 @@ export Portal from './components/Portal/Portal'
  */
 export typeOf from './helpers/typeOf'
 export classNames from './helpers/classNames'
+export inArray from './helpers/inArray'
 export isMounted from './helpers/isMounted'
 export objectKeys from './helpers/objectKeys'
 export offset from './helpers/offset'
