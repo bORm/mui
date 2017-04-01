@@ -33,7 +33,7 @@ class Button extends Component {
 			PropTypes.bool, PropTypes.string, PropTypes.number, PropTypes.element
 		]),
 		icon: PropTypes.oneOfType([
-			PropTypes.bool, PropTypes.string
+			PropTypes.bool, PropTypes.string, PropTypes.element, PropTypes.array
 		]),
 
 		onClick: PropTypes.oneOfType([
@@ -141,7 +141,7 @@ class Button extends Component {
 class ButtonIcon extends Component {
 	static propTypes = {
 		name: PropTypes.oneOfType([
-			PropTypes.bool, PropTypes.string
+			PropTypes.bool, PropTypes.string, PropTypes.element, PropTypes.array
 		])
 	};
 

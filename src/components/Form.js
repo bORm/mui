@@ -54,8 +54,8 @@ class Form extends Component {
       maxLength: 'Value is`t valid',
     },
     names: {},
-    onSubmit: function onSubmit() {},
-    ref: 'form',
+    onSubmit: (e, data, validation)=>{},
+    //ref: 'form',
     disabled: false
   };
 
@@ -176,11 +176,12 @@ class Form extends Component {
 
           let isInvalid = validation[name] || names[name];
 
-          if ( props.hasOwnProperty('danger') ) {
-            childProps['danger'] = !!(required || danger) && isInvalid || danger;
-          }
           if ( props.hasOwnProperty('warning') ) {
             childProps['warning'] = !!(!required || warning) && isInvalid || warning;
+          }
+
+          if ( props.hasOwnProperty('danger') ) {
+            childProps['danger'] = !!(required || danger) && isInvalid || danger;
           }
 
           if ( name ) {

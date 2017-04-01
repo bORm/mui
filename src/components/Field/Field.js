@@ -978,6 +978,7 @@ class Field extends Component {
 				onFocus && onFocus(e);
 			},
 			onBlur: e=>{
+        onBlur && onBlur(e);
 				this.setState({isFocused: false});
 				let { value } = e.target;
 				/*if (type === 'number') {
@@ -985,7 +986,6 @@ class Field extends Component {
 					console.log(value)
 				}*/
 				this.hasValue({defaultValue, value});
-				onBlur && onBlur(e);
 			},
 			name, readOnly, autoComplete,
 			ref: 'entry',

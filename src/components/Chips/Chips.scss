@@ -1,0 +1,83 @@
+.chips {
+  position: relative;
+
+  .field {
+
+    &-control {
+      @include clearfix();
+      padding: 26px 0 3px;
+
+      > span,
+      > input {
+        float: left;
+      }
+
+      input {
+        width: auto;
+      }
+
+      > em {
+        font-style: normal;
+        cursor: default;
+        border-radius: 16px;
+        display: block;
+        height: 26px;
+        line-height: 26px;
+        margin: 0 8px 4px 0;
+        padding: 0 12px;
+        float: left;
+        box-sizing: border-box;
+        max-width: 100%;
+        position: relative;
+        background: $gray-light;
+        color: $gray-darker;
+        font-size: 0;
+
+        span {
+          display: inline-block;
+          vertical-align: middle;
+          font-size: 16px;
+          color: inherit;
+
+          &.material-icon {
+            font-size: 14px;
+            font-weight: 600;
+            background: $gray-darker;
+            color: white;
+            border-radius: 50%;
+            padding: 2px;
+            margin: 0 -6px 0 6px;
+            cursor: pointer;
+          }
+        }
+
+        &.selected {
+          background: $gray;
+          color: white;
+        }
+      }
+    }
+
+  }
+
+  ul {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+    min-width: 320px;
+    li {
+      position: relative;
+      padding: 12px 16px;
+      line-height: 2.4rem;
+      font-size: 1.6rem;
+      cursor: pointer;
+      &.selected {
+        background: $gray-light;
+      }
+    }
+  }
+}
