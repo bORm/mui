@@ -1,0 +1,93 @@
+// Colors
+$primary: #5d608f;
+$accent: 	#CD5599;
+$default: #b8bbbd;
+$white: 	#ffffff;
+$black: 	#000000;
+$link: 		#1DC19C;
+
+$gray-base: #89949b;
+$white: #fff;
+$black: #000;
+
+$gray-light: #dddddd;
+$gray-lighter: #cccccc;
+$gray: #989898;
+$gray-darker: #747474;
+$gray-dark: #282828;
+
+$blue-light: #dce4ea;
+$blue-lighter: #c9e1fc;
+$blue: #79b0ec;
+
+$info: #79b0ec;
+$success: #54c61e;
+$warning: #ffbc1a;
+$danger: #f64e68;
+
+// Fonts
+$font-family: 		'LatoWeb', sans-serif;
+$font-color: #4d5355;
+$font-size: 13px;
+$line-height: 20px;
+
+// Border
+$border-radius-base: 8px;
+
+$border-radius-large: 25px;
+$border-radius-medium: 20px;
+$border-radius-small: 5px;
+$border-radius-mini: 2px;
+
+$border-radius-box: $border-radius-base;
+$border-radius-select: $border-radius-mini;
+
+//== Modal sizes
+
+// Extra small screen / phone
+$modal-xs:                  280px !default;
+// Small screen / tablet
+$modal-sm:                  320px !default;
+// Medium screen / desktop
+$modal-md:                  400px !default;
+// Large screen / wide desktop
+$modal-lg:                  660px !default;
+
+//== Media queries breakpoints
+
+// Extra small screen / phone
+$screen-xs:                  480px !default;
+// Small screen / tablet
+$screen-sm:                  768px !default;
+// Medium screen / desktop
+$screen-md:                  992px !default;
+// Large screen / wide desktop
+$screen-lg:                  1200px !default;
+
+//== Grid system
+//
+//## Define your custom responsive grid.
+
+//** Number of columns in the grid.
+$grid-columns:              12 !default;
+//** Padding between columns. Gets divided in half for the left and right.
+$grid-gutter-width:         15px !default;
+
+//== Container sizes
+
+// Small screen / tablet
+$container-sm:             (720px + $grid-gutter-width) !default;
+// Medium screen / desktop
+$container-md:            (940px + $grid-gutter-width) !default;
+// Large screen / wide desktop
+$container-lg:      (1140px + $grid-gutter-width) !default;
+
+// breakpoints
+$screen-xs-max: "only screen and (max-width: #{($screen-sm - 1)})";
+$screen-sm-max: "only screen and (max-width: #{($screen-md - 1)})";
+$screen-md-max: "only screen and (max-width: #{($screen-lg - 1)})";
+
+$screen-xs: "only screen and (min-width: #{$screen-xs})";
+$screen-sm: "only screen and (min-width: #{$screen-sm})";
+$screen-md: "only screen and (min-width: #{$screen-md})";
+$screen-lg: "only screen and (min-width: #{$screen-lg})";

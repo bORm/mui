@@ -1,0 +1,39 @@
+.list {
+	margin: 0;
+	//width: 20%;
+	&.un-styled {
+		list-style: none;
+		padding-left: 0;
+	}
+
+	&-item {
+		position: relative;
+		padding: 16px 8px;
+		display: table;
+		width: 100%;
+		box-sizing: border-box;
+
+		.primary,
+		.text,
+		.secondary {
+			padding: 0 8px;
+			display: table-cell;
+		}
+
+		.text {
+			text-align: left;
+			width: 100%;
+			overflow: hidden;
+			white-space: nowrap;
+		}
+
+		.primary {
+			width: 40px;
+		}
+		.secondary {
+
+		}
+
+	}
+
+}

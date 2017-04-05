@@ -1,0 +1,109 @@
+.drop {
+  position: relative;
+  &-container {
+    min-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    position: absolute;
+    height: 0;
+    width: 0;
+    visibility: hidden;
+    z-index: -1;
+    opacity: 0;
+    transform-origin: left top 0;
+    transition: transform 150ms;
+    transform: scaleY(0.3) scaleX(0.3);
+    overflow: hidden;
+    backface-visibility: hidden;
+    &.top-left .paper,
+    &.bottom-left .paper {
+      left: 0;
+    }
+    &.top-left {
+      transform-origin: left bottom 0;
+      bottom: 0;
+      > .paper {
+        bottom: 0;
+      }
+    }
+    &.bottom-left {
+      transform-origin: left top 0;
+      top: 0;
+      > .paper {
+        top: 0;
+      }
+    }
+    &.top-right .paper,
+    &.bottom-right .paper {
+      right: 0;
+    }
+    &.top-right {
+      transform-origin: right bottom 0;
+      bottom: 0;
+      right: 0;
+      > .paper {
+        bottom: 0;
+      }
+    }
+    &.bottom-right {
+      transform-origin: right top 0;
+      top: 0;
+      right: 0;
+      > .paper {
+        top: 0;
+      }
+    }
+    > .paper {
+      position: absolute;
+      list-style: none;
+      height: auto;
+      width: auto;
+      min-width: 124px;
+      margin: 0;
+      opacity: 0;
+      transition: opacity .1s;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+
+  &-control {
+    cursor: pointer !important;
+    * {
+      cursor: pointer !important;
+    }
+    .field {
+      &-control {
+        &:after {
+          content: 'arrow_drop_down';
+          font-family: 'Material Icons', sans-serif;
+          position: absolute;
+          right: 0;
+          bottom: 8px;
+          font-size: 24px;
+          color: $gray-darker;
+        }
+      }
+    }
+  }
+
+  &.is-open {
+    > .drop {
+      &-container {
+        visibility: visible;
+        z-index: 999;
+        transform: scaleY(1) scaleX(1);
+        opacity: 1;
+        overflow: visible;
+      }
+    }
+    .paper {
+      opacity: 1;
+      transition: opacity .5s;
+    }
+  }
+
+  @import "Menu";
+
+}

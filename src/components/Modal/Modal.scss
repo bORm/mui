@@ -1,0 +1,36 @@
+.modal {
+  @include Modal();
+
+  &-close {
+    cursor: default;
+    float: right;
+    margin: auto -5px auto auto;
+    font-size: 0;
+    .icon {
+      cursor: pointer;
+    }
+  }
+
+  &-header {
+    overflow-x: hidden;
+    font-size: 18px;
+    line-height: 2.6rem;
+    font-weight: 500;
+  }
+
+  > .paper {
+    position: relative;
+    z-index: 1;
+    padding: 24px 24px 24px;
+  }
+
+  &:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,.48);
+  }
+}

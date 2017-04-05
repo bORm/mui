@@ -1,0 +1,10 @@
+.pagination {
+	.button {
+		min-width: 0;
+
+		&.prev {
+			padding-left: 7px;
+			padding-right: 7px;
+		}
+	}
+}

@@ -1,0 +1,43 @@
+@mixin Modal() {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  z-index: 9999;
+  backface-visibility: hidden;
+  visibility: hidden;
+  text-align: center;
+  padding: 10px;
+  overflow-y: auto;
+  .open & {
+    visibility: visible;
+  }
+  &:before,
+  > .paper {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  &:before {
+    content: '';
+    width: 1px;
+    margin-left: -1px;
+    height: 100%;
+  }
+
+  > .paper {
+    position: relative;
+    z-index: 1;
+    border-radius: $border-radius-mini;
+    transform: scale(0.7);
+    opacity: 0;
+    transition: all 0.3s;
+    text-align: left;
+    max-width: 100%;
+    .open & {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

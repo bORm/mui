@@ -1,0 +1,45 @@
+.hidden {
+  display: none !important;
+}
+
+.inline {
+  display: inline !important;
+  &-block {
+    display: inline-block !important;
+  }
+}
+
+.block {
+  display: block !important;
+}
+
+.table {
+  display: table !important;
+  width: 100%;
+  &-cell {
+    display: table-cell !important;
+  }
+}
+
+.float {
+  &-left {
+    float: left;
+  }
+  &-right {
+    float: right;
+  }
+}
+
+.justify {
+  text-align: justify;
+  font-size: 0;
+  line-height: 1;
+  .inline-block {
+    vertical-align: middle;
+  }
+  &:after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+}
