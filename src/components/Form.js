@@ -10,7 +10,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 // types which indicate a submit action and are not successful controls
 // these will be ignored
-let k_r_submitter = /^(?:submit|button|image|reset|file)$/i;
+let k_r_submitter = /^(?:submit|button|image|reset)$/i;
 
 // node names which could be successful controls
 let k_r_success_contrls = /^(?:input|select|textarea|keygen)/i;
@@ -42,6 +42,7 @@ class Form extends Component {
 
   static defaultProps = {
     action: '#',
+    method: 'post',
     //onSubmit: false,
     validate: true,
     rules: {
@@ -88,7 +89,10 @@ class Form extends Component {
    * @returns {*}
    */
   onSubmit(e = {}){
-    e.preventDefault && e.preventDefault();
+    if ( validate ) {
+      e.preventDefault && e.preventDefault();
+      //return false;
+    }
     const { validate, onSubmit, disabled } = this.props;
 
     if ( !disabled ) {
@@ -123,7 +127,7 @@ class Form extends Component {
   render() {
     return (
       <form className={this.props.className} ref={'form'}
-            method="post" action={this.props.action}
+            method={this.props.method} action={this.props.action}
             onSubmit={::this.onSubmit}
             noValidate={this.props.validate}>
         { this.getFormElements(this.props.children) }
@@ -155,15 +159,24 @@ class Form extends Component {
 
           let childProps = {
             onBlur: e=>{
-              if ( required ) {
-                this.setState({
-                  validation: Form.isValidElement(validation, {
-                    required, name, value: e.target.value, type, min, max, minLength, maxLength
-                  }, rules)
-                });
-              }
+              this.setState({
+                validation: Form.isValidElement(validation, {
+                  required, name, value: e.target.value, type, min, max, minLength, maxLength
+                }, rules)
+              });
             }, disabled: disabled ? disabled : props.disabled
           };
+
+          /*if ( props.hasOwnProperty('onDrop') ) {
+            childProps.onDrop = (e)=>{
+              this.setState({
+                validation: Form.isValidElement(validation, {
+                  required, name, value: e.target.value, type, min, max, minLength, maxLength
+                }, rules)
+              });
+              return childProps.onDrop;
+            }
+          }*/
 
 					/*if ( type === 'select' ) {
 					 //debugger
