@@ -93,11 +93,11 @@ class Ripple extends Component {
 					this._ignoreNextMouseDown = true;
 				}
 			}
-			, onMouseUp: (e)=>{
+		, onMouseUp: (e)=>{
 				::this.end(e);
 				onMouseUp && onMouseUp(e);
 			}
-			, onMouseLeave: (e)=>{
+		, onMouseLeave: (e)=>{
 				::this.end(e);
 				onMouseLeave && onMouseLeave(e);
 			}
