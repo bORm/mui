@@ -83,11 +83,31 @@ const DateUtilities = {
 class DatePicker extends Component {
 
 	static propTypes = {
-		type: PropTypes.oneOf(['date', 'month'])
+		type: PropTypes.oneOf(['date', 'month']),
+    required: PropTypes.bool,
+    readOnly: PropTypes.bool,
+    disabled: PropTypes.bool,
+
+    success: PropTypes.oneOfType([
+      PropTypes.string, PropTypes.bool
+    ]),
+    warning: PropTypes.oneOfType([
+      PropTypes.string, PropTypes.bool
+    ]),
+    danger: React.PropTypes.oneOfType([
+      PropTypes.string, PropTypes.bool
+    ])
 	};
 
 	static defaultProps = {
-		type: 'date'
+		type: 'date',
+    required: false,
+    readOnly: false,
+    disabled: false,
+
+    success: false,
+    warning: false,
+    danger: false
 	};
 
 	constructor(props) {
@@ -97,8 +117,8 @@ class DatePicker extends Component {
 		this.state = {
 			view: DateUtilities.clone(def),
 			selected: selected,
-			minDate: DateUtilities.addYears(new Date(), -100),
-			maxDate: DateUtilities.addYears(new Date(), 100),
+			minDate: this.props.minDate || DateUtilities.addYears(new Date(), -100),
+			maxDate: this.props.maxDate || DateUtilities.addYears(new Date(), 100),
 			id: this.props.id || 'datePicker',
 			picker: 'day' // oneOf['day', 'month', 'year']
 		}
@@ -120,7 +140,8 @@ class DatePicker extends Component {
 
 	render(){
 		const { selected, picker } = this.state;
-		const { name, placeholder, type } = this.props;
+		const { name, placeholder, type, danger, warning } = this.props;
+
 		return (
 			<div className={'date-picker-control'}>
 				<Field {...{
@@ -129,7 +150,7 @@ class DatePicker extends Component {
 					value: !!(selected)
 						? type === 'date' ? DateUtilities.toString(selected) : DateUtilities.toMonthString(selected)
 						: '',
-					onClick: ::this.show, name, placeholder
+					onClick: ::this.show, name, placeholder, danger, warning
 				}}/>
 				<Modal id={this.state.id} className={classNames('date-picker', type)} closeButton={false}>
 					<DateView {...{
