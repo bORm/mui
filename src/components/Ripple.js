@@ -216,14 +216,16 @@ class Wave extends Component {
 	componentWillEnter(callback) {
 		this._initializeAnimation(callback);
 	}
+
 	componentDidAppear() {
 		this._animate();
 	}
 	componentDidEnter() {
 		this._animate();
 	}
+
 	componentWillLeave(callback) {
-		let style = ReactDOM.findDOMNode(this).style;
+		let style = findDOMNode(this).style;
 		style.opacity = 0;
 
 		let timeOut = null;
@@ -240,18 +242,15 @@ class Wave extends Component {
 
 		return (
 			<div className="wave" style={{
-				...{
-					//backgroundColor: 'rgb(0,0,0)'
-				width: size.min
-				, height: size.min
-				},
+        width: size.min,
+				height: size.min,
 				...style
-			}}></div>
+			}}/>
 		);
 	}
 
 	_animate() {
-		let style = ReactDOM.findDOMNode(this).style;
+		let style = findDOMNode(this).style;
 		const transitionValue = (
 			Transitions.easeOut('2s', 'opacity') + ',' +
 			Transitions.easeOut('1.5s', 'transform')
@@ -260,7 +259,7 @@ class Wave extends Component {
 		AutoPrefix.set(style, 'transform', 'scale(1)');
 	}
 	_initializeAnimation(callback) {
-		let style = ReactDOM.findDOMNode(this).style;
+		let style = findDOMNode(this).style;
 		style.opacity = .26;
 		AutoPrefix.set(style, 'transform', 'scale(0)');
 		let timeOut = null;

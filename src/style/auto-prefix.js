@@ -19,6 +19,10 @@ module.exports = {
     style[this.single(key)] = value;
   },
 
+  remove(style, key) {
+    style[this.single(key)] = '';
+  },
+
   single(key) {
 
     //If a browser doesn't exist, we can't prefix with Modernizr so

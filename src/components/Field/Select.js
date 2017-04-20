@@ -209,7 +209,8 @@ class Select extends Component {
       type, name,
       large, small, block,
       required, disabled,
-      success, warning, danger
+      success, warning, danger,
+      children
     } = this.props;
 
     const { value, field } = this.state;
@@ -224,7 +225,8 @@ class Select extends Component {
       large, small, block,
       success, warning, danger,
       name: '', required: false,
-			ref: 'input', readOnly:true
+			ref: 'input', readOnly:true,
+			...this.props.inputProps
     };
 
     const control = (
@@ -232,10 +234,10 @@ class Select extends Component {
     );
 
   	return (
-			<div>
+			<div className="select">
 				<DropDown control={control} onChange={(e, selected)=>{
 					const { value } = selected;
-          this.hasValue({defaultValue, value}, ()=>{
+          this.hasValue({children, defaultValue, value}, ()=>{
             this.props.onChange(e, selected);
             this.props.onBlur({target: {value}});
 					});
@@ -269,7 +271,7 @@ class Select extends Component {
               value = option.props.value ? option.props.value : text;
               return <option key={option.key} value={value}>{text}</option>;
             })*/}
-          })(this.props.children) }
+          })(children) }
 				</select>
 			</div>
 		);

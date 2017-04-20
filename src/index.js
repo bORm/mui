@@ -48,3 +48,9 @@ export isMounted from './helpers/isMounted'
 export objectKeys from './helpers/objectKeys'
 export offset from './helpers/offset'
 export {convertHexToRGB} from './helpers/color'
+
+/**
+ * style
+ */
+export AutoPrefix from 'style/auto-prefix.js';
+export Transitions from 'style/transitions.js';
