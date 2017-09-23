@@ -1,4 +1,5 @@
-import React, {Component, PropTypes, isValidElement, createElement, cloneElement} from 'react'
+import React, {Component, isValidElement, createElement, cloneElement} from 'react'
+import PropTypes from 'prop-types';
 import { classNames } from 'helpers'
 
 class Paper extends Component {

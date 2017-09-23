@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types';
 
 class Switch extends Component {
   static propTypes = {
@@ -34,8 +35,8 @@ class Switch extends Component {
       <div className="switch">
         <div className="switch-text">{label}</div>
         <input id={id} type="checkbox"/>
-        <label htmlFor={id}></label>
-        <div className="switch-line"></div>
+        <label htmlFor={id}/>
+        <div className="switch-line"/>
       </div>
     );
   }

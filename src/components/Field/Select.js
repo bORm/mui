@@ -1,4 +1,5 @@
-import React, {Component, PropTypes, Children} from 'react'
+import React, {Component, Children} from 'react'
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom'
 import DropDown, { Item } from 'components/DropDown/DropDown'
 import Field from 'components/Field/Field'

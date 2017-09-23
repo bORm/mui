@@ -1,4 +1,5 @@
-import React, {Component, PropTypes, isValidElement, cloneElement, createElement} from 'react'
+import React, {Component, isValidElement, cloneElement, createElement} from 'react'
+import PropTypes from 'prop-types';
 import Ripple from '../Ripple'
 import classNames from '../../helpers/classNames'
 

@@ -1,7 +1,8 @@
 import React, {
-	Component, PropTypes,
+	Component,
 	cloneElement, isValidElement
 } from 'react'
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 
 import Button, { ButtonIcon } from 'components/Button/Button'

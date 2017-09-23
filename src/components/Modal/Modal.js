@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types';
 import Portal from 'components/Portal/Portal'
 import Paper from 'components/Paper'
 import classNames from 'helpers/classNames'

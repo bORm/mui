@@ -1,4 +1,5 @@
-import React, {Component, PropTypes, Children, cloneElement} from 'react'
+import React, {Component, Children, cloneElement, createElement} from 'react'
+import PropTypes from 'prop-types';
 import Paper from 'components/Paper'
 import Ripple from 'components/Ripple'
 import classNames from 'helpers/classNames'
@@ -44,6 +45,9 @@ class Menu extends Component {
 
 class Item extends Component {
   static propTypes = {
+    component: PropTypes.oneOfType([
+      PropTypes.string, PropTypes.node,
+    ]),
     value: PropTypes.oneOfType([
       PropTypes.string, PropTypes.number, PropTypes.bool
     ]),
@@ -57,6 +61,7 @@ class Item extends Component {
   };
 
   static defaultProps = {
+    component: 'div',
     value: false,
     text: '',
     onClick: false,
@@ -69,21 +74,27 @@ class Item extends Component {
   render() {
 
     const {
+      component, className,
       text, children, onClick,
       ripple, ...other
     } = this.props;
 
-    const rippleContainer = (
-      <div className={classNames('menu-item', this.props.className)}
-           onClick={e=>{
-             onClick && onClick(e, ((text, value)=>{
-               text = !!(text) ? text : children;
-               value = value ? value : text;
-               return {value, text}
-             })(text, this.props.value))
-           }}
-      />
-    );
+    const containerProps = {
+      className: classNames('menu-item', className),
+      onClick: (e)=>{
+        onClick && onClick(e, ((text, value)=>{
+          text = !!(text) ? text : children;
+          value = value ? value : text;
+          return {value, text}
+        })(text, this.props.value))
+      },
+    };
+    const rippleContainer = (() => {
+      if (typeof component === 'string') {
+        return createElement(component, containerProps);
+      }
+      return cloneElement(component, containerProps);
+    })();
 
     return (
       <Ripple isCenter={ripple.isCenter} container={rippleContainer} {...other}>

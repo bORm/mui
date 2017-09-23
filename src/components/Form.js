@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, cloneElement, createElement } from 'react'
+import React, { Component, cloneElement, createElement } from 'react'
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom'
 import objectKeys from 'helpers/objectKeys'
 
@@ -430,10 +431,10 @@ class Form extends Component {
       }
     }
 
-    validation = {
-      ...this.state.validation,
-      ...validation
-    };
+    // validation = {
+    //   ...this.state.validation,
+    //   ...validation
+    // };
 
     //return result;
     this.setState({data: result, validation});

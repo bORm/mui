@@ -1,7 +1,8 @@
 import React, {
-	Component, PropTypes,
+	Component,
 	cloneElement, createElement, isValidElement
-} from 'react'
+} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM, { findDOMNode } from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-transition-group';
 import PureRenderMixin  from 'react-addons-pure-render-mixin';
@@ -55,7 +56,6 @@ class Ripple extends Component {
 	}
 
 	componentDidMount() {
-    this.ripple = findDOMNode(this.refs.ripple);
 		this.setState({
 			size: this.size
 		})
@@ -111,7 +111,7 @@ class Ripple extends Component {
 		const { waves } = this.state;
 
 		const ripple = !disabled ? (
-			<div className="ripple" key={'ripple'} ref={'ripple'}>
+			<div className="ripple" key={'ripple'} ref={ripple => (this.ripple = ripple)}>
 				<ReactCSSTransitionGroup className="waves" key="waves">
 					{waves}
 				</ReactCSSTransitionGroup>
@@ -136,7 +136,7 @@ class Ripple extends Component {
 		const style = this._getRippleStyle(e, isCenter, size);
 
 		!disabled && waves.push(
-			<Wave ref="RippleWave" key={wave} size={size}
+			<Wave ref={RippleWave => (this.RippleWave = RippleWave)} key={wave} size={size}
 			      style={isCenter ? {
 				      ...style,
 				      ...{

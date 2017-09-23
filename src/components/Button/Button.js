@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types';
 import Ripple from 'components/Ripple'
 import Paper from 'components/Paper'
 import Icon from 'components/Icon/Icon'

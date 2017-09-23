@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types';
 
 class Radio extends Component {
   static propTypes = {
@@ -28,7 +29,7 @@ class Radio extends Component {
         <label className="radio-control">
           <input {...inputProps} />
           <span>{this.props.label}</span>
-          <div className="radio-control-indicator"></div>
+          <div className="radio-control-indicator"/>
         </label>
       </div>
     );

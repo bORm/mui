@@ -1,4 +1,5 @@
-import React, {Component, PropTypes, createElement, cloneElement} from 'react'
+import React, {Component, createElement, cloneElement} from 'react'
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom'
 import { classNames, inArray } from 'helpers'
 
@@ -842,7 +843,7 @@ class Field extends Component {
 		warning: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.bool
 		]),
-		danger: React.PropTypes.oneOfType([
+		danger: PropTypes.oneOfType([
 			PropTypes.string, PropTypes.bool
 		])
 	};

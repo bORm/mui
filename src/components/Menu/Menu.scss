@@ -35,6 +35,24 @@
 		}
 	}
 
+	&-item {
+		position: relative;
+		cursor: pointer;
+		&-inner {
+			position: relative;
+			z-index: 1;
+			padding: 12px 16px;
+			line-height: 2.4rem;
+			font-size: 1.6rem;
+		}
+	}
+
+	&-divider {
+		border-bottom: 1px solid $gray-light;
+		margin: 8px 0;
+		cursor: default;
+	}
+
 }
 
 @keyframes dropdown-open {

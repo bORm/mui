@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types';
 
 const isMouseControlInverted = (axis) => axis === 'x-reverse' || axis === 'y';
 const mainAxisClientOffsetProperty = {
@@ -50,7 +51,7 @@ class Slider extends Component {
 		name: PropTypes.string,
 		required: PropTypes.bool,
 		label: PropTypes.oneOfType([
-			PropTypes.string, PropTypes.component
+			PropTypes.string, PropTypes.node
 		])
 	};
 
@@ -61,6 +62,7 @@ class Slider extends Component {
 		max: 1,
 		min: 0,
 		required: true,
+    label: '',
 	};
 
 	render(){

@@ -1,6 +1,7 @@
-import React, {Component, PropTypes} from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
-import { Button } from 'mui'
+import Button from 'components/Button/Button';
 class Pagination extends Component {
   static propTypes = {
     // limit: PropTypes.number,

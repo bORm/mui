@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types';
 import Button from 'components/Button/Button'
 import Field from 'components/Field/Field'
 import Modal from 'components/Modal/Modal'
@@ -94,7 +95,7 @@ class DatePicker extends Component {
     warning: PropTypes.oneOfType([
       PropTypes.string, PropTypes.bool
     ]),
-    danger: React.PropTypes.oneOfType([
+    danger: PropTypes.oneOfType([
       PropTypes.string, PropTypes.bool
     ])
 	};

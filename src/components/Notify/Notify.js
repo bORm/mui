@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
 import Portal from 'components/Portal'
