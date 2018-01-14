@@ -605,9 +605,12 @@ class PortalContent extends Component {
 	unMount(){
 		if ( !!(this.portal) ) {
 			// Remove the node and clean up after the target
-			unmountComponentAtNode(this.portal);
-			document.getElementById(this.props.mountTo).removeChild(this.portal);
-			this.portal = null;
+      this.timer = setTimeout(()=>{
+        unmountComponentAtNode(this.portal);
+        document.getElementById(this.props.mountTo).removeChild(this.portal);
+        this.portal = null;
+        this.timer && clearTimeout(this.timer);
+      }, 100);
 		}
 	}
 
@@ -639,8 +642,8 @@ export default class Portal extends Component {
 	constructor(props){
 		super(props);
 		const { isOpen } = props;
-		this.state = {isOpen};
-		this.emitter = false
+		this.state = { isOpen };
+    this.toggle = ::this.toggle;
 	}
 
 	/*componentDidMount(){
@@ -664,22 +667,26 @@ export default class Portal extends Component {
 		this.toggle(id, isOpen);
 	}
 
+  componentWillReceiveProps(props) {
+    const { id, isOpen } = props;
+		if (isOpen !== this.props.isOpen) this.toggle(id, isOpen);
+  }
+
 	static toggle(id, isOpen){
 		emitter.emit('toggle', id, isOpen);
 		Portal.isOpen = isOpen;
 	}
 
 	toggle(id, isOpen){
-		emitter.once('toggle', ::this.toggle);
+		emitter.once('toggle', this.toggle);
 		if ( id !== this.props.id ) return;
-		if ( isOpen !== this.state.isOpen ) {
-			this.setState({isOpen})
-		}
+    if ( isOpen !== this.state.isOpen ) {
+      this.setState({isOpen})
+    }
 	}
 
 	render(){
 		const { id, ...other } = this.props;
-		//console.log(id, this.state);
 		return (
 			<PortalContent id={id} { ...other } isOpen={this.state.isOpen}>
 				{ this.props.children }

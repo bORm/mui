@@ -15,14 +15,14 @@ class Loader extends Component {
 	}
 
 	render() {
-		const { width } = this.props;
+		const { width, ...other } = this.props;
 		const style = {
 			width,
 			height: width
 		};
 
 		return (
-			<div className="loader">
+			<div className="loader" {...other}>
 				<svg className="circular" viewBox="25 25 50 50" style={style}>
 					<circle className="path" cx="50" cy="50" r="20" fill="none"
 									strokeWidth="2" strokeMiterlimit="10"/>

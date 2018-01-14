@@ -3,13 +3,12 @@ import React, {
 	cloneElement, createElement, isValidElement
 } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM, { findDOMNode } from 'react-dom'
-import ReactCSSTransitionGroup from 'react-addons-transition-group';
-import PureRenderMixin  from 'react-addons-pure-render-mixin';
+import { findDOMNode } from 'react-dom'
+import { TransitionGroup } from 'react-transition-group';
 import Offset from 'util/offset.js';
 import AutoPrefix from 'style/auto-prefix.js';
 import Transitions from 'style/transitions.js';
-import { isMounted } from 'helpers/index'
+import { isMounted } from 'helpers';
 
 class Ripple extends Component {
 	static propTypes = {
@@ -53,6 +52,9 @@ class Ripple extends Component {
 		};
 		this._ignoreNextMouseDown = false;
 		this.ripple = null;
+
+    this.start = ::this.start;
+    this.end = ::this.end;
 	}
 
 	componentDidMount() {
@@ -88,17 +90,17 @@ class Ripple extends Component {
 		const eventHandlers = {
 			onMouseDown: (e)=>{
 				if (e.button === 0 && !this._ignoreNextMouseDown) {
-          ::this.start(e);
+          this.start(e);
 					onMouseDown && onMouseDown(e);
 					this._ignoreNextMouseDown = true;
 				}
 			}
 		, onMouseUp: (e)=>{
-				::this.end(e);
+				this.end(e);
 				onMouseUp && onMouseUp(e);
 			}
 		, onMouseLeave: (e)=>{
-				::this.end(e);
+				this.end(e);
 				onMouseLeave && onMouseLeave(e);
 			}
 		};
@@ -111,10 +113,13 @@ class Ripple extends Component {
 		const { waves } = this.state;
 
 		const ripple = !disabled ? (
-			<div className="ripple" key={'ripple'} ref={ripple => (this.ripple = ripple)}>
-				<ReactCSSTransitionGroup className="waves" key="waves">
+			<div
+				ref={ripple => (this.ripple = ripple)}
+				className="ripple" key="ripple"
+			>
+				<TransitionGroup className="waves" key="waves">
 					{waves}
-				</ReactCSSTransitionGroup>
+				</TransitionGroup>
 			</div>
 		) : null;
 
@@ -131,22 +136,21 @@ class Ripple extends Component {
 		const { waves, key } = this.state;
 		const size = this.size;
 		let wave = 'wave-'+ key;
-		//debugger;
 
 		const style = this._getRippleStyle(e, isCenter, size);
 
 		!disabled && waves.push(
-			<Wave ref={RippleWave => (this.RippleWave = RippleWave)} key={wave} size={size}
-			      style={isCenter ? {
-				      ...style,
-				      ...{
-					      top: '-100%',
-					      right: '-100%',
-					      bottom: '-100%',
-					      left: '-100%',
-					      margin: 'auto'
-				      }
-			      } : style} />
+			<Wave
+				key={wave} size={size}
+				style={isCenter ? {
+					...style,
+          top: '-100%',
+          right: '-100%',
+          bottom: '-100%',
+          left: '-100%',
+          margin: 'auto'
+				} : style}
+			/>
 		);
 		this.setState({
 			waves: waves,
@@ -154,7 +158,7 @@ class Ripple extends Component {
 		});
 	}
 
-	end(e) {
+	end() {
 		this._ignoreNextMouseDown = false;
 		const { waves } = this.state;
 
@@ -210,6 +214,13 @@ class Wave extends Component {
 		style: PropTypes.object.isRequired
 	};
 
+	constructor(props) {
+		super(props);
+		this._initializeAnimation = ::this._initializeAnimation;
+		this._animate = ::this._animate;
+		this.mounted = false;
+	}
+
 	componentWillAppear(callback) {
 		this._initializeAnimation(callback);
 	}
@@ -243,9 +254,9 @@ class Wave extends Component {
 		return (
 			<div className="wave" style={{
         width: size.min,
-				height: size.min,
-				...style
-			}}/>
+        height: size.min,
+        ...style
+      }}/>
 		);
 	}
 

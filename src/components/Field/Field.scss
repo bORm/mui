@@ -16,6 +16,11 @@
     box-sizing: border-box;
     position: relative;
 
+    > span.field-entry {
+      padding-right: 24px;
+      height: 100%;
+    }
+
     > textarea {
       min-width: 100%;
       max-width: 100%;
@@ -36,6 +41,8 @@
 
   &-label {
     position: absolute;
+    z-index: 1;
+    // z-index: 0;
     color: rgb(155, 155, 155);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -44,7 +51,6 @@
     max-width: 100%;
     pointer-events: none;
     -webkit-font-smoothing: antialiased;
-    z-index: 0;
     transform: translateZ(0) translate3d(0,56px,0) scale(1);
     transform-style: preserve-3d;
     transition: transform .4s cubic-bezier(.25,.8,.25,1);
@@ -63,6 +69,7 @@
       vertical-align: text-top;
     }
   }
+
   &-entry {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     position: relative;
@@ -90,6 +97,42 @@
     &:disabled {
       color: rgba(0, 0, 0, 0.38);
     }
+    &:-webkit-autofill .floating & {
+      .field-label {
+        background: red;
+      }
+    }
+  }
+
+  &.floating {
+    .field-label {
+      transition: transform cubic-bezier(.25,.8,.25,1) .4s,
+                  width cubic-bezier(.25,.8,.25,1) .4s,
+                  opacity cubic-bezier(.25,.8,.25,1) .4s;
+    }
+  }
+
+  @keyframes autofill {
+    0% {
+      display: none;
+      opacity: 0;
+    }
+    1% {
+      display: block;
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  &.floating &-entry:-webkit-autofill {
+    animation: autofill .1s linear;
+    & + .field-label {
+      opacity: 1;
+      color: rgba(0,0,0,0.54);
+      transform: translateZ(0) translate3d(0,38px,0) scale(.75);
+    }
   }
 
   &.is-focused,
@@ -100,9 +143,6 @@
         opacity: 1;
         color: rgba(0,0,0,0.54);
         transform: translateZ(0) translate3d(0,38px,0) scale(.75);
-        transition: transform cubic-bezier(.25,.8,.25,1) .4s,
-                    width cubic-bezier(.25,.8,.25,1) .4s,
-                    opacity cubic-bezier(.25,.8,.25,1) .4s;
       }
     }
   }

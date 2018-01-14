@@ -39,6 +39,9 @@
   .col-xs-#{$i} {
     width: 100% / $grid-columns * $i;
   }
+  .col-xs-offset-#{$i} {
+    margin-left: 100% / $grid-columns * $i;
+  }
 }
 @media #{$screen-sm} {
   .container {
@@ -47,6 +50,9 @@
   @for $i from 1 through $grid-columns {
     .col-sm-#{$i} {
       width: 100% / $grid-columns * $i;
+    }
+    .col-sm-offset-#{$i} {
+      margin-left: 100% / $grid-columns * $i;
     }
   }
 }
@@ -59,6 +65,9 @@
     .col-md-#{$i} {
       width: 100% / $grid-columns * $i;
     }
+    .col-md-offset-#{$i} {
+      margin-left: 100% / $grid-columns * $i;
+    }
   }
 }
 
@@ -69,6 +78,9 @@
   @for $i from 1 through $grid-columns {
     .col-lg-#{$i} {
       width: 100% / $grid-columns * $i;
+    }
+    .col-lg-offset-#{$i} {
+      margin-left: 100% / $grid-columns * $i;
     }
   }
 }

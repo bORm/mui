@@ -7,6 +7,8 @@
   margin: auto;
   z-index: 9999;
   backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
   visibility: hidden;
   text-align: center;
   padding: 10px;
@@ -27,16 +29,20 @@
   }
 
   > .paper {
-    position: relative;
+    position: absolute;
     z-index: 1;
     border-radius: $border-radius-mini;
-    transform: scale(0.7);
+    transform: translate3d(0, 0, 0) translateZ(0) scale(0.7);
+    transform-origin: 50% 50%;
     opacity: 0;
     transition: all 0.3s;
     text-align: left;
     max-width: 100%;
+    -webkit-transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     .open & {
-      transform: scale(1);
+      transform: translate3d(0, 0, 0) scale(1);
       opacity: 1;
     }
   }

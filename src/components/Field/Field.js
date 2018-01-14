@@ -988,7 +988,8 @@ class Field extends Component {
 				}*/
 				this.hasValue({defaultValue, value});
 			},
-			name, readOnly, autoComplete,
+			name, readOnly,
+			autoComplete: autoComplete.toString(),
 			ref: 'entry',
 			className: 'field-entry',
 			required, disabled, //value,
@@ -1071,18 +1072,27 @@ class Field extends Component {
 				required, disabled,
 			}, className)}>
 				<div className="field-control">
-					{
-						type !== 'textarea'
-							? <input type={type} {...inputProps} />
-							: <textarea {...inputProps} />
-					}
+					{(() => {
+            switch (type) {
+							case 'textarea':
+								return <textarea {...inputProps} />;
+              case 'select':
+                return (
+                	<span {...inputProps}>
+										{ inputProps.value }
+									</span>
+								);
+							default:
+								return <input type={type} {...inputProps} />;
+            }
+					})()}
 					{ placeholder && (
 						<span className="field-label"
 						      onClick={()=>this.refs.entry.getDOMNode().focus()}
 						>{ placeholder } { required && <sup>*</sup> }</span>
 					) }
 					<hr className="field-border field-border-focus"/>
-				<hr className="field-border"/>
+					<hr className="field-border"/>
 				</div>
 				{ typeof ( valid ) === 'string' && createElement('span', {
 					className: 'field-valid'

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { render, unmountComponentAtNode } from 'react-dom';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {EventEmitter} from 'fbemitter';
 const emitter = new EventEmitter();
 const renderSubtreeIntoContainer = require("react-dom").unstable_renderSubtreeIntoContainer;
