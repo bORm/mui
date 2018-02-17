@@ -100,7 +100,7 @@ class Form extends Component {
       this.form = this.getFormData();
       const { data, validation } = this.form;
       console.log(validation, data)
-      if ( validate && objectKeys(validation).length ) {
+      if ( validate && !objectKeys(validation).length ) {
         onSubmit && onSubmit(e, data, validation);
       }
     }

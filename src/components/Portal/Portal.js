@@ -603,15 +603,18 @@ class PortalContent extends Component {
 	};*/
 
 	unMount(){
-		if ( !!(this.portal) ) {
-			// Remove the node and clean up after the target
-      this.timer = setTimeout(()=>{
+    this.timer = setTimeout(()=>{
+      if ( !!(this.portal) ) {
+        // Remove the node and clean up after the target
         unmountComponentAtNode(this.portal);
-        document.getElementById(this.props.mountTo).removeChild(this.portal);
+        const container = document.getElementById(this.props.mountTo);
+        if (container.contains(this.portal)) {
+          container.removeChild(this.portal);
+				}
         this.portal = null;
-        this.timer && clearTimeout(this.timer);
-      }, 100);
-		}
+      }
+      this.timer && clearTimeout(this.timer);
+    }, 100);
 	}
 
 	/*unMount()  {

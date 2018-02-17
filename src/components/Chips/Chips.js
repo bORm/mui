@@ -2,7 +2,9 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import Paper from 'components/Paper'
 import Ripple from 'components/Ripple'
+import AutoSizeInput from 'react-input-autosize';
 import classNames from 'helpers/classNames'
+import onClickOutside from "react-onclickoutside";
 
 class Chips extends Component
 {
@@ -71,6 +73,7 @@ class Chips extends Component
       opened: false,
       value: props.value,
       inputValue: '',
+      inputWidth: 1,
       suggest: []
     }
   }
@@ -126,6 +129,7 @@ class Chips extends Component
       selectedSuggest, selectedValue, inputValue,
       suggest, value
     } = this.state;
+    console.log(value);
 
     const input = this.input;
 
@@ -177,6 +181,7 @@ class Chips extends Component
                 value.splice(selectedValue, 1);
                 selectedValue = -1;
                 inputValue = '';
+                this.props.onChange(value);
               }
               break;
             case 'ArrowLeft':
@@ -193,6 +198,8 @@ class Chips extends Component
               selectedValue = Math.max(value.length - 1, -1);
               break;
           }
+        } else if (key === 'Backspace') {
+          this.props.onChange([]);
         }
 
         break;
@@ -221,7 +228,8 @@ class Chips extends Component
       input.blur();
     }*/
 
-    this.setState({selectedSuggest, selectedValue, inputValue})
+    this.setState({selectedSuggest, selectedValue, inputValue});
+    console.log(value);
 
   };
 
@@ -237,12 +245,17 @@ class Chips extends Component
     const { onBlur } = this.props;
     onBlur && onBlur(e);
     this.setState({
-      isFocused: false,
       selectedSuggest: -1,
       selectedValue: -1
     });
 
     this.close();
+  };
+
+  handleClickOutside = () => {
+    this.setState({
+      isFocused: false,
+    });
   };
 
   // item
@@ -288,7 +301,11 @@ class Chips extends Component
 
   handleChange = event => {
     let suggest = this.suggest(event.target.value);
-    this.setState({suggest, inputValue: event.target.value})
+    this.setState({
+      suggest,
+      inputValue: event.target.value,
+      inputWidth: this.input.scrollWidth + 2,
+    });
   };
 
   render()
@@ -308,13 +325,16 @@ class Chips extends Component
     return (
       <div className={classNames('chips', className)}>
 
-        <label className={classNames('field floating field-md', {
-          success: success !== false,
-          warning: warning !== false,
-          danger: danger !== false,
-          hasValue: this.state.value.length > 0 || this.state.inputValue !== '',
-          isFocused: this.state.isFocused
-        })}>
+        <label
+          ref={(node) => { this.label = node; }}
+          className={classNames('field floating field-md', {
+            success: success !== false,
+            warning: warning !== false,
+            danger: danger !== false,
+            hasValue: this.state.value.length > 0 || this.state.inputValue !== '',
+            isFocused: this.state.isFocused
+          })}
+        >
           <div className="field-control">
             {this.state.value.map((item, key)=>(
               <Chip  {...{
@@ -329,17 +349,23 @@ class Chips extends Component
               }
               }/>
             ))}
-            <input {...{
-              ref: 'input',
-              type: 'text',
-              autoComplete: false,
-              className: 'field-entry',
-              onKeyDown: this.handleKeyDown,
-              onDoubleClick:  this.handleKeyDown,
-              onFocus: this.handleFocus,
-              onBlur: this.handleBlur,
-              onChange: this.handleChange
-            }} />
+            <input
+              {...{
+                ref: 'input',
+                type: 'text',
+                autoComplete: 'false',
+                className: 'field-entry',
+                onKeyDown: this.handleKeyDown,
+                onDoubleClick:  this.handleKeyDown,
+                onFocus: this.handleFocus,
+                onBlur: this.handleBlur,
+                onChange: this.handleChange,
+                style: {
+                  width: this.state.inputWidth,
+                },
+              }}
+              // value={this.state.inputValue}
+            />
             { placeholder && (
               <span className="field-label"
                     onClick={()=>this.input.focus()}
@@ -371,4 +397,4 @@ class Chips extends Component
   }
 }
 
-export default Chips
+export default onClickOutside(Chips);

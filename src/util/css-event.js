@@ -1,6 +1,5 @@
 let Events = require('./events');
 
-
 module.exports = {
 
   _testSupportedProps(props) {

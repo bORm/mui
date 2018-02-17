@@ -51,6 +51,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-input-autosize": "^2.2.1",
     "react-onclickoutside": "^5.11.1",
     "react-transform-hmr": "^1.0.4",
     "react-transition-group": "=1.2.1"

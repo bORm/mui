@@ -54,3 +54,8 @@ export {convertHexToRGB} from './helpers/color'
  */
 export AutoPrefix from 'style/auto-prefix.js';
 export Transitions from 'style/transitions.js';
+
+/**
+ * util
+ */
+export * as util from './util';

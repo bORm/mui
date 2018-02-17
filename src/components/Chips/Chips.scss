@@ -3,6 +3,13 @@
 
   .field {
 
+    &-entry {
+      width: auto;
+      border: 0;
+      outline: 0;
+      outline: none;
+    }
+
     &-control {
       @include clearfix();
       padding: 26px 0 3px;
