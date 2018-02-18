@@ -6,8 +6,8 @@ const renderSubtreeIntoContainer = ReactDOM.unstable_renderSubtreeIntoContainer;
 import EventEmitter from 'fbemitter/lib/BaseEventEmitter';
 const emitter = new EventEmitter();
 
-import ExecutionEnvironment from 'exenv';
-const { canUseDOM } = ExecutionEnvironment;
+// import ExecutionEnvironment from 'exenv';
+// const { canUseDOM } = ExecutionEnvironment;
 import { classNames } from 'helpers'
 // import isMounted from 'util/isMounted'
 // import Modal from 'react-modal'

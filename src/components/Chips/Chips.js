@@ -2,9 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types';
 import Paper from 'components/Paper'
 import Ripple from 'components/Ripple'
-import AutoSizeInput from 'react-input-autosize';
 import classNames from 'helpers/classNames'
-import onClickOutside from "react-onclickoutside";
+import onClickOutside from 'react-onclickoutside';
 
 class Chips extends Component
 {
