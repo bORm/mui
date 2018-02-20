@@ -88,7 +88,7 @@ class Button extends Component {
 				accent,
         white,
 				large,
-				medium: !large || !small || !mini,
+				medium: medium && [large, small, mini].indexOf(true) === -1,
 				small,
 				mini,
 				//icon: !!(icon)

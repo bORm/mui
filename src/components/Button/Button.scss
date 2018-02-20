@@ -155,10 +155,13 @@
     vertical-align: middle;
   }
   &-icon {
-    font-size: 1.6rem;
+    font-size: 2.4rem;
     line-height: inherit;
     & + .button-text {
       margin-left: 1rem;
+    }
+    .material-icon {
+      font-size: 100%;
     }
   }
   &-text {
@@ -181,15 +184,41 @@
         //min-height: 48px;
         font-size: 1.8rem;
       }
+      &-icon {
+        font-size: 2.4rem;
+        line-height: inherit;
+      }
     }
   }
 
   &.medium {
-
+    line-height: 3.6rem;
+    min-height: 3.6rem;
+    min-width: 3.6rem;
+    .button {
+      &-text {
+        font-size: 1.6rem;
+      }
+      &-icon {
+        font-size: 1.8rem;
+        line-height: inherit;
+      }
+    }
   }
 
   &.small {
-
+    line-height: 3.2rem;
+    min-height: 3.2rem;
+    min-width: 3.2rem;
+    .button {
+      &-text {
+        font-size: 1.6rem;
+      }
+      &-icon {
+        font-size: 1.6rem;
+        line-height: 1.6rem;
+      }
+    }
   }
 
   &.mini {
